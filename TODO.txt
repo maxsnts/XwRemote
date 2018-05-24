@@ -1,0 +1,30 @@
+**************** GENERAL**************
+- Credits
+- Copy Servers
+- New Icons
+- High DPI
+- Can you Help?
+
+**************** APPLE ***************
+- Screen
+- IO
+
+**************** RDP *****************
+- Gateway
+
+**************** VNC *****************
+- await on Connect
+
+**************** SSH *****************
+- Connect using Keys
+- Putty lternative
+
+**************** SFTP ****************
+- Connect using Keys
+
+**************** IO ******************
+- Cancel Uploads and Downloads
+
+**************** SQL *****************
+- Start!!!!
+

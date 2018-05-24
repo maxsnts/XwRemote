@@ -1,0 +1,523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BD4B53CC-4C74-4879-A716-259F937E31BE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XwRemote</RootNamespace>
+    <AssemblyName>XwRemote</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\XwRemote.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>XwRemote.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\AWSSDK.S3.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.MSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\AxInterop.MSTSCLib.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="FluentFTP, Version=19.2.2.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\FluentFTP.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.MSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>Lib\Interop.MSTSCLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Microsoft\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Other\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Poderosa.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Poderosa.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Poderosa.Plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Poderosa.Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Poderosa.Protocols, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Poderosa.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="Poderosa.TerminalEmulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Poderosa.TerminalEmulator.dll</HintPath>
+    </Reference>
+    <Reference Include="Poderosa.TerminalSession, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Poderosa.TerminalSession.dll</HintPath>
+    </Reference>
+    <Reference Include="Poderosa.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Poderosa.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpRaven, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Other\SharpRaven.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VncSharp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=61974755c7bfea7c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Other\VncSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="XwMaxLib, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\XwMaxLibrary\XwMaxLib.dll</HintPath>
+    </Reference>
+    <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\Group.cs" />
+    <Compile Include="Lib\Other\SshNetExtensions.cs" />
+    <Compile Include="Misc\AskPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\AskPassword.Designer.cs">
+      <DependentUpon>AskPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\MyExt.cs" />
+    <Compile Include="Misc\Scroller\Scroller.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Misc\Scroller\Scroller.Designer.cs">
+      <DependentUpon>Scroller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\SendError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\SendError.Designer.cs">
+      <DependentUpon>SendError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Stuff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Stuff.Designer.cs">
+      <DependentUpon>Stuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\IO\IOServer.cs" />
+    <Compile Include="Servers\IE\IEServer.cs" />
+    <Compile Include="Servers\IO\XwRemoteIO.cs" />
+    <Compile Include="Servers\RDP\RDPServer.cs" />
+    <Compile Include="Servers\SQL\SQLForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\SQL\SQLForm.Designer.cs">
+      <DependentUpon>SQLForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\SQL\SQLServer.cs" />
+    <Compile Include="Servers\SSH\ctlApplicationPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Servers\IO\Exists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\IO\Exists.Designer.cs">
+      <DependentUpon>Exists.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\IO\ListViewColumnSorter.cs" />
+    <Compile Include="Servers\IO\LocalList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Servers\IO\QueueList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Servers\IO\RemoteList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Servers\IO\Structs.cs" />
+    <Compile Include="Servers\IE\IEForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\IE\IEForm.Designer.cs">
+      <DependentUpon>IEForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\SSH\SSHServer.cs" />
+    <Compile Include="Servers\VNC\VNCServer.cs" />
+    <Compile Include="Misc\GlobalSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\GlobalSettings.Designer.cs">
+      <DependentUpon>GlobalSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\IE\IESettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\IE\IESettings.Designer.cs">
+      <DependentUpon>IESettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\SQL\SQLSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\SQL\SQLSettings.Designer.cs">
+      <DependentUpon>SQLSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\UpdateBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\UpdateBox.Designer.cs">
+      <DependentUpon>UpdateBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Misc\ServerManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\ServerManager.Designer.cs">
+      <DependentUpon>ServerManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\Server.cs" />
+    <Compile Include="Servers\IO\IOForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\IO\IOForm.Designer.cs">
+      <DependentUpon>IOForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\RDP\RDPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\RDP\RDPForm.Designer.cs">
+      <DependentUpon>RDPForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\SSH\SSHForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\SSH\SSHForm.Designer.cs">
+      <DependentUpon>SSHForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\VNC\VNCForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\VNC\VNCForm.Designer.cs">
+      <DependentUpon>VNCForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\IO\IOSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\IO\IOSettings.Designer.cs">
+      <DependentUpon>IOSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\RDP\RDPSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\RDP\RDPSettings.Designer.cs">
+      <DependentUpon>RDPSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Servers\SSH\SSHSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\SSH\SSHSettings.Designer.cs">
+      <DependentUpon>SSHSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\Config.cs" />
+    <Compile Include="Servers\VNC\VNCSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\VNC\VNCSettings.Designer.cs">
+      <DependentUpon>VNCSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Version.cs" />
+    <EmbeddedResource Include="Misc\AskPassword.resx">
+      <DependentUpon>AskPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\SendError.resx">
+      <DependentUpon>SendError.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Stuff.resx">
+      <DependentUpon>Stuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\SQL\SQLForm.resx">
+      <DependentUpon>SQLForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\SSH\ctlApplicationPanel.resx">
+      <DependentUpon>ctlApplicationPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\IO\Exists.resx">
+      <DependentUpon>Exists.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\IE\IEForm.resx">
+      <DependentUpon>IEForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\GlobalSettings.resx">
+      <DependentUpon>GlobalSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\IE\IESettings.resx">
+      <DependentUpon>IESettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\SQL\SQLSettings.resx">
+      <DependentUpon>SQLSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\UpdateBox.resx">
+      <DependentUpon>UpdateBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\ServerManager.resx">
+      <DependentUpon>ServerManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\IO\IOForm.resx">
+      <DependentUpon>IOForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\RDP\RDPForm.resx">
+      <DependentUpon>RDPForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\SSH\SSHForm.resx">
+      <DependentUpon>SSHForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\VNC\VNCForm.resx">
+      <DependentUpon>VNCForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\IO\IOSettings.resx">
+      <DependentUpon>IOSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\RDP\RDPSettings.resx">
+      <DependentUpon>RDPSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\SSH\SSHSettings.resx">
+      <DependentUpon>SSHSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\VNC\VNCSettings.resx">
+      <DependentUpon>VNCSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Credits.rtf" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="XwRemote.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XwRemote.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ftp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fullscreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nogroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pencil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rdp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ssh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vnc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\AWS\AWSSDK.Core.dll" />
+    <Content Include="Lib\AWS\AWSSDK.Core.pdb" />
+    <Content Include="Lib\AWS\AWSSDK.Core.xml" />
+    <Content Include="Lib\AWS\AWSSDK.S3.dll" />
+    <Content Include="Lib\AWS\AWSSDK.S3.pdb" />
+    <Content Include="Lib\AWS\AWSSDK.S3.xml" />
+    <Content Include="Lib\Microsoft\AxInterop.MSTSCLib.dll" />
+    <Content Include="Lib\Microsoft\Interop.MSTSCLib.dll" />
+    <Content Include="Lib\Microsoft\Microsoft.WindowsAzure.Storage.dll" />
+    <Content Include="Lib\Microsoft\Microsoft.WindowsAzure.Storage.pdb" />
+    <Content Include="Lib\Microsoft\Microsoft.WindowsAzure.Storage.xml" />
+    <Content Include="Lib\Other\FluentFTP.dll" />
+    <Content Include="Lib\Other\FluentFTP.xml" />
+    <Content Include="Lib\Other\Newtonsoft.Json.dll" />
+    <Content Include="Lib\Other\Newtonsoft.Json.xml" />
+    <Content Include="Lib\Other\Poderosa.Core.dll" />
+    <Content Include="Lib\Other\Poderosa.Plugin.dll" />
+    <Content Include="Lib\Other\Poderosa.Protocols.dll" />
+    <Content Include="Lib\Other\Poderosa.TerminalEmulator.dll" />
+    <Content Include="Lib\Other\Poderosa.TerminalSession.dll" />
+    <Content Include="Lib\Other\Poderosa.UI.dll" />
+    <Content Include="Lib\Other\Renci.SshNet.dll" />
+    <Content Include="Lib\Other\Renci.SshNet.xml" />
+    <Content Include="Lib\Other\SharpRaven.dll" />
+    <Content Include="Lib\Other\VncSharp.dll" />
+    <Content Include="Lib\Other\VncSharp.pdb" />
+    <Content Include="Lib\Other\zlib.net.dll" />
+    <Content Include="Lib\XwMaxLib\MySql.Data.dll" />
+    <Content Include="Lib\XwMaxLib\System.Data.SQLite.dll" />
+    <Content Include="Resources\XwUpdater.exe" />
+    <EmbeddedResource Include="Resources\whynot.txt" />
+    <None Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Lib\XwMaxLib\XwMaxLib.dll" />
+    <Content Include="Lib\XwMaxLib\XwMaxLib.pdb" />
+    <Content Include="Resources\azure.png" />
+    <Content Include="Resources\paypal.png" />
+    <Content Include="Resources\s3.png" />
+    <None Include="Resources\sftp.png" />
+    <None Include="Resources\database.png" />
+    <None Include="Resources\file_green.png" />
+    <None Include="Resources\files_red.png" />
+    <None Include="Resources\files_green.png" />
+    <None Include="Resources\file_red.png" />
+    <None Include="Resources\IE.png" />
+    <None Include="Resources\copy.png" />
+    <None Include="putty\putty.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\updates.png" />
+    <None Include="Resources\rename.png" />
+    <None Include="Resources\retry.png" />
+    <None Include="Resources\accept.png" />
+    <None Include="Resources\bullet_arrow_up.png" />
+    <None Include="Resources\stop.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\XWega.96.png" />
+    <None Include="Resources\XWega.Name.png" />
+    <None Include="Resources\XWega.48.png" />
+    <None Include="Resources\download.png" />
+    <None Include="Resources\upload.png" />
+    <None Include="Resources\PinDown.png" />
+    <None Include="Resources\PinUp.png" />
+    <None Include="Resources\link.png" />
+    <None Include="Resources\link_break.png" />
+    <None Include="Resources\redhealp.png" />
+    <None Include="Resources\exclamation.png" />
+    <None Include="Resources\page_white_put.png" />
+    <None Include="Resources\play.png" />
+    <None Include="Resources\chart_line.png" />
+    <None Include="Resources\xwremote.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxMSTSCLib">
+      <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="MSTSCLib">
+      <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
