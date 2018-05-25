@@ -130,22 +130,33 @@ namespace XwRemote.Misc
         //************************************************************************************
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             string path = Environment.CurrentDirectory;
             using (WebClient client = new WebClient())
             {
-                string updateUrl = $"https://github.com/maxsnts/XwGitUpdateTest/releases/download/v{NewVersion}/{Main.UpdateRepo}.v{NewVersion}.zip";
-                client.DownloadFile(updateUrl, Path.Combine(path, $"{Main.UpdateRepo}.zip"));
-
-                File.WriteAllBytes(Path.Combine(path, "XwUpdater.exe"), Resources.XwUpdater);
-               
-                using (Process process = new Process())
+                string URL = $"https://github.com/maxsnts/{Main.UpdateRepo}/releases/download/v{NewVersion}/{Main.UpdateRepo}.v{NewVersion}.zip";
+                try
                 {
-                    process.StartInfo.FileName = Path.Combine(path, "XwUpdater.exe");
-                    process.StartInfo.WorkingDirectory = path;
-                    process.StartInfo.Arguments = $"\"{Main.UpdateRepo}.exe\" \"{Main.UpdateRepo}.zip\" \"{path}\"";
-                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                    process.Start();
-                    Environment.Exit(0);
+                    client.DownloadFile(URL, Path.Combine(path, $"{Main.UpdateRepo}.zip"));
+
+                    File.WriteAllBytes(Path.Combine(path, "XwUpdater.exe"), Resources.XwUpdater);
+               
+                    using (Process process = new Process())
+                    {
+                        process.StartInfo.FileName = Path.Combine(path, "XwUpdater.exe");
+                        process.StartInfo.WorkingDirectory = path;
+                        process.StartInfo.Arguments = $"\"{Main.UpdateRepo}.exe\" \"{Main.UpdateRepo}.zip\" \"{path}\"";
+                        process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        process.Start();
+                        Environment.Exit(0);
+                    }
+                }
+                catch
+                {
+                    labelVersion.Text = "Unable to check for updates, update manually";
+                    linkLatest.Text = URL;
+                    linkLatest.Visible = true;
+                    buttonUpdate.Enabled = false;
                 }
             }
         }
