@@ -8,6 +8,6 @@ namespace XwRemote
 {
     class Version
     {
-        internal const string AssemblyVersion = "3.0.1.1";
+        internal const string AssemblyVersion = "3.0.1.2";
     }
 }

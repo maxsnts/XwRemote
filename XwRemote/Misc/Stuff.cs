@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharpRaven;
 using SharpRaven.Data;
+using XwMaxLib.Extentions;
 using XwRemote.Properties;
 
 namespace XwRemote.Misc
@@ -63,6 +64,12 @@ namespace XwRemote.Misc
         //************************************************************************************
         private void buttonSend_Click(object sender, EventArgs e)
         {
+            if (CommentBox.Text.Trim() == "")
+            {
+                CommentBox.ShowBalloon(ToolTipIcon.Warning, "", "Empty message?");
+                return;
+            }
+
             Cursor.Current = Cursors.WaitCursor;
             string message = "";
             message += "***************************** MESSAGE *****************************\n";
@@ -165,6 +172,12 @@ namespace XwRemote.Misc
         private void linkLatest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLatest.Text);
+        }
+
+        //************************************************************************************
+        private void linkReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkReleases.Text);
         }
     }
 }

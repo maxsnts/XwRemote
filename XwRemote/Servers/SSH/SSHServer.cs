@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using KRBTabControlNS.CustomTab;
 using XwRemote.Properties;
 using XwRemote.Settings;
@@ -12,10 +7,12 @@ namespace XwRemote.Servers
 {
     public class SSHServer : Server
     {
+        SSHForm form = null;
+
         //**********************************************************************************************
         public override void Open(TabPageEx tab)
         {
-            SSHForm form = new SSHForm(this);
+            form = new SSHForm(this);
             form.Parent = tab;
             form.Show();
         }
@@ -37,14 +34,18 @@ namespace XwRemote.Servers
         //**********************************************************************************************
         public override bool OnTabClose()
         {
-
-            return true;
+            bool ret = true;
+            if (form != null)
+                ret = form.OnTabClose();
+            form = null;
+            return ret;
         }
 
         //**********************************************************************************************
         public override void OnTabFocus()
         {
-
+            if (form != null)
+                form.OnTabFocus();
         }
 
         //**********************************************************************************************

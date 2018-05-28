@@ -39,6 +39,7 @@
             this.faTabCredits = new FarsiLibrary.Win.FATabStripItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.faTabWhyNot = new FarsiLibrary.Win.FATabStripItem();
+            this.scroller1 = new ExtendedComponents.Scroller();
             this.faTabContact = new FarsiLibrary.Win.FATabStripItem();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
@@ -50,6 +51,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CommentBox = new System.Windows.Forms.TextBox();
             this.faTabUpdates = new FarsiLibrary.Win.FATabStripItem();
+            this.linkReleases = new System.Windows.Forms.LinkLabel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.linkLatest = new System.Windows.Forms.LinkLabel();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.labelVersion = new System.Windows.Forms.Label();
             this.faTabDonation = new FarsiLibrary.Win.FATabStripItem();
@@ -57,8 +62,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
-            this.linkLatest = new System.Windows.Forms.LinkLabel();
-            this.scroller1 = new ExtendedComponents.Scroller();
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).BeginInit();
             this.faTabStrip1.SuspendLayout();
             this.faTabAbout.SuspendLayout();
@@ -189,6 +192,22 @@
             this.faTabWhyNot.TabIndex = 2;
             this.faTabWhyNot.Title = "Why Not";
             // 
+            // scroller1
+            // 
+            this.scroller1.BackColor = System.Drawing.Color.Black;
+            this.scroller1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.scroller1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scroller1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.scroller1.ForeColor = System.Drawing.Color.Yellow;
+            this.scroller1.Interval = 50;
+            this.scroller1.Location = new System.Drawing.Point(0, 0);
+            this.scroller1.Name = "scroller1";
+            this.scroller1.Size = new System.Drawing.Size(557, 367);
+            this.scroller1.TabIndex = 0;
+            this.scroller1.TextFont = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.scroller1.TextToScroll = "";
+            this.scroller1.TopPartSizePercent = 50;
+            // 
             // faTabContact
             // 
             this.faTabContact.CanClose = false;
@@ -293,6 +312,9 @@
             // faTabUpdates
             // 
             this.faTabUpdates.CanClose = false;
+            this.faTabUpdates.Controls.Add(this.linkReleases);
+            this.faTabUpdates.Controls.Add(this.textBox1);
+            this.faTabUpdates.Controls.Add(this.label9);
             this.faTabUpdates.Controls.Add(this.linkLatest);
             this.faTabUpdates.Controls.Add(this.buttonUpdate);
             this.faTabUpdates.Controls.Add(this.labelVersion);
@@ -301,6 +323,51 @@
             this.faTabUpdates.Size = new System.Drawing.Size(557, 367);
             this.faTabUpdates.TabIndex = 4;
             this.faTabUpdates.Title = "Updates";
+            // 
+            // linkReleases
+            // 
+            this.linkReleases.AutoSize = true;
+            this.linkReleases.Location = new System.Drawing.Point(262, 122);
+            this.linkReleases.Name = "linkReleases";
+            this.linkReleases.Size = new System.Drawing.Size(240, 13);
+            this.linkReleases.TabIndex = 21;
+            this.linkReleases.TabStop = true;
+            this.linkReleases.Text = "https://github.com/maxsnts/XwRemote/releases";
+            this.linkReleases.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReleases_LinkClicked);
+            // 
+            // textBox1
+            // 
+            this.textBox1.AcceptsReturn = true;
+            this.textBox1.AcceptsTab = true;
+            this.textBox1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(11, 139);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(535, 217);
+            this.textBox1.TabIndex = 20;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 123);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(247, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Release notes for the latest version, more info at ";
+            // 
+            // linkLatest
+            // 
+            this.linkLatest.Location = new System.Drawing.Point(14, 60);
+            this.linkLatest.Name = "linkLatest";
+            this.linkLatest.Size = new System.Drawing.Size(532, 13);
+            this.linkLatest.TabIndex = 18;
+            this.linkLatest.TabStop = true;
+            this.linkLatest.Text = "lastest";
+            this.linkLatest.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLatest.Visible = false;
+            this.linkLatest.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLatest_LinkClicked);
             // 
             // buttonUpdate
             // 
@@ -372,34 +439,6 @@
             this.linkLabel3.Text = "Make a contribution however small using paypal";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked_1);
             // 
-            // linkLatest
-            // 
-            this.linkLatest.Location = new System.Drawing.Point(14, 60);
-            this.linkLatest.Name = "linkLatest";
-            this.linkLatest.Size = new System.Drawing.Size(532, 13);
-            this.linkLatest.TabIndex = 18;
-            this.linkLatest.TabStop = true;
-            this.linkLatest.Text = "lastest";
-            this.linkLatest.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLatest.Visible = false;
-            this.linkLatest.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLatest_LinkClicked);
-            // 
-            // scroller1
-            // 
-            this.scroller1.BackColor = System.Drawing.Color.Black;
-            this.scroller1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.scroller1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scroller1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.scroller1.ForeColor = System.Drawing.Color.Yellow;
-            this.scroller1.Interval = 50;
-            this.scroller1.Location = new System.Drawing.Point(0, 0);
-            this.scroller1.Name = "scroller1";
-            this.scroller1.Size = new System.Drawing.Size(557, 367);
-            this.scroller1.TabIndex = 0;
-            this.scroller1.TextFont = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.scroller1.TextToScroll = "";
-            this.scroller1.TopPartSizePercent = 50;
-            // 
             // Stuff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -412,7 +451,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Stuff";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Stuff";
             this.Load += new System.EventHandler(this.Stuff_Load);
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).EndInit();
@@ -425,6 +464,7 @@
             this.faTabContact.ResumeLayout(false);
             this.faTabContact.PerformLayout();
             this.faTabUpdates.ResumeLayout(false);
+            this.faTabUpdates.PerformLayout();
             this.faTabDonation.ResumeLayout(false);
             this.faTabDonation.PerformLayout();
             this.ResumeLayout(false);
@@ -463,5 +503,8 @@
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.LinkLabel linkLatest;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.LinkLabel linkReleases;
     }
 }

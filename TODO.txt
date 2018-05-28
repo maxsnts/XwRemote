@@ -3,7 +3,6 @@
 - Copy Servers
 - New Icons
 - High DPI
-- Can you Help?
 
 **************** APPLE ***************
 - Screen

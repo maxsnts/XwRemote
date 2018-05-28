@@ -19,6 +19,7 @@ namespace XwRemote.Servers
         public ToolTip linkTip = new ToolTip();
         public bool SkipCheckLink = false;
         private XwRemoteIO remoteIO = new XwRemoteIO();
+        private bool Closing = false;
 
         //********************************************************************************************
         public IOForm(Server srv)
@@ -105,12 +106,14 @@ namespace XwRemote.Servers
                 default:
                     throw new Exception("Invalid engine");
             }
+
             await RemoteList.Load();
         }
       
         //********************************************************************************************
         public bool OnTabClose()
         {
+            Closing = true;
             remoteIO.Close();
             return true;
         }
@@ -139,12 +142,15 @@ namespace XwRemote.Servers
         //********************************************************************************************
         public void Log(string text, Color textColor)
         {
+            if (Closing)
+                return;
+
             if (text.StartsWith("OK   :"))
                 textColor = Color.Green;
 
             if (text.StartsWith("ERROR:"))
                 textColor = Color.Red;
-
+            
             Invoke((Action)(() =>
             {
                 lock (StatusBox)

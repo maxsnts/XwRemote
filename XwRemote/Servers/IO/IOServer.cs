@@ -1,7 +1,5 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using KRBTabControlNS.CustomTab;
-using XwRemote.Misc;
 using XwRemote.Properties;
 using XwRemote.Settings;
 
@@ -9,6 +7,8 @@ namespace XwRemote.Servers
 {
     public class IOServer: Server
     {
+        IOForm form = null;
+
         //**********************************************************************************************
         public IOServer(ServerType type)
         {
@@ -18,7 +18,7 @@ namespace XwRemote.Servers
         //**********************************************************************************************
         public override void Open(TabPageEx tab)
         {
-            IOForm form = new IOForm(this);
+            form = new IOForm(this);
             form.Parent = tab;
             form.Show();
         }
@@ -40,13 +40,18 @@ namespace XwRemote.Servers
         //**********************************************************************************************
         public override bool OnTabClose()
         {
-            return true;
+            bool ret  = true;
+            if (form != null)
+                ret = form.OnTabClose();
+            form = null;
+            return ret;
         }
 
         //**********************************************************************************************
         public override void OnTabFocus()
         {
-
+            if (form != null)
+                form.OnTabFocus();
         }
 
         //**********************************************************************************************

@@ -143,7 +143,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SendError";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Send Error?";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SendError_FormClosing);
