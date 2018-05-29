@@ -121,9 +121,14 @@ namespace XwRemote.Misc
                         try
                         {
                             m = Regex.Match(content, @"(?ixs)markdown-body"">(?<NOTES>.*?)</div>");
-                            string notes = m.Result("${NOTES}");
-                            notes.Replace("<p>", "");
-                            notes.Replace("<\\p>", "\n");
+                            //this must be a bad way to do it
+                            string notes = m.Result("${NOTES}").Trim();
+                            notes = notes.Replace("<p>", "");
+                            notes = notes.Replace("</p>", "\r\n");
+                            notes = notes.Replace("<ul>", "");
+                            notes = notes.Replace("</ul>", "");
+                            notes = notes.Replace("<li>", "- ");
+                            notes = notes.Replace("</li>", "\r\n\r\n");
                             ReleaseNotes.Text = notes;
                         }
                         catch { /* dont care */}
