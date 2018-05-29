@@ -40,9 +40,17 @@ namespace XwRemote
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             // Add the event handler for handling non-UI thread exceptions to the event. 
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
-//#endif
+            //#endif
 
-            File.Delete("XwUpdater.exe");
+            if (File.Exists("XwUpdater.exe"))
+            {
+                try
+                {
+                    Thread.Sleep(500);
+                    File.Delete("XwUpdater.exe");
+                }
+                catch { /* dont care */ }
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main());

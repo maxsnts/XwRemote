@@ -8,6 +8,10 @@ namespace XwRemote
 {
     class Version
     {
-        internal const string AssemblyVersion = "3.0.1.2";
+#if DEBUG
+        internal const string AssemblyVersion = "0.0.0.0";
+#else
+        internal const string AssemblyVersion = "3.0.1.3";        
+#endif
     }
 }

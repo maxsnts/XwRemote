@@ -345,8 +345,9 @@ namespace XwRemote.Servers.IO
                         {
                             if (!path.EndsWith("/"))
                                 path += "/";
-                            
-                            
+                            if (path.StartsWith("/"))
+                                path = path.Remove(0, 1);
+
                             ListObjectsV2Request request = new ListObjectsV2Request();
                             request.BucketName = Hostname;
                             request.Delimiter = "/";

@@ -117,6 +117,16 @@ namespace XwRemote.Misc
                         labelVersion.Text = $"There is a new version available: {latestVersion}";
                         NewVersion = latestVersion;
                         buttonUpdate.Enabled = true;
+
+                        try
+                        {
+                            m = Regex.Match(content, @"(?ixs)markdown-body"">(?<NOTES>.*?)</div>");
+                            string notes = m.Result("${NOTES}");
+                            notes.Replace("<p>", "");
+                            notes.Replace("<\\p>", "\n");
+                            ReleaseNotes.Text = notes;
+                        }
+                        catch { /* dont care */}
                     }
                     else
                     {
@@ -137,7 +147,11 @@ namespace XwRemote.Misc
         //************************************************************************************
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            buttonUpdate.Text = "Updating ...";
+            buttonUpdate.Enabled = false;
+            Update();
             Cursor.Current = Cursors.WaitCursor;
+
             string path = Environment.CurrentDirectory;
             using (WebClient client = new WebClient())
             {

@@ -52,7 +52,7 @@
             this.CommentBox = new System.Windows.Forms.TextBox();
             this.faTabUpdates = new FarsiLibrary.Win.FATabStripItem();
             this.linkReleases = new System.Windows.Forms.LinkLabel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ReleaseNotes = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.linkLatest = new System.Windows.Forms.LinkLabel();
             this.buttonUpdate = new System.Windows.Forms.Button();
@@ -313,7 +313,7 @@
             // 
             this.faTabUpdates.CanClose = false;
             this.faTabUpdates.Controls.Add(this.linkReleases);
-            this.faTabUpdates.Controls.Add(this.textBox1);
+            this.faTabUpdates.Controls.Add(this.ReleaseNotes);
             this.faTabUpdates.Controls.Add(this.label9);
             this.faTabUpdates.Controls.Add(this.linkLatest);
             this.faTabUpdates.Controls.Add(this.buttonUpdate);
@@ -327,7 +327,7 @@
             // linkReleases
             // 
             this.linkReleases.AutoSize = true;
-            this.linkReleases.Location = new System.Drawing.Point(262, 122);
+            this.linkReleases.Location = new System.Drawing.Point(262, 89);
             this.linkReleases.Name = "linkReleases";
             this.linkReleases.Size = new System.Drawing.Size(240, 13);
             this.linkReleases.TabIndex = 21;
@@ -335,23 +335,23 @@
             this.linkReleases.Text = "https://github.com/maxsnts/XwRemote/releases";
             this.linkReleases.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReleases_LinkClicked);
             // 
-            // textBox1
+            // ReleaseNotes
             // 
-            this.textBox1.AcceptsReturn = true;
-            this.textBox1.AcceptsTab = true;
-            this.textBox1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(11, 139);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(535, 217);
-            this.textBox1.TabIndex = 20;
+            this.ReleaseNotes.AcceptsReturn = true;
+            this.ReleaseNotes.AcceptsTab = true;
+            this.ReleaseNotes.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ReleaseNotes.Location = new System.Drawing.Point(11, 106);
+            this.ReleaseNotes.Multiline = true;
+            this.ReleaseNotes.Name = "ReleaseNotes";
+            this.ReleaseNotes.ReadOnly = true;
+            this.ReleaseNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ReleaseNotes.Size = new System.Drawing.Size(535, 250);
+            this.ReleaseNotes.TabIndex = 20;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 123);
+            this.label9.Location = new System.Drawing.Point(8, 90);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(247, 13);
             this.label9.TabIndex = 19;
@@ -359,7 +359,7 @@
             // 
             // linkLatest
             // 
-            this.linkLatest.Location = new System.Drawing.Point(14, 60);
+            this.linkLatest.Location = new System.Drawing.Point(12, 32);
             this.linkLatest.Name = "linkLatest";
             this.linkLatest.Size = new System.Drawing.Size(532, 13);
             this.linkLatest.TabIndex = 18;
@@ -371,7 +371,7 @@
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(193, 88);
+            this.buttonUpdate.Location = new System.Drawing.Point(198, 55);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(165, 23);
             this.buttonUpdate.TabIndex = 17;
@@ -381,7 +381,7 @@
             // 
             // labelVersion
             // 
-            this.labelVersion.Location = new System.Drawing.Point(11, 24);
+            this.labelVersion.Location = new System.Drawing.Point(11, 10);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(535, 21);
             this.labelVersion.TabIndex = 16;
@@ -503,7 +503,7 @@
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.LinkLabel linkLatest;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox ReleaseNotes;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.LinkLabel linkReleases;
     }

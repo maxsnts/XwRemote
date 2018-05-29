@@ -10,6 +10,10 @@ namespace XwUpdater
         
         static void Main(string[] args)
         {
+            Updating upd = new Updating();
+            upd.Show();
+            upd.Update();
+
             if (args.Length == 3)
             {
                 string runprocess = args[0];
