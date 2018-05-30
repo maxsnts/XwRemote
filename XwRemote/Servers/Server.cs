@@ -52,10 +52,41 @@ namespace XwRemote.Settings
         public int SshTerminal = 1;
 
         //**********************************************************************************************
-        public Server Copy()
+        public Server Copy(ServerType newType)
         {
-            Server copy = (Server)MemberwiseClone();
-            copy.ID = 0;
+            //How the hell can i use MemberwiseClone while changing type?!?
+            //Server copy = (Server)MemberwiseClone();
+            //Oh well, i wiull just copy the members
+            //it may be betters since i need to make changes
+            //to the values when converting between types
+            Server copy = Server.GetServerInstance(newType);
+            copy.IsFavorite = false;
+            copy.Name = Name;
+            copy.Host = Host;
+            copy.Username = Username;
+            copy.Password = Password;
+            copy.SendKeys = SendKeys;
+            copy.UseSound = UseSound;
+            copy.ConnectDrives = ConnectDrives;
+            copy.GroupID = GroupID;
+            copy.Color = Color;
+            copy.Width = Width;
+            copy.Height = Height;
+            copy.Console = Console;
+            copy.AutoScale = AutoScale;
+            copy.SSH1 = SSH1;
+            copy.Passive = Passive;
+            copy.Themes = Themes;
+            copy.Certificates = Certificates;
+            copy.Encryption = Encryption;
+            copy.UseHtmlLogin = UseHtmlLogin;
+            copy.HtmlUserBox = HtmlUserBox;
+            copy.HtmlPassBox = HtmlPassBox;
+            copy.HtmlLoginBtn = HtmlLoginBtn;
+            copy.TabColor = TabColor;
+            copy.Notes = Notes;
+            copy.SshTerminal = SshTerminal;
+            copy.Port = GetDefaultServerPort(newType);
             return copy;
         }
 
@@ -83,7 +114,26 @@ namespace XwRemote.Settings
                     throw new Exception($"Type not valid {type}");
             }
         }
-        
+
+        //********************************************************************************************
+        public int GetDefaultServerPort(ServerType type)
+        {
+            switch (type)
+            {
+                case ServerType.FTP:
+                    return 21;
+                case ServerType.RDP:
+                    return 3389;
+                case ServerType.VNC:
+                    return 5900;
+                case ServerType.SSH:
+                case ServerType.SFTP:
+                    return 22;
+                default:
+                    return 0;
+            }
+        }
+
         //**********************************************************************************************
         // Virtuals, usually empty
         public virtual void Open(TabPageEx tab)

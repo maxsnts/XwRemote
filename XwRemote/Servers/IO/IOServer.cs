@@ -13,6 +13,7 @@ namespace XwRemote.Servers
         public IOServer(ServerType type)
         {
             Type = type;
+            Port = GetDefaultServerPort(type);
         }
 
         //**********************************************************************************************

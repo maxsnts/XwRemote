@@ -20,7 +20,21 @@ Anyway, if there is anything that this could make better, let me know!
 
 Next on the list is connecting to SSH/SFTP using Keys.
 
-![Connection Manager](Images/ServerManager.jpg)
-![Connection Manager](Images/RDP-Config.jpg)
-![Connection Manager](Images/RDP.jpg)
-![Connection Manager](Images/SFTP.jpg)
+- Server Manager
+![Connection Manager](Images/ServerManager.png)
+
+
+- Example of server configuration (different configurations for different protocols) 
+![Connection Manager](Images/RDP-Config.png)
+
+
+- RDP session
+![Connection Manager](Images/RDP.png)
+
+
+- SFTP connection (all file connectors use the same interface, FTP, SFTP, AWS S3, Azure)
+![Connection Manager](Images/SFTP.png)
+
+
+- Remote SSH session
+![Connection Manager](Images/SSH.png)

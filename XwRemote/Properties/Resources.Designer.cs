@@ -131,10 +131,10 @@ namespace XwRemote.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\froman\fprq2\fcharset0 Liberation Serif;}{\f1\froman\fprq2\fcharset0 Arial;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
         ///{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.14393}\viewkind4\uc1 
-        ///\pard\nowidctlpar\hyphpar0\sa200\sl276\slmult1\cf1\kerning1\f0\fs16\lang2070\line\tab\b\f1\fs20\lang1033 Some pieces of the puzzle\&apos;85\line\line\tab\b0\fs16 KRBTabControl\line\tab {\cf0{\field{\*\fldinst{HYPERLINK http://www.codeproject.com/KB/tabs/KRBTabControl.aspx }}{\f [rest of string was truncated]&quot;;.
+        ///\pard\nowidctlpar\hyphpar0\sa200\sl276\slmult1\cf1\kerning1\f0\fs20\lang2070\line\tab\b\fs28\lang1033 Some pieces of the puzzle\&apos;85\line\b0\fs20\tab If you feel that you should not be here, contact me and I will remove it.\b\line\line\tab\b0 KRBTabControl\line\tab {\cf0{\field{\*\fldinst{HYPERLINK http://www.codeproject.com [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Credits {
             get {
@@ -298,6 +298,16 @@ namespace XwRemote.Properties {
         internal static System.Drawing.Bitmap IE {
             get {
                 object obj = ResourceManager.GetObject("IE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inout {
+            get {
+                object obj = ResourceManager.GetObject("inout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -533,7 +543,21 @@ namespace XwRemote.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In a network far far away....
+        ///   Looks up a localized string similar to In a network far far away...
+        ///
+        ///An IT guy got frustrated about
+        ///fighting so many applications...
+        ///
+        ///So many thing to do...
+        ///So many applications open...
+        ///
+        ///Lets create a weapon to battle them all
+        ///
+        ///With the help of the Open Source Rebels
+        ///he started to craft away this weapon
+        ///
+        ///The path is not easy, and its slow going
+        ///but advances are being made!!!.
         /// </summary>
         internal static string whynot {
             get {

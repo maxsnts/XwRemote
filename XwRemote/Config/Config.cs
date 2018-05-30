@@ -29,6 +29,11 @@ namespace XwRemote.Settings
                 Environment.Exit(1);
             }
 
+            if (File.Exists("XwRemote.dat"))
+            {
+                File.Move("XwRemote.dat", "#XwRemoteServerDatabase#");
+            }
+
             UpgradeConfigDB();
             Refresh();
         }
@@ -65,7 +70,7 @@ namespace XwRemote.Settings
         {
             string fullPath = System.Reflection.Assembly.GetAssembly(typeof(Main)).Location;
             string theDirectory = Path.GetDirectoryName(fullPath);
-            return Path.Combine(theDirectory, "XwRemote.dat");
+            return Path.Combine(theDirectory, "#XwRemoteServerDatabase#");
         }
 
         //********************************************************************************************************

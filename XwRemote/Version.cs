@@ -11,7 +11,7 @@ namespace XwRemote
 #if DEBUG
         internal const string AssemblyVersion = "0.0.0.0";
 #else
-        internal const string AssemblyVersion = "3.0.1.3";        
+        internal const string AssemblyVersion = "3.0.1.4";        
 #endif
     }
 }

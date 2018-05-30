@@ -56,7 +56,7 @@
             this.dialogHeader1.HeaderTitle = "Configuration is protected";
             this.dialogHeader1.Location = new System.Drawing.Point(0, 0);
             this.dialogHeader1.Name = "dialogHeader1";
-            this.dialogHeader1.Size = new System.Drawing.Size(344, 50);
+            this.dialogHeader1.Size = new System.Drawing.Size(342, 50);
             this.dialogHeader1.TabIndex = 1;
             // 
             // label1
@@ -70,7 +70,7 @@
             // 
             // butOK
             // 
-            this.butOK.Location = new System.Drawing.Point(116, 104);
+            this.butOK.Location = new System.Drawing.Point(116, 112);
             this.butOK.Name = "butOK";
             this.butOK.Size = new System.Drawing.Size(106, 37);
             this.butOK.TabIndex = 3;
@@ -81,7 +81,7 @@
             // butCancel
             // 
             this.butCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.butCancel.Location = new System.Drawing.Point(228, 104);
+            this.butCancel.Location = new System.Drawing.Point(228, 112);
             this.butCancel.Name = "butCancel";
             this.butCancel.Size = new System.Drawing.Size(104, 37);
             this.butCancel.TabIndex = 4;
@@ -95,7 +95,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
-            this.ClientSize = new System.Drawing.Size(344, 152);
+            this.ClientSize = new System.Drawing.Size(342, 161);
             this.ControlBox = false;
             this.Controls.Add(this.butCancel);
             this.Controls.Add(this.butOK);

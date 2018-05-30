@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using XwMaxLib.Extensions;
+using XwRemote.Misc;
 using XwRemote.Servers;
 using XwRemote.Settings;
 
@@ -234,9 +235,25 @@ namespace XwRemote
         }
 
         //**********************************************************************************************
+        private int GetSelectedGroup()
+        {
+            TreeNode selected = treeServers.SelectedNode;
+            if (selected == null)
+                return 0;
+
+            if (selected.Tag is Group)
+                return ((Group)selected.Tag).ID;
+
+            if (selected.Tag is Server)
+                return ((Server)selected.Tag).GroupID;
+
+            return 0;
+        }
+        //**********************************************************************************************
         private void NewFTP_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.FTP);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -245,6 +262,7 @@ namespace XwRemote
         private void NewSFTP_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.SFTP);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -253,6 +271,7 @@ namespace XwRemote
         private void NewS3_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.AWSS3);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -261,6 +280,7 @@ namespace XwRemote
         private void NewAzureFile_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.AZUREFILE);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -269,6 +289,7 @@ namespace XwRemote
         private void NewRDP_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.RDP);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -277,6 +298,7 @@ namespace XwRemote
         private void NewVNC_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.VNC);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -285,6 +307,7 @@ namespace XwRemote
         private void newSSH_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.SSH);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -293,6 +316,7 @@ namespace XwRemote
         private void newSQL_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.MYSQL);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -301,6 +325,7 @@ namespace XwRemote
         private void newIE_Click(object sender, EventArgs e)
         {
             Server server = Server.GetServerInstance(ServerType.IE);
+            server.GroupID = GetSelectedGroup();
             server.New();
             LoadList();
         }
@@ -503,21 +528,7 @@ namespace XwRemote
                 previousHighlightedNode.BackColor = SystemColors.Window;
             previousHighlightedNode = null;
         }
-
-        //**********************************************************************************************
-        private int GetSelectedGroup()
-        {
-            if (treeServers.SelectedNode != null)
-            {
-                if (treeServers.SelectedNode.Level == 0)
-                    return treeServers.SelectedNode.Name.ToIntOrDefault(0);
-                else
-                    return treeServers.SelectedNode.Parent.Name.ToIntOrDefault(0);
-            }
-
-            return 0;
-        }
-
+        
         //********************************************************************************************
         private void tree_KeyDown(object sender, KeyEventArgs e)
         {
@@ -569,29 +580,11 @@ namespace XwRemote
         {
             if (srv != null)
             {
-                Server newSrv = srv.Copy();
+                Server newSrv = srv.Copy(type);
                 EditServerById(newSrv, true);
             }
         }
-        
-        //********************************************************************************************
-        private int GetDefaultServerPort(ServerType type)
-        {
-            switch (type)
-            {
-                case ServerType.FTP:
-                    return 21;
-                case ServerType.RDP:
-                    return 3389;
-                case ServerType.VNC:
-                    return 5900;
-                case ServerType.SSH:
-                    return 22;
-                default:
-                    return 0;
-            }
-        }
-
+  
         //********************************************************************************************
         private void copyAsFTP_Click(object sender, EventArgs e)
         {
@@ -638,6 +631,49 @@ namespace XwRemote
             treeServers.Focus();
         }
 
+        //********************************************************************************************
+        private void copyAsSFTP_Click(object sender, EventArgs e)
+        {
+            Server srv = (Server)treeServers.SelectedNode?.Tag;
+            if (srv != null)
+                MakeCopy(ServerType.SFTP, srv);
+        }
 
+        //********************************************************************************************
+        private void copyAsAWSS3_Click(object sender, EventArgs e)
+        {
+            Server srv = (Server)treeServers.SelectedNode?.Tag;
+            if (srv != null)
+                MakeCopy(ServerType.AWSS3, srv);
+        }
+
+        //********************************************************************************************
+        private void copyAsAzureFile_Click(object sender, EventArgs e)
+        {
+            Server srv = (Server)treeServers.SelectedNode?.Tag;
+            if (srv != null)
+                MakeCopy(ServerType.AZUREFILE, srv);
+        }
+
+        //********************************************************************************************
+        private void ExportServer_Click(object sender, EventArgs e)
+        {
+            Server srv = (Server)treeServers.SelectedNode?.Tag;
+            if (srv == null)
+            {
+                MessageBox.Show("Unable to read server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            InOut inout = new InOut(false, srv);
+            inout.ShowDialog();
+        }
+
+        //********************************************************************************************
+        private void ImportServer_Click(object sender, EventArgs e)
+        {
+            InOut inout = new InOut(true, null);
+            inout.ShowDialog();
+            LoadList();
+        }
     }
 }

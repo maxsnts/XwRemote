@@ -130,6 +130,12 @@
     <Compile Include="Misc\AskPassword.Designer.cs">
       <DependentUpon>AskPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Misc\InOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\InOut.Designer.cs">
+      <DependentUpon>InOut.cs</DependentUpon>
+    </Compile>
     <Compile Include="Misc\MyExt.cs" />
     <Compile Include="Misc\Scroller\Scroller.cs">
       <SubType>UserControl</SubType>
@@ -278,6 +284,9 @@
     <Compile Include="Version.cs" />
     <EmbeddedResource Include="Misc\AskPassword.resx">
       <DependentUpon>AskPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\InOut.resx">
+      <DependentUpon>InOut.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Misc\SendError.resx">
       <DependentUpon>SendError.cs</DependentUpon>
@@ -435,6 +444,7 @@
     <Content Include="Lib\Other\zlib.net.dll" />
     <Content Include="Lib\XwMaxLib\MySql.Data.dll" />
     <Content Include="Lib\XwMaxLib\System.Data.SQLite.dll" />
+    <Content Include="Resources\inout.png" />
     <Content Include="Resources\XwUpdater.exe" />
     <EmbeddedResource Include="Resources\whynot.txt" />
     <None Include="x64\SQLite.Interop.dll">

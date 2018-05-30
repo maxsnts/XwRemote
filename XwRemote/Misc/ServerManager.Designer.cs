@@ -39,12 +39,7 @@
             this.addGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.newFTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newRDPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newVNCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newSSHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newIEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportServer = new System.Windows.Forms.ToolStripMenuItem();
             this.ConnectBtn = new System.Windows.Forms.Button();
             this.NewFTP = new System.Windows.Forms.Button();
             this.NewRDP = new System.Windows.Forms.Button();
@@ -58,11 +53,15 @@
             this.addToFavoritesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.makeCopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyAsFTP = new System.Windows.Forms.ToolStripMenuItem();
             this.copyAsRDP = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyAsVNC = new System.Windows.Forms.ToolStripMenuItem();
             this.copyAsSSH = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsFTP = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsSFTP = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsAWSS3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsAzureFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsVNC = new System.Windows.Forms.ToolStripMenuItem();
             this.copyAsIE = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportServer = new System.Windows.Forms.ToolStripMenuItem();
             this.newIE = new System.Windows.Forms.Button();
             this.dialogHeader1 = new XwMaxLib.UI.DialogHeader();
             this.newSQL = new System.Windows.Forms.Button();
@@ -86,10 +85,10 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.treeServers);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(358, 424);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(404, 545);
             this.toolStripContainer1.Location = new System.Drawing.Point(12, 56);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(358, 449);
+            this.toolStripContainer1.Size = new System.Drawing.Size(404, 570);
             this.toolStripContainer1.TabIndex = 0;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -108,7 +107,7 @@
             this.treeServers.Location = new System.Drawing.Point(0, 0);
             this.treeServers.Name = "treeServers";
             this.treeServers.ShowNodeToolTips = true;
-            this.treeServers.Size = new System.Drawing.Size(358, 424);
+            this.treeServers.Size = new System.Drawing.Size(404, 545);
             this.treeServers.TabIndex = 0;
             this.treeServers.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeServers_AfterLabelEdit);
             this.treeServers.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeServers_AfterCollapse);
@@ -196,14 +195,9 @@
             this.addGroupToolStripMenuItem,
             this.renameGroupToolStripMenuItem,
             this.deleteGroupToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.newFTPToolStripMenuItem,
-            this.newRDPToolStripMenuItem,
-            this.newVNCToolStripMenuItem,
-            this.newSSHToolStripMenuItem,
-            this.newIEToolStripMenuItem});
+            this.ImportServer});
             this.contextGroup.Name = "contextMenuStrip1";
-            this.contextGroup.Size = new System.Drawing.Size(173, 186);
+            this.contextGroup.Size = new System.Drawing.Size(173, 92);
             // 
             // addGroupToolStripMenuItem
             // 
@@ -230,57 +224,20 @@
             this.deleteGroupToolStripMenuItem.Text = "Delete Group";
             this.deleteGroupToolStripMenuItem.Click += new System.EventHandler(this.DeleteGroup_Click);
             // 
-            // toolStripSeparator2
+            // ImportServer
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
-            // 
-            // newFTPToolStripMenuItem
-            // 
-            this.newFTPToolStripMenuItem.Image = global::XwRemote.Properties.Resources.ftp;
-            this.newFTPToolStripMenuItem.Name = "newFTPToolStripMenuItem";
-            this.newFTPToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.newFTPToolStripMenuItem.Text = "New FTP";
-            this.newFTPToolStripMenuItem.Click += new System.EventHandler(this.NewFTP_Click);
-            // 
-            // newRDPToolStripMenuItem
-            // 
-            this.newRDPToolStripMenuItem.Image = global::XwRemote.Properties.Resources.rdp;
-            this.newRDPToolStripMenuItem.Name = "newRDPToolStripMenuItem";
-            this.newRDPToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.newRDPToolStripMenuItem.Text = "New RDP";
-            this.newRDPToolStripMenuItem.Click += new System.EventHandler(this.NewRDP_Click);
-            // 
-            // newVNCToolStripMenuItem
-            // 
-            this.newVNCToolStripMenuItem.Image = global::XwRemote.Properties.Resources.vnc;
-            this.newVNCToolStripMenuItem.Name = "newVNCToolStripMenuItem";
-            this.newVNCToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.newVNCToolStripMenuItem.Text = "New VNC";
-            this.newVNCToolStripMenuItem.Click += new System.EventHandler(this.NewVNC_Click);
-            // 
-            // newSSHToolStripMenuItem
-            // 
-            this.newSSHToolStripMenuItem.Image = global::XwRemote.Properties.Resources.ssh;
-            this.newSSHToolStripMenuItem.Name = "newSSHToolStripMenuItem";
-            this.newSSHToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.newSSHToolStripMenuItem.Text = "New SSH";
-            this.newSSHToolStripMenuItem.Click += new System.EventHandler(this.newSSH_Click);
-            // 
-            // newIEToolStripMenuItem
-            // 
-            this.newIEToolStripMenuItem.Image = global::XwRemote.Properties.Resources.IE;
-            this.newIEToolStripMenuItem.Name = "newIEToolStripMenuItem";
-            this.newIEToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.newIEToolStripMenuItem.Text = "New IE";
-            this.newIEToolStripMenuItem.Click += new System.EventHandler(this.newIE_Click);
+            this.ImportServer.Image = global::XwRemote.Properties.Resources.inout;
+            this.ImportServer.Name = "ImportServer";
+            this.ImportServer.Size = new System.Drawing.Size(172, 22);
+            this.ImportServer.Text = "Import Server";
+            this.ImportServer.Click += new System.EventHandler(this.ImportServer_Click);
             // 
             // ConnectBtn
             // 
             this.ConnectBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ConnectBtn.Image = global::XwRemote.Properties.Resources.connect;
             this.ConnectBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ConnectBtn.Location = new System.Drawing.Point(376, 448);
+            this.ConnectBtn.Location = new System.Drawing.Point(422, 569);
             this.ConnectBtn.Name = "ConnectBtn";
             this.ConnectBtn.Size = new System.Drawing.Size(141, 57);
             this.ConnectBtn.TabIndex = 0;
@@ -294,7 +251,7 @@
             this.NewFTP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NewFTP.Image = global::XwRemote.Properties.Resources.ftp;
             this.NewFTP.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NewFTP.Location = new System.Drawing.Point(376, 139);
+            this.NewFTP.Location = new System.Drawing.Point(422, 139);
             this.NewFTP.Name = "NewFTP";
             this.NewFTP.Size = new System.Drawing.Size(141, 23);
             this.NewFTP.TabIndex = 1;
@@ -308,7 +265,7 @@
             this.NewRDP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NewRDP.Image = global::XwRemote.Properties.Resources.rdp;
             this.NewRDP.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NewRDP.Location = new System.Drawing.Point(376, 81);
+            this.NewRDP.Location = new System.Drawing.Point(422, 81);
             this.NewRDP.Name = "NewRDP";
             this.NewRDP.Size = new System.Drawing.Size(141, 23);
             this.NewRDP.TabIndex = 3;
@@ -322,7 +279,7 @@
             this.NewVNC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NewVNC.Image = global::XwRemote.Properties.Resources.vnc;
             this.NewVNC.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NewVNC.Location = new System.Drawing.Point(376, 255);
+            this.NewVNC.Location = new System.Drawing.Point(422, 255);
             this.NewVNC.Name = "NewVNC";
             this.NewVNC.Size = new System.Drawing.Size(141, 23);
             this.NewVNC.TabIndex = 4;
@@ -336,7 +293,7 @@
             this.newSSH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newSSH.Image = global::XwRemote.Properties.Resources.ssh;
             this.newSSH.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.newSSH.Location = new System.Drawing.Point(376, 110);
+            this.newSSH.Location = new System.Drawing.Point(422, 110);
             this.newSSH.Name = "newSSH";
             this.newSSH.Size = new System.Drawing.Size(141, 23);
             this.newSSH.TabIndex = 5;
@@ -350,7 +307,7 @@
             this.EditServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.EditServer.Image = global::XwRemote.Properties.Resources.pencil;
             this.EditServer.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.EditServer.Location = new System.Drawing.Point(376, 419);
+            this.EditServer.Location = new System.Drawing.Point(422, 540);
             this.EditServer.Name = "EditServer";
             this.EditServer.Size = new System.Drawing.Size(141, 23);
             this.EditServer.TabIndex = 6;
@@ -364,7 +321,7 @@
             this.DeleteServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DeleteServer.Image = global::XwRemote.Properties.Resources.delete;
             this.DeleteServer.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.DeleteServer.Location = new System.Drawing.Point(376, 390);
+            this.DeleteServer.Location = new System.Drawing.Point(422, 511);
             this.DeleteServer.Name = "DeleteServer";
             this.DeleteServer.Size = new System.Drawing.Size(141, 23);
             this.DeleteServer.TabIndex = 7;
@@ -380,16 +337,17 @@
             this.deleteServerToolStripMenuItem,
             this.addToFavoritesToolStripMenuItem,
             this.toolStripSeparator3,
-            this.makeCopyToolStripMenuItem});
+            this.makeCopyToolStripMenuItem,
+            this.ExportServer});
             this.contextServer.Name = "contextServer";
-            this.contextServer.Size = new System.Drawing.Size(161, 98);
+            this.contextServer.Size = new System.Drawing.Size(181, 142);
             // 
             // editServerToolStripMenuItem
             // 
             this.editServerToolStripMenuItem.Image = global::XwRemote.Properties.Resources.pencil;
             this.editServerToolStripMenuItem.Name = "editServerToolStripMenuItem";
             this.editServerToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.editServerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.editServerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editServerToolStripMenuItem.Text = "Edit Server";
             this.editServerToolStripMenuItem.Click += new System.EventHandler(this.EditServer_Click);
             // 
@@ -397,7 +355,7 @@
             // 
             this.deleteServerToolStripMenuItem.Image = global::XwRemote.Properties.Resources.delete;
             this.deleteServerToolStripMenuItem.Name = "deleteServerToolStripMenuItem";
-            this.deleteServerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.deleteServerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteServerToolStripMenuItem.Text = "Delete Server";
             this.deleteServerToolStripMenuItem.Click += new System.EventHandler(this.DeleteServer_Click);
             // 
@@ -405,74 +363,109 @@
             // 
             this.addToFavoritesToolStripMenuItem.Image = global::XwRemote.Properties.Resources.favs;
             this.addToFavoritesToolStripMenuItem.Name = "addToFavoritesToolStripMenuItem";
-            this.addToFavoritesToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.addToFavoritesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addToFavoritesToolStripMenuItem.Text = "Add to Favorites";
             this.addToFavoritesToolStripMenuItem.Click += new System.EventHandler(this.addToFavoritesToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(157, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // makeCopyToolStripMenuItem
             // 
             this.makeCopyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyAsFTP,
             this.copyAsRDP,
-            this.copyAsVNC,
             this.copyAsSSH,
+            this.copyAsFTP,
+            this.copyAsSFTP,
+            this.copyAsAWSS3,
+            this.copyAsAzureFile,
+            this.copyAsVNC,
             this.copyAsIE});
             this.makeCopyToolStripMenuItem.Image = global::XwRemote.Properties.Resources.copy;
             this.makeCopyToolStripMenuItem.Name = "makeCopyToolStripMenuItem";
-            this.makeCopyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.makeCopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.makeCopyToolStripMenuItem.Text = "Make Copy as...";
-            // 
-            // copyAsFTP
-            // 
-            this.copyAsFTP.Image = global::XwRemote.Properties.Resources.ftp;
-            this.copyAsFTP.Name = "copyAsFTP";
-            this.copyAsFTP.Size = new System.Drawing.Size(98, 22);
-            this.copyAsFTP.Text = "FTP";
-            this.copyAsFTP.Click += new System.EventHandler(this.copyAsFTP_Click);
             // 
             // copyAsRDP
             // 
             this.copyAsRDP.Image = global::XwRemote.Properties.Resources.rdp;
             this.copyAsRDP.Name = "copyAsRDP";
-            this.copyAsRDP.Size = new System.Drawing.Size(98, 22);
+            this.copyAsRDP.Size = new System.Drawing.Size(125, 22);
             this.copyAsRDP.Text = "RDP";
             this.copyAsRDP.Click += new System.EventHandler(this.copyAsRDP_Click);
-            // 
-            // copyAsVNC
-            // 
-            this.copyAsVNC.Image = global::XwRemote.Properties.Resources.vnc;
-            this.copyAsVNC.Name = "copyAsVNC";
-            this.copyAsVNC.Size = new System.Drawing.Size(98, 22);
-            this.copyAsVNC.Text = "VNC";
-            this.copyAsVNC.Click += new System.EventHandler(this.copyAsVNC_Click);
             // 
             // copyAsSSH
             // 
             this.copyAsSSH.Image = global::XwRemote.Properties.Resources.ssh;
             this.copyAsSSH.Name = "copyAsSSH";
-            this.copyAsSSH.Size = new System.Drawing.Size(98, 22);
+            this.copyAsSSH.Size = new System.Drawing.Size(125, 22);
             this.copyAsSSH.Text = "SSH";
             this.copyAsSSH.Click += new System.EventHandler(this.copyAsSSH_Click);
+            // 
+            // copyAsFTP
+            // 
+            this.copyAsFTP.Image = global::XwRemote.Properties.Resources.ftp;
+            this.copyAsFTP.Name = "copyAsFTP";
+            this.copyAsFTP.Size = new System.Drawing.Size(125, 22);
+            this.copyAsFTP.Text = "FTP";
+            this.copyAsFTP.Click += new System.EventHandler(this.copyAsFTP_Click);
+            // 
+            // copyAsSFTP
+            // 
+            this.copyAsSFTP.Image = global::XwRemote.Properties.Resources.sftp;
+            this.copyAsSFTP.Name = "copyAsSFTP";
+            this.copyAsSFTP.Size = new System.Drawing.Size(125, 22);
+            this.copyAsSFTP.Text = "SFTP";
+            this.copyAsSFTP.Click += new System.EventHandler(this.copyAsSFTP_Click);
+            // 
+            // copyAsAWSS3
+            // 
+            this.copyAsAWSS3.Image = global::XwRemote.Properties.Resources.s3;
+            this.copyAsAWSS3.Name = "copyAsAWSS3";
+            this.copyAsAWSS3.Size = new System.Drawing.Size(125, 22);
+            this.copyAsAWSS3.Text = "AWS S3";
+            this.copyAsAWSS3.Click += new System.EventHandler(this.copyAsAWSS3_Click);
+            // 
+            // copyAsAzureFile
+            // 
+            this.copyAsAzureFile.Image = global::XwRemote.Properties.Resources.azure;
+            this.copyAsAzureFile.Name = "copyAsAzureFile";
+            this.copyAsAzureFile.Size = new System.Drawing.Size(125, 22);
+            this.copyAsAzureFile.Text = "Azure File";
+            this.copyAsAzureFile.Click += new System.EventHandler(this.copyAsAzureFile_Click);
+            // 
+            // copyAsVNC
+            // 
+            this.copyAsVNC.Image = global::XwRemote.Properties.Resources.vnc;
+            this.copyAsVNC.Name = "copyAsVNC";
+            this.copyAsVNC.Size = new System.Drawing.Size(125, 22);
+            this.copyAsVNC.Text = "VNC";
+            this.copyAsVNC.Click += new System.EventHandler(this.copyAsVNC_Click);
             // 
             // copyAsIE
             // 
             this.copyAsIE.Image = global::XwRemote.Properties.Resources.IE;
             this.copyAsIE.Name = "copyAsIE";
-            this.copyAsIE.Size = new System.Drawing.Size(98, 22);
+            this.copyAsIE.Size = new System.Drawing.Size(125, 22);
             this.copyAsIE.Text = "IE";
             this.copyAsIE.Click += new System.EventHandler(this.copyAsIE_Click);
+            // 
+            // ExportServer
+            // 
+            this.ExportServer.Image = global::XwRemote.Properties.Resources.inout;
+            this.ExportServer.Name = "ExportServer";
+            this.ExportServer.Size = new System.Drawing.Size(180, 22);
+            this.ExportServer.Text = "Export Server";
+            this.ExportServer.Click += new System.EventHandler(this.ExportServer_Click);
             // 
             // newIE
             // 
             this.newIE.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newIE.Image = global::XwRemote.Properties.Resources.IE;
             this.newIE.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.newIE.Location = new System.Drawing.Point(376, 284);
+            this.newIE.Location = new System.Drawing.Point(422, 284);
             this.newIE.Name = "newIE";
             this.newIE.Size = new System.Drawing.Size(141, 23);
             this.newIE.TabIndex = 5;
@@ -488,12 +481,12 @@
             this.dialogHeader1.Gradient2 = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(222)))), ((int)(((byte)(255)))));
             this.dialogHeader1.Gradient3 = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(209)))), ((int)(((byte)(255)))));
             this.dialogHeader1.Gradient4 = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
-            this.dialogHeader1.HeaderDescription = "This is where is manage you server connections";
+            this.dialogHeader1.HeaderDescription = "This is where you manage your server connections";
             this.dialogHeader1.HeaderImage = global::XwRemote.Properties.Resources.xwremote1;
             this.dialogHeader1.HeaderTitle = "Connections";
             this.dialogHeader1.Location = new System.Drawing.Point(0, 0);
             this.dialogHeader1.Name = "dialogHeader1";
-            this.dialogHeader1.Size = new System.Drawing.Size(526, 50);
+            this.dialogHeader1.Size = new System.Drawing.Size(572, 50);
             this.dialogHeader1.TabIndex = 8;
             // 
             // newSQL
@@ -501,7 +494,7 @@
             this.newSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newSQL.Image = global::XwRemote.Properties.Resources.database;
             this.newSQL.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.newSQL.Location = new System.Drawing.Point(376, 313);
+            this.newSQL.Location = new System.Drawing.Point(422, 313);
             this.newSQL.Name = "newSQL";
             this.newSQL.Size = new System.Drawing.Size(141, 23);
             this.newSQL.TabIndex = 9;
@@ -515,7 +508,7 @@
             this.NewSFTP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NewSFTP.Image = global::XwRemote.Properties.Resources.sftp;
             this.NewSFTP.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NewSFTP.Location = new System.Drawing.Point(376, 168);
+            this.NewSFTP.Location = new System.Drawing.Point(422, 168);
             this.NewSFTP.Name = "NewSFTP";
             this.NewSFTP.Size = new System.Drawing.Size(141, 23);
             this.NewSFTP.TabIndex = 10;
@@ -529,7 +522,7 @@
             this.NewS3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NewS3.Image = global::XwRemote.Properties.Resources.s3;
             this.NewS3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NewS3.Location = new System.Drawing.Point(376, 197);
+            this.NewS3.Location = new System.Drawing.Point(422, 197);
             this.NewS3.Name = "NewS3";
             this.NewS3.Size = new System.Drawing.Size(141, 23);
             this.NewS3.TabIndex = 11;
@@ -543,7 +536,7 @@
             this.NewAzureFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NewAzureFile.Image = global::XwRemote.Properties.Resources.azure;
             this.NewAzureFile.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NewAzureFile.Location = new System.Drawing.Point(376, 226);
+            this.NewAzureFile.Location = new System.Drawing.Point(422, 226);
             this.NewAzureFile.Name = "NewAzureFile";
             this.NewAzureFile.Size = new System.Drawing.Size(141, 23);
             this.NewAzureFile.TabIndex = 12;
@@ -557,7 +550,7 @@
             this.AcceptButton = this.ConnectBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 515);
+            this.ClientSize = new System.Drawing.Size(572, 636);
             this.Controls.Add(this.NewAzureFile);
             this.Controls.Add(this.NewS3);
             this.Controls.Add(this.NewSFTP);
@@ -618,16 +611,10 @@
         private System.Windows.Forms.ContextMenuStrip contextServer;
         private System.Windows.Forms.ToolStripMenuItem deleteServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editServerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem newFTPToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newRDPToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newVNCToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newSSHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addToFavoritesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem makeCopyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.Button newIE;
-        private System.Windows.Forms.ToolStripMenuItem newIEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyAsFTP;
         private System.Windows.Forms.ToolStripMenuItem copyAsRDP;
         private System.Windows.Forms.ToolStripMenuItem copyAsVNC;
@@ -637,5 +624,10 @@
         private System.Windows.Forms.Button NewSFTP;
         private System.Windows.Forms.Button NewS3;
         private System.Windows.Forms.Button NewAzureFile;
+        private System.Windows.Forms.ToolStripMenuItem copyAsSFTP;
+        private System.Windows.Forms.ToolStripMenuItem copyAsAWSS3;
+        private System.Windows.Forms.ToolStripMenuItem copyAsAzureFile;
+        private System.Windows.Forms.ToolStripMenuItem ImportServer;
+        private System.Windows.Forms.ToolStripMenuItem ExportServer;
     }
 }

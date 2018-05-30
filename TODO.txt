@@ -1,6 +1,4 @@
 **************** GENERAL**************
-- Credits
-- Copy Servers
 - New Icons
 - High DPI
 
@@ -26,4 +24,3 @@
 
 **************** SQL *****************
 - Start!!!!
-
