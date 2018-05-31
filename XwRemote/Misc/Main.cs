@@ -67,7 +67,9 @@ namespace XwRemote
             int W = config.GetValue("MainFormLocationW").ToIntOrDefault(700);
             int H = config.GetValue("MainFormLocationH").ToIntOrDefault(600);
             Rectangle position = new Rectangle(X, Y, W, H);
-            if (SystemInformation.VirtualScreen.Contains(position))
+            Rectangle screen = SystemInformation.VirtualScreen;
+            screen.Inflate(20, 20);
+            if (screen.Contains(position))
             {
                 Location = position.Location;
                 Size = position.Size;

@@ -29,7 +29,7 @@ namespace XwRemote.Settings
                 Environment.Exit(1);
             }
 
-            if (File.Exists("XwRemote.dat"))
+            if (File.Exists("XwRemote.dat") && !File.Exists("#XwRemoteServerDatabase#"))
             {
                 File.Move("XwRemote.dat", "#XwRemoteServerDatabase#");
             }
@@ -44,7 +44,7 @@ namespace XwRemote.Settings
             try
             {
                 using (FileStream fs = File.Create(
-                    Path.Combine(dirPath, "test.txt"),1,FileOptions.DeleteOnClose))
+                    Path.Combine(dirPath, Path.GetTempFileName()),1,FileOptions.DeleteOnClose))
                 { }
                 return true;
             }
@@ -83,7 +83,7 @@ namespace XwRemote.Settings
         }
 
         //**************************************************************************************************
-        //This could be condensed in fewer command, but would breake compatibility with previous versions
+        //This could be condensed in fewer commands, but would breake compatibility with previous versions
         private void UpgradeConfigDB()
         {
             //Get password ?!?
@@ -256,6 +256,12 @@ namespace XwRemote.Settings
                     sql.ExecuteTX("ALTER TABLE Servers ADD COLUMN Encryption BOOLEAN;");
                     sql.ExecuteTX("UPDATE Servers SET Encryption=0");
                 }
+
+                if (!sql.ColumnExists("Servers", "SshKey"))
+                {
+                    sql.ExecuteTX("ALTER TABLE Servers ADD COLUMN SshKey TEXT;");
+                    sql.ExecuteTX("UPDATE Servers SET SshKey=''");
+                }
             }
         }
 
@@ -316,6 +322,7 @@ namespace XwRemote.Settings
                     ,Notes
                     ,SshTerminal
                     ,Encryption
+                    ,SshKey
                     FROM Servers
                     ORDER BY name
                     COLLATE NOCASE");
@@ -353,6 +360,7 @@ namespace XwRemote.Settings
                     server.Notes = sql.Value("Notes").ToString();
                     server.SshTerminal = sql.Value("SshTerminal").ToInt32();
                     server.Encryption = sql.Value("Encryption").ToBoolean();
+                    server.SshKey = sql.Value("SshKey").ToString();
                     Main.servers.Add(server);
                 }
             }
@@ -422,6 +430,7 @@ namespace XwRemote.Settings
                 sql.AddParameter("Notes", server.Notes);
                 sql.AddParameter("SshTerminal", server.SshTerminal);
                 sql.AddParameter("Encryption", server.Encryption);
+                sql.AddParameter("SshKey", server.SshKey);
 
                 if (server.ID == 0)
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using XwMaxLib.Extensions;
 using XwMaxLib.Extentions;
@@ -33,6 +34,7 @@ namespace XwRemote.Settings
             checkSSH1.Checked = server.SSH1;
             tabColorBox.SelectedColor = Color.FromArgb(server.TabColor);
             NotesBox.Text = server.Notes;
+            SshKeyBox.Text = server.SshKey;
 
             if (server.SshTerminal == 2)
                 radioPoderosa.Checked = true;
@@ -74,6 +76,7 @@ namespace XwRemote.Settings
             server.Port = PortBox.Text.ToIntOrDefault(22);
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
             server.Notes = NotesBox.Text;
+            server.SshKey = SshKeyBox.Text;
 
             if (radioPoderosa.Checked)
                 server.SshTerminal = 2;
@@ -110,6 +113,16 @@ namespace XwRemote.Settings
         {
             if (e.KeyCode == Keys.F12)
                 PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
+        }
+
+        //**************************************************************************************
+        private void buttonOpenSshKey_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                SshKeyBox.Text = File.ReadAllText(open.FileName);
+            }
         }
     }
 }

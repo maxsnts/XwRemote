@@ -53,6 +53,9 @@
             this.radioPutty = new System.Windows.Forms.RadioButton();
             this.radioPoderosa = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.buttonOpenSshKey = new System.Windows.Forms.Button();
+            this.SshKeyBox = new System.Windows.Forms.TextBox();
             this.dividerPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -177,7 +180,7 @@
             this.dividerPanel1.Controls.Add(this.btnCancel);
             this.dividerPanel1.Controls.Add(this.btnOK);
             this.dividerPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dividerPanel1.Location = new System.Drawing.Point(0, 375);
+            this.dividerPanel1.Location = new System.Drawing.Point(0, 427);
             this.dividerPanel1.Name = "dividerPanel1";
             this.dividerPanel1.Size = new System.Drawing.Size(391, 45);
             this.dividerPanel1.TabIndex = 13;
@@ -187,7 +190,7 @@
             this.DefaultPort.AutoSize = true;
             this.DefaultPort.Checked = true;
             this.DefaultPort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.DefaultPort.Location = new System.Drawing.Point(65, 164);
+            this.DefaultPort.Location = new System.Drawing.Point(65, 163);
             this.DefaultPort.Name = "DefaultPort";
             this.DefaultPort.Size = new System.Drawing.Size(60, 17);
             this.DefaultPort.TabIndex = 4;
@@ -198,7 +201,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 165);
+            this.label8.Location = new System.Drawing.Point(7, 164);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(26, 13);
             this.label8.TabIndex = 12;
@@ -207,7 +210,7 @@
             // PortBox
             // 
             this.PortBox.Enabled = false;
-            this.PortBox.Location = new System.Drawing.Point(131, 162);
+            this.PortBox.Location = new System.Drawing.Point(131, 161);
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(251, 20);
             this.PortBox.TabIndex = 5;
@@ -215,7 +218,7 @@
             // checkSSH1
             // 
             this.checkSSH1.AutoSize = true;
-            this.checkSSH1.Location = new System.Drawing.Point(65, 188);
+            this.checkSSH1.Location = new System.Drawing.Point(65, 187);
             this.checkSSH1.Name = "checkSSH1";
             this.checkSSH1.Size = new System.Drawing.Size(119, 17);
             this.checkSSH1.TabIndex = 6;
@@ -226,7 +229,7 @@
             // 
             this.tabColorBox.Extended = true;
             this.tabColorBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabColorBox.Location = new System.Drawing.Point(65, 237);
+            this.tabColorBox.Location = new System.Drawing.Point(65, 398);
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
@@ -235,7 +238,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 242);
+            this.label1.Location = new System.Drawing.Point(7, 403);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 24;
@@ -243,8 +246,9 @@
             // 
             // label9
             // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 265);
+            this.label9.Location = new System.Drawing.Point(8, 332);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 27;
@@ -253,16 +257,17 @@
             // NotesBox
             // 
             this.NotesBox.AcceptsReturn = true;
-            this.NotesBox.Location = new System.Drawing.Point(65, 266);
+            this.NotesBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.NotesBox.Location = new System.Drawing.Point(65, 332);
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
-            this.NotesBox.Size = new System.Drawing.Size(317, 77);
+            this.NotesBox.Size = new System.Drawing.Size(317, 62);
             this.NotesBox.TabIndex = 26;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 212);
+            this.label6.Location = new System.Drawing.Point(8, 211);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(47, 13);
             this.label6.TabIndex = 28;
@@ -294,10 +299,41 @@
             // 
             this.panel1.Controls.Add(this.radioPutty);
             this.panel1.Controls.Add(this.radioPoderosa);
-            this.panel1.Location = new System.Drawing.Point(62, 209);
+            this.panel1.Location = new System.Drawing.Point(62, 208);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(173, 27);
             this.panel1.TabIndex = 31;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 237);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(43, 13);
+            this.label7.TabIndex = 33;
+            this.label7.Text = "SshKey";
+            // 
+            // buttonOpenSshKey
+            // 
+            this.buttonOpenSshKey.Location = new System.Drawing.Point(16, 266);
+            this.buttonOpenSshKey.Name = "buttonOpenSshKey";
+            this.buttonOpenSshKey.Size = new System.Drawing.Size(26, 23);
+            this.buttonOpenSshKey.TabIndex = 34;
+            this.buttonOpenSshKey.Text = "...";
+            this.buttonOpenSshKey.UseVisualStyleBackColor = true;
+            this.buttonOpenSshKey.Click += new System.EventHandler(this.buttonOpenSshKey_Click);
+            // 
+            // SshKeyBox
+            // 
+            this.SshKeyBox.AcceptsReturn = true;
+            this.SshKeyBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SshKeyBox.Location = new System.Drawing.Point(65, 237);
+            this.SshKeyBox.Multiline = true;
+            this.SshKeyBox.Name = "SshKeyBox";
+            this.SshKeyBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.SshKeyBox.Size = new System.Drawing.Size(317, 90);
+            this.SshKeyBox.TabIndex = 36;
+            this.SshKeyBox.WordWrap = false;
             // 
             // SSHSettings
             // 
@@ -305,7 +341,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(391, 420);
+            this.ClientSize = new System.Drawing.Size(391, 472);
+            this.Controls.Add(this.SshKeyBox);
+            this.Controls.Add(this.buttonOpenSshKey);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label9);
@@ -371,5 +410,8 @@
         private System.Windows.Forms.RadioButton radioPutty;
         private System.Windows.Forms.RadioButton radioPoderosa;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button buttonOpenSshKey;
+        private System.Windows.Forms.TextBox SshKeyBox;
     }
 }

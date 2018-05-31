@@ -8,6 +8,7 @@ using XwMaxLib.Data;
 using XwRemote.Properties;
 using XwRemote.Servers.IO;
 using XwRemote.Settings;
+using static XwRemote.Servers.IO.XwRemoteIO;
 
 namespace XwRemote.Servers
 {
@@ -76,30 +77,32 @@ namespace XwRemote.Servers
 
             Update();
 
+            XwRemoteIOResult result = null;
             switch (server.Type)
             {
                 case ServerType.FTP:
-                    await remoteIO.ConnectToFTP(
-                        server.Host,
-                        server.Port,
-                        server.Username,
-                        server.Password);
-                        break;
-                case ServerType.SFTP:
-                    await remoteIO.ConnectToSFTP(
+                result = await remoteIO.ConnectToFTP(
                         server.Host,
                         server.Port,
                         server.Username,
                         server.Password);
                     break;
+                case ServerType.SFTP:
+                result = await remoteIO.ConnectToSFTP(
+                        server.Host,
+                        server.Port,
+                        server.Username,
+                        server.Password,
+                        server.SshKey);
+                    break;
                 case ServerType.AWSS3:
-                    await remoteIO.ConnectToAWSS3(
+                result = await remoteIO.ConnectToAWSS3(
                         server.Host,
                         server.Username,
                         server.Password);
                     break;
                 case ServerType.AZUREFILE:
-                    await remoteIO.ConnectToAZUREFILE(
+                result = await remoteIO.ConnectToAZUREFILE(
                         server.Username,
                         server.Password);
                     break;
@@ -107,7 +110,15 @@ namespace XwRemote.Servers
                     throw new Exception("Invalid engine");
             }
 
-            await RemoteList.Load();
+            if (result.Success)
+            {
+                await RemoteList.Load();
+            }
+            else
+            {
+                loadingCircle1.Visible = false;
+                SetStatusText(result.Message);
+            }
         }
       
         //********************************************************************************************

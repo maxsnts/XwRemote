@@ -30,7 +30,7 @@ namespace XwRemote.Settings
             if (Int32.TryParse(Main.config.GetValue("DEFAULT_SSH_FONT_SIZE"), out size))
                 sshFontSize.Value = size;
             else
-                sshFontSize.Value = 9;
+                sshFontSize.Value = 10;
 
             radioFixed_CheckedChanged(null, null);
         }

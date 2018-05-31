@@ -15,6 +15,7 @@ namespace XwRemote.Servers
     {
         private ApplicationPanel puttyPanel;  
         private Server server = null;
+        private string ShhKeyFile = "";
         Poderosa.Terminal.TerminalControl terminal = null;
 
         //********************************************************************************************
@@ -241,7 +242,15 @@ namespace XwRemote.Servers
                 key.SetValue("GSSLibs", "gssapi32,sspi,custom", RegistryValueKind.String);
                 key.SetValue("GSSCustom", "", RegistryValueKind.String);
                 key.SetValue("LogHost", "", RegistryValueKind.String);
-                key.SetValue("PublicKeyFile", "", RegistryValueKind.String);
+
+                if (server.SshKey == "")
+                    key.SetValue("PublicKeyFile", "", RegistryValueKind.String);
+                else
+                {
+                    ShhKeyFile = Path.GetTempFileName();
+                    File.WriteAllText(ShhKeyFile, server.SshKey);
+                    key.SetValue("PublicKeyFile", ShhKeyFile, RegistryValueKind.String);
+                }
                 key.SetValue("RemoteCommand", "", RegistryValueKind.String);
                 key.SetValue("Answerback", "PuTTY", RegistryValueKind.String);
                 key.SetValue("BellWaveFile", "", RegistryValueKind.String);
@@ -428,7 +437,8 @@ namespace XwRemote.Servers
         //********************************************************************************************
         private void DeletePuttySession()
         {
-            //return;
+            if (File.Exists(ShhKeyFile))
+                File.Delete(ShhKeyFile);
 
             string subkey = String.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);
             RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey);

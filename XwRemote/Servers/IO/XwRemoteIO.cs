@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon;
@@ -63,6 +64,7 @@ namespace XwRemote.Servers.IO
         private int Port = 0;
         private string Username = "";
         private string Password = "";
+        private string SshKey = "";
         private Engine engine;
         private FtpClient ftp = null;
         private SftpClient sftp = null;
@@ -138,7 +140,7 @@ namespace XwRemote.Servers.IO
         }
 
         //**********************************************************************************************
-        public async Task<XwRemoteIOResult> ConnectToSFTP(string Hostname, int Port, string Username, string Password)
+        public async Task<XwRemoteIOResult> ConnectToSFTP(string Hostname, int Port, string Username, string Password, string SshKey = "")
         {
             XwRemoteIOResult result = new XwRemoteIOResult();
             try
@@ -148,10 +150,17 @@ namespace XwRemote.Servers.IO
                 this.Port = Port;
                 this.Username = Username;
                 this.Password = Password;
-
+                this.SshKey = SshKey;
                 await Task.Run(() =>
                 {
-                    sftp = new SftpClient(Hostname, Port, Username, Password);
+                    //Use password
+                    if (SshKey == "")
+                        sftp = new SftpClient(Hostname, Port, Username, Password);
+                    else
+                    {
+                        PrivateKeyFile file = new PrivateKeyFile(new MemoryStream(Encoding.ASCII.GetBytes(SshKey)), Password);
+                        sftp = new SftpClient(Hostname, Port, Username,  file);
+                    }
                     sftp.Connect();
                 });
 
@@ -251,7 +260,7 @@ namespace XwRemote.Servers.IO
                     case Engine.FTP:
                         return await ConnectToFTP(Hostname, Port, Username, Password);
                     case Engine.SFTP:
-                        return await ConnectToSFTP(Hostname, Port, Username, Password);
+                        return await ConnectToSFTP(Hostname, Port, Username, Password, SshKey);
                     case Engine.S3:
                         return await ConnectToAWSS3(Hostname, Username, Password);
                     case Engine.AZUREFILE:

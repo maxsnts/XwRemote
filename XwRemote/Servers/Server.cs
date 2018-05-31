@@ -23,11 +23,11 @@ namespace XwRemote.Settings
     {
         public int ID = 0;
         public ServerType Type;
-        public string Name;
-        public string Host;
+        public string Name = "";
+        public string Host = "";
         public int Port;
-        public string Username;
-        public string Password;
+        public string Username = "";
+        public string Password = "";
         public bool SendKeys = true;
         public bool UseSound = false;
         public bool IsFavorite = false;
@@ -44,12 +44,13 @@ namespace XwRemote.Settings
         public bool Certificates = false;
         public bool Encryption = false;
         public bool UseHtmlLogin = false;
-        public string HtmlUserBox;
-        public string HtmlPassBox;
-        public string HtmlLoginBtn;
+        public string HtmlUserBox = "";
+        public string HtmlPassBox = "";
+        public string HtmlLoginBtn = "";
         public int TabColor = -4144960;
         public string Notes;
         public int SshTerminal = 1;
+        public string SshKey = "";
 
         //**********************************************************************************************
         public Server Copy(ServerType newType)
@@ -86,6 +87,7 @@ namespace XwRemote.Settings
             copy.TabColor = TabColor;
             copy.Notes = Notes;
             copy.SshTerminal = SshTerminal;
+            copy.SshKey = SshKey;
             copy.Port = GetDefaultServerPort(newType);
             return copy;
         }

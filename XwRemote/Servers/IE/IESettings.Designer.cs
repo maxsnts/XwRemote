@@ -167,7 +167,7 @@ namespace XwRemote.Servers
             this.dividerPanel1.Controls.Add(this.btnOK);
             this.dividerPanel1.Controls.Add(this.IsFavorite);
             this.dividerPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dividerPanel1.Location = new System.Drawing.Point(0, 388);
+            this.dividerPanel1.Location = new System.Drawing.Point(0, 373);
             this.dividerPanel1.Name = "dividerPanel1";
             this.dividerPanel1.Size = new System.Drawing.Size(395, 45);
             this.dividerPanel1.TabIndex = 16;
@@ -185,7 +185,7 @@ namespace XwRemote.Servers
             // checkUseHtml
             // 
             this.checkUseHtml.AutoSize = true;
-            this.checkUseHtml.Location = new System.Drawing.Point(70, 197);
+            this.checkUseHtml.Location = new System.Drawing.Point(70, 160);
             this.checkUseHtml.Name = "checkUseHtml";
             this.checkUseHtml.Size = new System.Drawing.Size(185, 17);
             this.checkUseHtml.TabIndex = 4;
@@ -195,7 +195,7 @@ namespace XwRemote.Servers
             // 
             // userIDbox
             // 
-            this.userIDbox.Location = new System.Drawing.Point(158, 221);
+            this.userIDbox.Location = new System.Drawing.Point(158, 184);
             this.userIDbox.Name = "userIDbox";
             this.userIDbox.Size = new System.Drawing.Size(229, 20);
             this.userIDbox.TabIndex = 5;
@@ -203,7 +203,7 @@ namespace XwRemote.Servers
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 224);
+            this.label1.Location = new System.Drawing.Point(13, 187);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(135, 13);
             this.label1.TabIndex = 13;
@@ -211,7 +211,7 @@ namespace XwRemote.Servers
             // 
             // passIDbox
             // 
-            this.passIDbox.Location = new System.Drawing.Point(158, 247);
+            this.passIDbox.Location = new System.Drawing.Point(158, 210);
             this.passIDbox.Name = "passIDbox";
             this.passIDbox.Size = new System.Drawing.Size(229, 20);
             this.passIDbox.TabIndex = 6;
@@ -219,7 +219,7 @@ namespace XwRemote.Servers
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 250);
+            this.label6.Location = new System.Drawing.Point(12, 213);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(133, 13);
             this.label6.TabIndex = 14;
@@ -227,7 +227,7 @@ namespace XwRemote.Servers
             // 
             // loginIDbox
             // 
-            this.loginIDbox.Location = new System.Drawing.Point(158, 273);
+            this.loginIDbox.Location = new System.Drawing.Point(158, 236);
             this.loginIDbox.Name = "loginIDbox";
             this.loginIDbox.Size = new System.Drawing.Size(229, 20);
             this.loginIDbox.TabIndex = 7;
@@ -235,7 +235,7 @@ namespace XwRemote.Servers
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 276);
+            this.label7.Location = new System.Drawing.Point(12, 239);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(126, 13);
             this.label7.TabIndex = 15;
@@ -245,7 +245,7 @@ namespace XwRemote.Servers
             // 
             this.tabColorBox.Extended = true;
             this.tabColorBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabColorBox.Location = new System.Drawing.Point(70, 161);
+            this.tabColorBox.Location = new System.Drawing.Point(70, 345);
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
@@ -254,7 +254,7 @@ namespace XwRemote.Servers
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 166);
+            this.label8.Location = new System.Drawing.Point(12, 350);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(52, 13);
             this.label8.TabIndex = 24;
@@ -263,7 +263,7 @@ namespace XwRemote.Servers
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 298);
+            this.label9.Location = new System.Drawing.Point(12, 261);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 27;
@@ -272,7 +272,7 @@ namespace XwRemote.Servers
             // NotesBox
             // 
             this.NotesBox.AcceptsReturn = true;
-            this.NotesBox.Location = new System.Drawing.Point(70, 299);
+            this.NotesBox.Location = new System.Drawing.Point(70, 262);
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 77);
@@ -284,7 +284,7 @@ namespace XwRemote.Servers
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(395, 433);
+            this.ClientSize = new System.Drawing.Size(395, 418);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.NotesBox);
             this.Controls.Add(this.tabColorBox);

@@ -444,6 +444,7 @@
     <Content Include="Lib\Other\zlib.net.dll" />
     <Content Include="Lib\XwMaxLib\MySql.Data.dll" />
     <Content Include="Lib\XwMaxLib\System.Data.SQLite.dll" />
+    <Content Include="putty\puttygen.exe" />
     <Content Include="Resources\inout.png" />
     <Content Include="Resources\XwUpdater.exe" />
     <EmbeddedResource Include="Resources\whynot.txt" />

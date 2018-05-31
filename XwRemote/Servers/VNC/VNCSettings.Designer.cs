@@ -73,7 +73,7 @@
             this.dividerPanel1.Controls.Add(this.butCancel);
             this.dividerPanel1.Controls.Add(this.butOK);
             this.dividerPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dividerPanel1.Location = new System.Drawing.Point(0, 300);
+            this.dividerPanel1.Location = new System.Drawing.Point(0, 294);
             this.dividerPanel1.Name = "dividerPanel1";
             this.dividerPanel1.Size = new System.Drawing.Size(392, 45);
             this.dividerPanel1.TabIndex = 11;
@@ -203,7 +203,7 @@
             // 
             this.tabColorBox.Extended = true;
             this.tabColorBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabColorBox.Location = new System.Drawing.Point(66, 183);
+            this.tabColorBox.Location = new System.Drawing.Point(66, 266);
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
@@ -212,7 +212,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 187);
+            this.label1.Location = new System.Drawing.Point(7, 270);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 24;
@@ -221,7 +221,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 211);
+            this.label9.Location = new System.Drawing.Point(8, 182);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 27;
@@ -230,7 +230,7 @@
             // NotesBox
             // 
             this.NotesBox.AcceptsReturn = true;
-            this.NotesBox.Location = new System.Drawing.Point(66, 212);
+            this.NotesBox.Location = new System.Drawing.Point(66, 183);
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 77);
@@ -242,7 +242,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
-            this.ClientSize = new System.Drawing.Size(392, 345);
+            this.ClientSize = new System.Drawing.Size(392, 339);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.NotesBox);
             this.Controls.Add(this.tabColorBox);

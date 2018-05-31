@@ -13,11 +13,10 @@
 - await on Connect
 
 **************** SSH *****************
-- Connect using Keys
-- Putty lternative
+- Putty alternative
 
 **************** SFTP ****************
-- Connect using Keys
+
 
 **************** IO ******************
 - Cancel Uploads and Downloads

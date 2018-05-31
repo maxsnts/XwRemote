@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using XwMaxLib.Objects;
 using XwMaxLib.Extensions;
 using XwMaxLib.Extentions;
+using System.IO;
 
 namespace XwRemote.Settings
 {
@@ -29,7 +30,8 @@ namespace XwRemote.Settings
             IsPassive.Checked   = server.Passive;
             NotesBox.Text = server.Notes;
             tabColorBox.SelectedColor = Color.FromArgb(server.TabColor);
-            
+            SshKeyBox.Text = server.SshKey;
+
             switch (server.Type)
             {
                 case ServerType.FTP:
@@ -66,6 +68,9 @@ namespace XwRemote.Settings
                             DefaultPort.Checked = false;
                             PortBox.Enabled = true;
                         }
+                        SshKeyBox.Visible = true;
+                        SshKeyLabel.Visible = true;
+                        buttonOpenSshKey.Visible = true;
                     }
                     break;
                 case ServerType.AWSS3:
@@ -96,7 +101,7 @@ namespace XwRemote.Settings
                         PortLabel.Visible = false;
                         HostLabel.Visible = false;
                         HostBox.Visible = false;
-                        UsernameLabel.Text = "Name";
+                        UsernameLabel.Text = "Storage";
                         PasswordLabel.Text = "Key";
                         PassBox.UseSystemPasswordChar = false;
                     }
@@ -122,6 +127,7 @@ namespace XwRemote.Settings
             server.Passive      = IsPassive.Checked;
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
             server.Notes = NotesBox.Text;
+            server.SshKey = SshKeyBox.Text;
             Main.config.SaveServer(server);
             Close();
         }
@@ -151,6 +157,16 @@ namespace XwRemote.Settings
         {
             if (e.KeyCode == Keys.F12)
                 PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
+        }
+
+        //**************************************************************************************
+        private void buttonOpenSshKey_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                SshKeyBox.Text = File.ReadAllText(open.FileName);
+            }
         }
     }
 }

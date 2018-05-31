@@ -51,6 +51,11 @@ namespace XwRemote
                 }
                 catch { /* dont care */ }
             }
+
+            var dir = new DirectoryInfo(Environment.CurrentDirectory);
+            foreach (var file in dir.EnumerateFiles("*.tmp"))
+                file.Delete();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main());
