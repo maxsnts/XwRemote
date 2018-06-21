@@ -2,11 +2,14 @@
 using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
+using System.Security;
 using System.Threading;
 using System.Windows.Forms;
 using KRBTabControlNS.CustomTab;
 using Microsoft.Win32;
+using Poderosa.TerminalControl;
 using SuperPutty;
+using XwMaxLib.Extensions;
 using XwRemote.Settings;
 
 namespace XwRemote.Servers
@@ -16,8 +19,8 @@ namespace XwRemote.Servers
         private ApplicationPanel puttyPanel;  
         private Server server = null;
         private string ShhKeyFile = "";
-        Poderosa.Terminal.TerminalControl terminal = null;
-
+        SshTerminalControl poderosaPanel = null;
+        
         //********************************************************************************************
         public SSHForm(Server srv)
         {
@@ -25,7 +28,6 @@ namespace XwRemote.Servers
             Dock = DockStyle.Fill;
             TopLevel = false;
             server = srv;
-            
         }
 
         //********************************************************************************************
@@ -74,7 +76,22 @@ namespace XwRemote.Servers
                     break;
                 case 2:
                     {
-                        terminal = new Poderosa.Terminal.TerminalControl();
+                        poderosaPanel = new SshTerminalControl();
+                        poderosaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+                        poderosaPanel.Visible = false;
+                        poderosaPanel.SshProtocol = (server.SSH1) ? SshProtocol.SSH1 : SshProtocol.SSH2;
+                        poderosaPanel.TerminalType = TerminalType.XTerm;
+                        poderosaPanel.Font = new Font("Consolas", Main.config.GetValue("DEFAULT_SSH_FONT_SIZE").ToIntOrDefault(10));
+                        poderosaPanel.BackColor = Color.Black;
+                        poderosaPanel.ForeColor = Color.LightGray;
+                        poderosaPanel.HostName = server.Host;
+                        poderosaPanel.Port = server.Port;
+                        //terminalControl.IdentityFile = loginDialog.IdentityFile;
+                        poderosaPanel.Username = server.Username;
+                        poderosaPanel.Password = new SecureString();
+                        foreach (char character in server.Password)
+                            poderosaPanel.Password.AppendChar(character);
+                        Controls.Add(poderosaPanel);
                     }
                     break;
                 default:
@@ -102,30 +119,75 @@ namespace XwRemote.Servers
             loadingCircle1.Visible = true;
             SetStatusText("Connecting...");
 
-            if (server.SshTerminal == 2)
+            switch (server.SshTerminal)
             {
-            }
-            else
-            {
-                if (File.Exists("putty\\putty.exe"))
-                {
-                    CreatePuttySession();
-                    puttyPanel.ApplicationParameters = String.Format(" -load \"{4}\" {0} -P {5} -l {1} -pw {2} {3}",
-                        server.Host,
-                        server.Username,
-                        server.Password,
-                        (server.SSH1) ? "-1" : "-2",
-                        String.Format("XwRemote{0}", server.ID),
-                        server.Port);
+                case 1:
+                    {
+                        if (File.Exists("putty\\putty.exe"))
+                        {
+                            CreatePuttySession();
+                            puttyPanel.ApplicationParameters = String.Format(" -load \"{4}\" {0} -P {5} -l {1} -pw {2} {3}",
+                                server.Host,
+                                server.Username,
+                                server.Password,
+                                (server.SSH1) ? "-1" : "-2",
+                                String.Format("XwRemote{0}", server.ID),
+                                server.Port);
 
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(ConnectTrd), this);
-                }
-                else
-                {
-                    loadingCircle1.Visible = false;
-                    SetStatusText("Putty not found");
-                }
+                            ThreadPool.QueueUserWorkItem(new WaitCallback(ConnectTrd), this);
+                        }
+                        else
+                        {
+                            loadingCircle1.Visible = false;
+                            SetStatusText("Putty not found");
+                        }
+                    }
+                    break;
+                case 2:
+                    {
+                        poderosaPanel.Connected += PoderosaPanel_Connected;
+                        poderosaPanel.Disconnected += PoderosaPanel_Disconnected;
+                        poderosaPanel.LoggedOff += PoderosaPanel_LoggedOff;
+                        poderosaPanel.AsyncConnect();
+                    }
+                    break;
             }
+        }
+
+        //********************************************************************************************
+        private void PoderosaPanel_LoggedOff(object sender, EventArgs e)
+        {
+            Invoke((Action)(() =>
+            {
+                SetStatusText("Logged Off");
+                loadingCircle1.Visible = false;
+                poderosaPanel.Visible = false;
+                statusLabel.Visible = true;
+            }));
+        }
+
+        //********************************************************************************************
+        private void PoderosaPanel_Disconnected(object sender, ErrorEventArgs e)
+        {
+            Invoke((Action)(() =>
+            {
+                SetStatusText(e.GetException().Message);
+                loadingCircle1.Visible = false;
+                poderosaPanel.Visible = false;
+                statusLabel.Visible = true;
+            }));
+        }
+
+        //********************************************************************************************
+        private void PoderosaPanel_Connected(object sender, EventArgs e)
+        {
+            Invoke((Action)(() =>
+            {
+                loadingCircle1.Visible = false;
+                statusLabel.Visible = false;
+                poderosaPanel.Visible = true;
+                poderosaPanel.Focus();
+            }));
         }
 
         //********************************************************************************************
@@ -172,25 +234,40 @@ namespace XwRemote.Servers
         //********************************************************************************************
         public bool OnTabClose()
         {
-            if (server.SshTerminal == 2)
+            switch (server.SshTerminal)
             {
-
+                case 1:
+                    {
+                        puttyPanel.Kill();
+                        DeletePuttySession();
+                    }
+                    break;
+                case 2:
+                    {
+                        if (poderosaPanel != null)
+                            poderosaPanel.Dispose();
+                    }
+                    break;
             }
-            else
-            {
-                puttyPanel.Kill();
-                DeletePuttySession();
-            }
-
             return true;
         }
 
         //********************************************************************************************
         public void OnTabFocus()
         {
-            //mainPtr.ServerTabs.TabGradient.ColorEnd = Color.FromArgb(server.TabColor);
-            if (server.SshTerminal == 1)
-                puttyPanel?.ReFocus();
+            switch (server.SshTerminal)
+            {
+                case 1:
+                    {
+                        puttyPanel?.ReFocus();
+                    }
+                    break;
+                case 2:
+                    {
+                        poderosaPanel.Focus();
+                    }
+                    break;
+            }
         }
 
         //********************************************************************************************
@@ -219,10 +296,7 @@ namespace XwRemote.Servers
                 using (Graphics g = this.CreateGraphics())
                 {
                     int currentDPI = (int)g.DpiX;
-                    if (Int32.TryParse(Main.config.GetValue("DEFAULT_SSH_FONT_SIZE"), out int size))
-                        key.SetValue("FontHeight", size, RegistryValueKind.DWord);
-                    else
-                        key.SetValue("FontHeight", 5, RegistryValueKind.DWord);
+                    key.SetValue("FontHeight", Main.config.GetValue("DEFAULT_SSH_FONT_SIZE").ToIntOrDefault(10), RegistryValueKind.DWord);
                 }
                 
                 key.SetValue("TerminalType", "xterm", RegistryValueKind.String);
@@ -437,15 +511,27 @@ namespace XwRemote.Servers
         //********************************************************************************************
         private void DeletePuttySession()
         {
-            if (File.Exists(ShhKeyFile))
-                File.Delete(ShhKeyFile);
-
-            string subkey = String.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey);
-            if (key != null)
+            switch (server.SshTerminal)
             {
-                key.Close();
-                Registry.CurrentUser.DeleteSubKeyTree(subkey);
+                case 1:
+                    {
+                        if (File.Exists(ShhKeyFile))
+                            File.Delete(ShhKeyFile);
+
+                        string subkey = String.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);
+                        RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey);
+                        if (key != null)
+                        {
+                            key.Close();
+                            Registry.CurrentUser.DeleteSubKeyTree(subkey);
+                        }
+                    }
+                    break;
+                case 2:
+                    {
+                        
+                    }
+                    break;
             }
         }
     }

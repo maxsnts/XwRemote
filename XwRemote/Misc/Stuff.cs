@@ -16,7 +16,7 @@ namespace XwRemote.Misc
     public partial class Stuff : Form
     {
         private string NewVersion = "";
-
+        
         //************************************************************************************
         public Stuff()
         {
@@ -105,7 +105,12 @@ namespace XwRemote.Misc
         {
             using (WebClient client = new WebClient())
             {
+#if DEBUG
+                string URL = $"https://github.com/maxsnts/{Main.UpdateRepo}/releases/tag/v3.0.1.0";
+#else
                 string URL = $"https://github.com/maxsnts/{Main.UpdateRepo}/releases/latest";
+#endif
+
                 try
                 {
                     string content = await client.DownloadStringTaskAsync(URL);
@@ -152,30 +157,24 @@ namespace XwRemote.Misc
         //************************************************************************************
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             buttonUpdate.Text = "Updating ...";
             buttonUpdate.Enabled = false;
-            Update();
-            Cursor.Current = Cursors.WaitCursor;
-
+            UpdateProgress.Minimum = 0;
+            UpdateProgress.Maximum = 100;
+            UpdateProgress.Step = 1;
+            UpdateProgress.Visible = true;
+            ReleaseNotes.Select(0, 0);
+            
             string path = Environment.CurrentDirectory;
             using (WebClient client = new WebClient())
             {
                 string URL = $"https://github.com/maxsnts/{Main.UpdateRepo}/releases/download/v{NewVersion}/{Main.UpdateRepo}.v{NewVersion}.zip";
                 try
                 {
-                    client.DownloadFile(URL, Path.Combine(path, $"{Main.UpdateRepo}.zip"));
-
-                    File.WriteAllBytes(Path.Combine(path, "XwUpdater.exe"), Resources.XwUpdater);
-               
-                    using (Process process = new Process())
-                    {
-                        process.StartInfo.FileName = Path.Combine(path, "XwUpdater.exe");
-                        process.StartInfo.WorkingDirectory = path;
-                        process.StartInfo.Arguments = $"\"{Main.UpdateRepo}.exe\" \"{Main.UpdateRepo}.zip\" \"{path}\"";
-                        process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                        process.Start();
-                        Environment.Exit(0);
-                    }
+                    client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                    client.DownloadProgressChanged += Client_DownloadProgressChanged;
+                    client.DownloadFileAsync(new Uri(URL), Path.Combine(path, $"{Main.UpdateRepo}.zip"));
                 }
                 catch
                 {
@@ -184,6 +183,43 @@ namespace XwRemote.Misc
                     linkLatest.Visible = true;
                     buttonUpdate.Enabled = false;
                 }
+            }
+        }
+
+        //************************************************************************************
+        private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            BeginInvoke((Action)(() =>
+            {
+                UpdateProgress.Value = e.ProgressPercentage;
+            }));
+        }
+
+        //************************************************************************************
+        private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            try
+            {
+                string path = Environment.CurrentDirectory;
+                File.WriteAllBytes(Path.Combine(path, "XwUpdater.exe"), Resources.XwUpdater);
+
+                using (Process process = new Process())
+                {
+                    process.StartInfo.FileName = Path.Combine(path, "XwUpdater.exe");
+                    process.StartInfo.WorkingDirectory = path;
+                    process.StartInfo.Arguments = $"\"{Main.UpdateRepo}.exe\" \"{Main.UpdateRepo}.zip\" \"{path}\"";
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    process.Start();
+                    Environment.Exit(0);
+                }
+            }
+            catch
+            {
+                labelVersion.Text = "Unable to check for updates, update manually";
+                string URL = $"https://github.com/maxsnts/{Main.UpdateRepo}/releases/download/v{NewVersion}/{Main.UpdateRepo}.v{NewVersion}.zip";
+                linkLatest.Text = URL;
+                linkLatest.Visible = true;
+                buttonUpdate.Enabled = false;
             }
         }
 

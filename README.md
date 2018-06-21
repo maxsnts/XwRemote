@@ -1,6 +1,6 @@
 # XwRemote
 
-How do i eliminate the need for many applications and the consequent open and close merry-go-round
+How do i eliminate the need for many applications and the consequent open and close merry-go-round?
 
 ##### For now it supports:
  - RDP 
@@ -15,6 +15,8 @@ How do i eliminate the need for many applications and the consequent open and cl
 
 The functionality is not the most complete but it will increase over time.
 There is always a balance between "complete" and "simple" so...
+
+I will try to include new features as time allows.
 
 Anyway, if there is anything that this could do better, let me know!
 

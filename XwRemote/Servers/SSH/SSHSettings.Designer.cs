@@ -290,9 +290,9 @@
             this.radioPoderosa.AutoSize = true;
             this.radioPoderosa.Location = new System.Drawing.Point(68, 3);
             this.radioPoderosa.Name = "radioPoderosa";
-            this.radioPoderosa.Size = new System.Drawing.Size(71, 17);
+            this.radioPoderosa.Size = new System.Drawing.Size(101, 17);
             this.radioPoderosa.TabIndex = 30;
-            this.radioPoderosa.Text = "Poderoda";
+            this.radioPoderosa.Text = "Poderosa (Beta)";
             this.radioPoderosa.UseVisualStyleBackColor = true;
             // 
             // panel1

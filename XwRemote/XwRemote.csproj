@@ -31,6 +31,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +39,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
@@ -69,30 +71,6 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\Other\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Poderosa.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Poderosa.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Poderosa.Plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Poderosa.Plugin.dll</HintPath>
-    </Reference>
-    <Reference Include="Poderosa.Protocols, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Poderosa.Protocols.dll</HintPath>
-    </Reference>
-    <Reference Include="Poderosa.TerminalEmulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Poderosa.TerminalEmulator.dll</HintPath>
-    </Reference>
-    <Reference Include="Poderosa.TerminalSession, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Poderosa.TerminalSession.dll</HintPath>
-    </Reference>
-    <Reference Include="Poderosa.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Poderosa.UI.dll</HintPath>
     </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -137,6 +115,310 @@
       <DependentUpon>InOut.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\MyExt.cs" />
+    <Compile Include="Misc\Poderosa\Core\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\AboutBoxEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\BasicCommands.cs" />
+    <Compile Include="Misc\Poderosa\Core\BasicMenus.cs" />
+    <Compile Include="Misc\Poderosa\Core\Caret.cs" />
+    <Compile Include="Misc\Poderosa\Core\CharacterDocument.cs" />
+    <Compile Include="Misc\Poderosa\Core\CharacterDocumentViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\CommandEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\CommandManager.cs" />
+    <Compile Include="Misc\Poderosa\Core\CommandPositionEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\CommandPositionT.cs" />
+    <Compile Include="Misc\Poderosa\Core\CoreServicesEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\Credits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\DocActivationCommands.cs" />
+    <Compile Include="Misc\Poderosa\Core\DocumentAndViewEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\ExtensionPointList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\ExtensionPointList.Designer.cs">
+      <DependentUpon>ExtensionPointList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\GenericsUtil.cs" />
+    <Compile Include="Misc\Poderosa\Core\GLine.cs" />
+    <Compile Include="Misc\Poderosa\Core\ListenerList.cs" />
+    <Compile Include="Misc\Poderosa\Core\MacroEngineEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\MainWindowMenu.cs" />
+    <Compile Include="Misc\Poderosa\Core\MainWindowMenuT.cs" />
+    <Compile Include="Misc\Poderosa\Core\MenuUtil.cs" />
+    <Compile Include="Misc\Poderosa\Core\PluginList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\PluginList.Designer.cs">
+      <DependentUpon>PluginList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\PoderosaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\PopupViewContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\Preferences.cs" />
+    <Compile Include="Misc\Poderosa\Core\PreferencesEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\PreferencesT.cs" />
+    <Compile Include="Misc\Poderosa\Core\RenderProfile.cs" />
+    <Compile Include="Misc\Poderosa\Core\RenderProfileSerialize.cs" />
+    <Compile Include="Misc\Poderosa\Core\Selection.cs" />
+    <Compile Include="Misc\Poderosa\Core\SelectionEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\Serialize.cs" />
+    <Compile Include="Misc\Poderosa\Core\SerializeEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\Session.cs" />
+    <Compile Include="Misc\Poderosa\Core\SessionEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\SplittableView.cs" />
+    <Compile Include="Misc\Poderosa\Core\StatusBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\TextDecoration.cs" />
+    <Compile Include="Misc\Poderosa\Core\TextSelection.cs" />
+    <Compile Include="Misc\Poderosa\Core\ToolBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Core\ToolBarEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\UIEventHandler.cs" />
+    <Compile Include="Misc\Poderosa\Core\Unicode.cs" />
+    <Compile Include="Misc\Poderosa\Core\WindowManager.cs" />
+    <Compile Include="Misc\Poderosa\Core\WindowManagerEx.cs" />
+    <Compile Include="Misc\Poderosa\Core\WindowPreference.cs" />
+    <Compile Include="Misc\Poderosa\Granados\AgentForward.cs" />
+    <Compile Include="Misc\Poderosa\Granados\AlgorithmSupport.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Base64.cs" />
+    <Compile Include="Misc\Poderosa\Granados\BigInteger.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Blowfish.cs" />
+    <Compile Include="Misc\Poderosa\Granados\ChannelCollection.cs" />
+    <Compile Include="Misc\Poderosa\Granados\CipherUtil.cs" />
+    <Compile Include="Misc\Poderosa\Granados\ConnectionInfo.cs" />
+    <Compile Include="Misc\Poderosa\Granados\ConnectionParameter.cs" />
+    <Compile Include="Misc\Poderosa\Granados\ConnectionRoot.cs" />
+    <Compile Include="Misc\Poderosa\Granados\CRC.cs" />
+    <Compile Include="Misc\Poderosa\Granados\DataFragment.cs" />
+    <Compile Include="Misc\Poderosa\Granados\DES.cs" />
+    <Compile Include="Misc\Poderosa\Granados\DSA.cs" />
+    <Compile Include="Misc\Poderosa\Granados\LibraryClient.cs" />
+    <Compile Include="Misc\Poderosa\Granados\PKIBase.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\FileTransfer\Cancellation.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\BERReader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\ByteArrayUtil.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\ISSH1PrivateKeyLoader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\ISSH2PrivateKeyLoader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\OpenSSHPrivateKeyLoader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\PrivateKeyFileFormat.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\PrivateKeyFileHeader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\PrivateKeyLoader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\PuTTYPrivateKeyLoader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\SSH1PrivateKeyLoader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\KeyFormat\SSHComPrivateKeyLoader.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SCP\SCPChannelStream.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SCP\SCPChannelStreamTest.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SCP\SCPClient.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SCP\SCPClientException.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SFTP\SFTPClient.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SFTP\SFTPClientException.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SFTP\SFTPFileAttributes.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SFTP\SFTPFileInfo.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SFTP\SFTPPacket.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SFTP\SFTPPacketType.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Poderosa\SFTP\SFTPStatusCodes.cs" />
+    <Compile Include="Misc\Poderosa\Granados\PrimeSieve.cs" />
+    <Compile Include="Misc\Poderosa\Granados\ReaderWriter.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Rijndael.cs" />
+    <Compile Include="Misc\Poderosa\Granados\RSA.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SCP.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Socket.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH1Connection.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH1Packet.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH1UserAuthKey.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH1Util.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH2Connection.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH2Packet.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH2UserAuthKey.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSH2Util.cs" />
+    <Compile Include="Misc\Poderosa\Granados\SSHUtil.cs" />
+    <Compile Include="Misc\Poderosa\Granados\StringResource.cs" />
+    <Compile Include="Misc\Poderosa\Granados\Tutorial.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\AdapterEx.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\AdpaterManager.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\CollectionUtil.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\ConfigAttr.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\ConfigColorAttr.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\EnumDescription.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\ExtensionPoint.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\Plugin.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\PluginEx.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\PluginT.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\PoderosaLog.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\PoderosaLogEx.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\PoderosaStartup.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\PoderosaWorld.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\PoderosaWorldEx.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\StringResource.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Plugin\StructuredText.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\StructuredTextT.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\StructuredTextXML.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\Tracer.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\Util.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\VersionInfo.cs" />
+    <Compile Include="Misc\Poderosa\Plugin\Win32.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\CommunicationUtil.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\Connector.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\HostKeyCheckerEx.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\InterruptableConnector.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\InterruptableConnectorT.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\LocalShell.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\NetUtil.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\ProtocolComponent.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\ProtocolComponentEx.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\ProtocolOptions.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\ProtocolServiceT.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\ProtocolsEx.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\ProtocolsPlugin.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\SimpleStringEncrypt.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\socks.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\SSH.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\SSHSocket.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Protocols\strings_ja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>strings_ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Poderosa\Protocols\Telnet.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\TerminalConnection.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\TerminalConnectionEx.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\TerminalConnectionT.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\TerminalParameter.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\TerminalParameterEx.cs" />
+    <Compile Include="Misc\Poderosa\Protocols\TerminalParameterSerialize.cs" />
+    <Compile Include="Misc\Poderosa\TerminalControl\EmptyTracer.cs" />
+    <Compile Include="Misc\Poderosa\TerminalControl\InvisibleModePlugin.cs" />
+    <Compile Include="Misc\Poderosa\TerminalControl\Properties\Resources.Designer.cs" />
+    <Compile Include="Misc\Poderosa\TerminalControl\Properties\Settings.Designer.cs" />
+    <Compile Include="Misc\Poderosa\TerminalControl\SshProtocol.cs" />
+    <Compile Include="Misc\Poderosa\TerminalControl\SshTerminalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalControl\SshTerminalControl.Designer.cs">
+      <DependentUpon>SshTerminalControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalControl\TerminalType.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\CharDecoder.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\CommandResultEx.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\CommandResultPopup.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\CommandResultPopupSession.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\Encoding.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\GEnv.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\IntelliSense.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\IntelliSenseCommand.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\IntelliSenseEx.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\IntelliSenseItem.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\IntelliSenseWindow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalEmulator\KeepAlive.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\KeyFunction.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\Logger.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\LoggerEx.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\ModalTaskEx.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\OldTerminalParam.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\Options.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\PromptRecognizer.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\Properties\Resources.Designer.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\ShellScheme.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalBase.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalCommands.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalDocument.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalEmulatorEx.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalEmulatorPlugin.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalOutput.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalSettings.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalSettingsEx.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalSettingsSerialize.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalToolBar.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\TerminalUtil.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\Util.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\VT100.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\WarningWithDisableOption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalEmulator\XmlLogger.cs" />
+    <Compile Include="Misc\Poderosa\TerminalEmulator\XTerm.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\AutoShellExecutor.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\CopyPaste.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\CygwinLoginDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalSession\CygwinPlugin.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\LoginDialogBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalSession\PaneBridge.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\Properties\Resources.Designer.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\Reproduce.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\ShortcutFile.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\ShortcutFileCommands.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\SSHShortcutLoginDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalSession\StartCommands.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\TelnetSSHLoginDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\TerminalSession\TelnetSSHPlugin.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\TerminalSession.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\TerminalSessionEx.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\TerminalSessionOptions.cs" />
+    <Compile Include="Misc\Poderosa\TerminalSession\TerminalSessionPlugin.cs" />
+    <Compile Include="Misc\Poderosa\UI\ColorButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\UI\ColorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\UI\ColorUtil.cs" />
+    <Compile Include="Misc\Poderosa\UI\DrawUtil.cs" />
+    <Compile Include="Misc\Poderosa\UI\GButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\UI\GMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\UI\HotKey.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\UI\ListItem.cs" />
+    <Compile Include="Misc\Poderosa\UI\PaneDivision.cs" />
+    <Compile Include="Misc\Poderosa\UI\PaneSplitter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\UI\TabBar.cs" />
+    <Compile Include="Misc\Poderosa\UI\ThreeButtonMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\Poderosa\UI\Util.cs" />
+    <Compile Include="Misc\Poderosa\UI\Win32.cs" />
+    <Compile Include="Misc\Poderosa\UI\WinFormsUtil.cs" />
     <Compile Include="Misc\Scroller\Scroller.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -288,6 +570,60 @@
     <EmbeddedResource Include="Misc\InOut.resx">
       <DependentUpon>InOut.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\Core\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\Core\Credits.resx">
+      <DependentUpon>Credits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\Core\icons.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Core\PluginList.resx">
+      <DependentUpon>PluginList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\Core\strings.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Core\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Granados\strings.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Granados\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Plugin\strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\Plugin\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Protocols\strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Poderosa.Protocols.strings.resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\Protocols\strings_ja.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings_ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalControl\Properties\Resources.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\Properties\Resources.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\rulechars.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\strings.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\WarningWithDisableOption.resx">
+      <DependentUpon>WarningWithDisableOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\CygwinLoginDialog.resx">
+      <DependentUpon>CygwinLoginDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\LoginDialogBase.resx">
+      <DependentUpon>LoginDialogBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\Properties\Resources.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\SSHShortcutLoginDialog.resx">
+      <DependentUpon>SSHShortcutLoginDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\strings.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\TelnetSSHLoginDialog.resx">
+      <DependentUpon>TelnetSSHLoginDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\UI\ThreeButtonMessageBox.resx">
+      <DependentUpon>ThreeButtonMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Misc\SendError.resx">
       <DependentUpon>SendError.cs</DependentUpon>
     </EmbeddedResource>
@@ -352,6 +688,7 @@
       <DependentUpon>VNCSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Credits.rtf" />
+    <None Include="Misc\Poderosa\TerminalControl\Properties\Settings.settings" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -430,12 +767,6 @@
     <Content Include="Lib\Other\FluentFTP.xml" />
     <Content Include="Lib\Other\Newtonsoft.Json.dll" />
     <Content Include="Lib\Other\Newtonsoft.Json.xml" />
-    <Content Include="Lib\Other\Poderosa.Core.dll" />
-    <Content Include="Lib\Other\Poderosa.Plugin.dll" />
-    <Content Include="Lib\Other\Poderosa.Protocols.dll" />
-    <Content Include="Lib\Other\Poderosa.TerminalEmulator.dll" />
-    <Content Include="Lib\Other\Poderosa.TerminalSession.dll" />
-    <Content Include="Lib\Other\Poderosa.UI.dll" />
     <Content Include="Lib\Other\Renci.SshNet.dll" />
     <Content Include="Lib\Other\Renci.SshNet.xml" />
     <Content Include="Lib\Other\SharpRaven.dll" />
@@ -444,6 +775,26 @@
     <Content Include="Lib\Other\zlib.net.dll" />
     <Content Include="Lib\XwMaxLib\MySql.Data.dll" />
     <Content Include="Lib\XwMaxLib\System.Data.SQLite.dll" />
+    <Content Include="Misc\Poderosa\Core\stringresource.xml" />
+    <Content Include="Misc\Poderosa\Granados\stringresource.xml" />
+    <Content Include="Misc\Poderosa\Plugin\stringresource.xml" />
+    <EmbeddedResource Include="Misc\Poderosa\Protocols\stringresource.xml" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\Bell16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\CommentLog16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\Info16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\Intellisense16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\LineFeed16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\LocalEcho16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\Poderosa16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\Resources\SuspendLog16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalEmulator\stringresource.xml" />
+    <Content Include="Misc\Poderosa\TerminalSession\Resources\Cygwin16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalSession\Resources\NewConnection16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalSession\Resources\Open16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalSession\Resources\Save16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalSession\Resources\SFU16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalSession\Resources\Single16x16.png" />
+    <Content Include="Misc\Poderosa\TerminalSession\stringresource.xml" />
     <Content Include="putty\puttygen.exe" />
     <Content Include="Resources\inout.png" />
     <Content Include="Resources\XwUpdater.exe" />

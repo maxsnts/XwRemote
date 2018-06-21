@@ -62,6 +62,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.UpdateProgress = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).BeginInit();
             this.faTabStrip1.SuspendLayout();
             this.faTabAbout.SuspendLayout();
@@ -312,6 +313,7 @@
             // faTabUpdates
             // 
             this.faTabUpdates.CanClose = false;
+            this.faTabUpdates.Controls.Add(this.UpdateProgress);
             this.faTabUpdates.Controls.Add(this.linkReleases);
             this.faTabUpdates.Controls.Add(this.ReleaseNotes);
             this.faTabUpdates.Controls.Add(this.label9);
@@ -327,7 +329,7 @@
             // linkReleases
             // 
             this.linkReleases.AutoSize = true;
-            this.linkReleases.Location = new System.Drawing.Point(262, 89);
+            this.linkReleases.Location = new System.Drawing.Point(279, 103);
             this.linkReleases.Name = "linkReleases";
             this.linkReleases.Size = new System.Drawing.Size(240, 13);
             this.linkReleases.TabIndex = 21;
@@ -340,18 +342,18 @@
             this.ReleaseNotes.AcceptsReturn = true;
             this.ReleaseNotes.AcceptsTab = true;
             this.ReleaseNotes.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ReleaseNotes.Location = new System.Drawing.Point(11, 106);
+            this.ReleaseNotes.Location = new System.Drawing.Point(11, 122);
             this.ReleaseNotes.Multiline = true;
             this.ReleaseNotes.Name = "ReleaseNotes";
             this.ReleaseNotes.ReadOnly = true;
             this.ReleaseNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ReleaseNotes.Size = new System.Drawing.Size(535, 250);
+            this.ReleaseNotes.Size = new System.Drawing.Size(535, 234);
             this.ReleaseNotes.TabIndex = 20;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 90);
+            this.label9.Location = new System.Drawing.Point(25, 104);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(247, 13);
             this.label9.TabIndex = 19;
@@ -371,7 +373,7 @@
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(198, 55);
+            this.buttonUpdate.Location = new System.Drawing.Point(198, 50);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(165, 23);
             this.buttonUpdate.TabIndex = 17;
@@ -438,6 +440,14 @@
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "Make a contribution however small using paypal";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked_1);
+            // 
+            // UpdateProgress
+            // 
+            this.UpdateProgress.Location = new System.Drawing.Point(10, 77);
+            this.UpdateProgress.Name = "UpdateProgress";
+            this.UpdateProgress.Size = new System.Drawing.Size(535, 10);
+            this.UpdateProgress.TabIndex = 22;
+            this.UpdateProgress.Visible = false;
             // 
             // Stuff
             // 
@@ -506,5 +516,6 @@
         private System.Windows.Forms.TextBox ReleaseNotes;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.LinkLabel linkReleases;
+        private System.Windows.Forms.ProgressBar UpdateProgress;
     }
 }
