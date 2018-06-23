@@ -134,6 +134,7 @@ namespace XwRemote.Misc
                             notes = notes.Replace("</ul>", "");
                             notes = notes.Replace("<li>", "- ");
                             notes = notes.Replace("</li>", "\r\n\r\n");
+                            notes = notes.Replace("<br>", "\r\n");
                             ReleaseNotes.Text = notes;
                         }
                         catch { /* dont care */}

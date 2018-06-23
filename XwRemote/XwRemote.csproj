@@ -291,16 +291,6 @@
     <Compile Include="Misc\Poderosa\Protocols\socks.cs" />
     <Compile Include="Misc\Poderosa\Protocols\SSH.cs" />
     <Compile Include="Misc\Poderosa\Protocols\SSHSocket.cs" />
-    <Compile Include="Misc\Poderosa\Protocols\strings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>strings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Misc\Poderosa\Protocols\strings_ja.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>strings_ja.resx</DependentUpon>
-    </Compile>
     <Compile Include="Misc\Poderosa\Protocols\Telnet.cs" />
     <Compile Include="Misc\Poderosa\Protocols\TerminalConnection.cs" />
     <Compile Include="Misc\Poderosa\Protocols\TerminalConnectionEx.cs" />
@@ -576,33 +566,37 @@
     <EmbeddedResource Include="Misc\Poderosa\Core\Credits.resx">
       <DependentUpon>Credits.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Misc\Poderosa\Core\icons.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Core\icons.resx">
+      <LogicalName>Poderosa.Core.icons.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\Core\PluginList.resx">
       <DependentUpon>PluginList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Misc\Poderosa\Core\strings.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\Core\strings_ja.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\Granados\strings.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\Granados\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\Core\strings.resx">
+      <LogicalName>Poderosa.Core.strings.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\Granados\strings.resx">
+      <LogicalName>Poderosa.Granados.strings.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\Plugin\strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <LogicalName>Poderosa.Plugin.strings.resources</LogicalName>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Misc\Poderosa\Plugin\strings_ja.resx" />
     <EmbeddedResource Include="Misc\Poderosa\Protocols\strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>strings.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Poderosa.Protocols.strings.resources</CustomToolNamespace>
+      <LogicalName>Poderosa.Protocols.strings.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Misc\Poderosa\Protocols\strings_ja.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>strings_ja.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalControl\Properties\Resources.resx">
+          <LogicalName>Poderosa.TerminalControl.Properties.Resources.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Misc\Poderosa\TerminalControl\Properties\Resources.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\Properties\Resources.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\rulechars.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\strings.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\Properties\Resources.resx">
+      <LogicalName>Poderosa.TerminalEmulator.Properties.Resources.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\rulechars.resx">
+            <LogicalName>Poderosa.TerminalEmulator.rulechars.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\strings.resx">
+      <LogicalName>Poderosa.TerminalEmulator.strings.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\WarningWithDisableOption.resx">
       <DependentUpon>WarningWithDisableOption.cs</DependentUpon>
     </EmbeddedResource>
@@ -612,12 +606,15 @@
     <EmbeddedResource Include="Misc\Poderosa\TerminalSession\LoginDialogBase.resx">
       <DependentUpon>LoginDialogBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\Properties\Resources.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\Properties\Resources.resx">
+      <LogicalName>Poderosa.TerminalSession.Properties.Resources.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\TerminalSession\SSHShortcutLoginDialog.resx">
       <DependentUpon>SSHShortcutLoginDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\strings.resx" />
-    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\strings_ja.resx" />
+    <EmbeddedResource Include="Misc\Poderosa\TerminalSession\strings.resx">
+      <LogicalName>Poderosa.TerminalSession.strings.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\TerminalSession\TelnetSSHLoginDialog.resx">
       <DependentUpon>TelnetSSHLoginDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -778,7 +775,7 @@
     <Content Include="Misc\Poderosa\Core\stringresource.xml" />
     <Content Include="Misc\Poderosa\Granados\stringresource.xml" />
     <Content Include="Misc\Poderosa\Plugin\stringresource.xml" />
-    <EmbeddedResource Include="Misc\Poderosa\Protocols\stringresource.xml" />
+    <Content Include="Misc\Poderosa\Protocols\stringresource.xml" />
     <Content Include="Misc\Poderosa\TerminalEmulator\Resources\Bell16x16.png" />
     <Content Include="Misc\Poderosa\TerminalEmulator\Resources\CommentLog16x16.png" />
     <Content Include="Misc\Poderosa\TerminalEmulator\Resources\Info16x16.png" />

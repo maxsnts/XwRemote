@@ -290,9 +290,9 @@
             this.radioPoderosa.AutoSize = true;
             this.radioPoderosa.Location = new System.Drawing.Point(68, 3);
             this.radioPoderosa.Name = "radioPoderosa";
-            this.radioPoderosa.Size = new System.Drawing.Size(101, 17);
+            this.radioPoderosa.Size = new System.Drawing.Size(149, 17);
             this.radioPoderosa.TabIndex = 30;
-            this.radioPoderosa.Text = "Poderosa (Beta)";
+            this.radioPoderosa.Text = "Poderosa (Very Very Beta)";
             this.radioPoderosa.UseVisualStyleBackColor = true;
             // 
             // panel1
@@ -301,7 +301,7 @@
             this.panel1.Controls.Add(this.radioPoderosa);
             this.panel1.Location = new System.Drawing.Point(62, 208);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(173, 27);
+            this.panel1.Size = new System.Drawing.Size(320, 27);
             this.panel1.TabIndex = 31;
             // 
             // label7

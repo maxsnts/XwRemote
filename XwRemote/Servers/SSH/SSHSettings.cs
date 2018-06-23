@@ -20,10 +20,6 @@ namespace XwRemote.Settings
         //**************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
-#if !DEBUG
-            radioPoderosa.Visible = false;
-#endif
-
             server.Type = ServerType.SSH;
             NameBox.Text = server.Name;
             HostBox.Text = server.Host;
