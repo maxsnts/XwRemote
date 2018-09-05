@@ -42,8 +42,6 @@ namespace XwRemote
         //**********************************************************************************************
         private void LoadList()
         {
-            treeServers.BeginUpdate();
-            treeServers.SuspendLayout();
             tmpSelectedNode = treeServers.SelectedNode?.Name;
             treeServers.ContextMenuStrip = null;
             treeServers.Nodes.Clear();
@@ -67,8 +65,6 @@ namespace XwRemote
             SelectNode();
             treeServers.Focus();
             tmpSelectedNode = null;
-            treeServers.ResumeLayout();
-            treeServers.EndUpdate();
             Main.config.SetValue("ServerManagerSelectedTab", SelectedTab.ToString());
         }
 
@@ -155,6 +151,7 @@ namespace XwRemote
             {
                 treeServers.SelectedNode = found[0];
                 treeServers.SelectedNode.Parent?.Expand();
+                treeServers.SelectedNode?.EnsureVisible();
             }
         }
 

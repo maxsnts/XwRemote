@@ -59,6 +59,7 @@ namespace XwRemote.Servers
                 {
                     form.vnc.VncPort = form.server.Port;
                     form.vnc.GetPassword = form.VNCPassword;
+                    //form.vnc.Connect(form.server.Host);
                     form.vnc.Connect(form.server.Host, false, form.server.AutoScale);
                 }
                 catch (Exception ex)

@@ -873,7 +873,7 @@ namespace Poderosa.View {
                 case 3:
                     return Color.Yellow;
                 case 4:
-                    return Color.Blue;
+                    return Color.FromArgb(100, 100, 255); //Max change
                 case 5:
                     return Color.Magenta;
                 case 6:
