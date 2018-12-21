@@ -68,6 +68,7 @@
             this.NewSFTP = new System.Windows.Forms.Button();
             this.NewS3 = new System.Windows.Forms.Button();
             this.NewAzureFile = new System.Windows.Forms.Button();
+            this.textSearch = new System.Windows.Forms.TextBox();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -85,10 +86,10 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.treeServers);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(404, 545);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(404, 513);
             this.toolStripContainer1.Location = new System.Drawing.Point(12, 56);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(404, 570);
+            this.toolStripContainer1.Size = new System.Drawing.Size(404, 538);
             this.toolStripContainer1.TabIndex = 0;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -107,7 +108,7 @@
             this.treeServers.Location = new System.Drawing.Point(0, 0);
             this.treeServers.Name = "treeServers";
             this.treeServers.ShowNodeToolTips = true;
-            this.treeServers.Size = new System.Drawing.Size(404, 545);
+            this.treeServers.Size = new System.Drawing.Size(404, 513);
             this.treeServers.TabIndex = 0;
             this.treeServers.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeServers_AfterLabelEdit);
             this.treeServers.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeServers_AfterCollapse);
@@ -135,7 +136,7 @@
             this.tabStrip1.Location = new System.Drawing.Point(3, 0);
             this.tabStrip1.Name = "tabStrip1";
             this.tabStrip1.RenderStyle = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tabStrip1.SelectedTab = this.FilterGrouped;
+            this.tabStrip1.SelectedTab = this.FilterFavorites;
             this.tabStrip1.Size = new System.Drawing.Size(219, 25);
             this.tabStrip1.TabIndex = 0;
             this.tabStrip1.UseVisualStyles = false;
@@ -143,11 +144,10 @@
             // FilterGrouped
             // 
             this.FilterGrouped.AutoToolTip = false;
-            this.FilterGrouped.Checked = true;
             this.FilterGrouped.HotTextColor = System.Drawing.SystemColors.ControlText;
             this.FilterGrouped.Image = global::XwRemote.Properties.Resources.group;
             this.FilterGrouped.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FilterGrouped.IsSelected = true;
+            this.FilterGrouped.IsSelected = false;
             this.FilterGrouped.Margin = new System.Windows.Forms.Padding(0);
             this.FilterGrouped.Name = "FilterGrouped";
             this.FilterGrouped.Padding = new System.Windows.Forms.Padding(0);
@@ -176,10 +176,11 @@
             // FilterFavorites
             // 
             this.FilterFavorites.AutoToolTip = false;
+            this.FilterFavorites.Checked = true;
             this.FilterFavorites.HotTextColor = System.Drawing.SystemColors.ControlText;
             this.FilterFavorites.Image = global::XwRemote.Properties.Resources.favs;
             this.FilterFavorites.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FilterFavorites.IsSelected = false;
+            this.FilterFavorites.IsSelected = true;
             this.FilterFavorites.Margin = new System.Windows.Forms.Padding(0);
             this.FilterFavorites.Name = "FilterFavorites";
             this.FilterFavorites.Padding = new System.Windows.Forms.Padding(0);
@@ -340,14 +341,14 @@
             this.makeCopyToolStripMenuItem,
             this.ExportServer});
             this.contextServer.Name = "contextServer";
-            this.contextServer.Size = new System.Drawing.Size(181, 142);
+            this.contextServer.Size = new System.Drawing.Size(161, 120);
             // 
             // editServerToolStripMenuItem
             // 
             this.editServerToolStripMenuItem.Image = global::XwRemote.Properties.Resources.pencil;
             this.editServerToolStripMenuItem.Name = "editServerToolStripMenuItem";
             this.editServerToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.editServerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editServerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.editServerToolStripMenuItem.Text = "Edit Server";
             this.editServerToolStripMenuItem.Click += new System.EventHandler(this.EditServer_Click);
             // 
@@ -355,7 +356,7 @@
             // 
             this.deleteServerToolStripMenuItem.Image = global::XwRemote.Properties.Resources.delete;
             this.deleteServerToolStripMenuItem.Name = "deleteServerToolStripMenuItem";
-            this.deleteServerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteServerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.deleteServerToolStripMenuItem.Text = "Delete Server";
             this.deleteServerToolStripMenuItem.Click += new System.EventHandler(this.DeleteServer_Click);
             // 
@@ -363,14 +364,14 @@
             // 
             this.addToFavoritesToolStripMenuItem.Image = global::XwRemote.Properties.Resources.favs;
             this.addToFavoritesToolStripMenuItem.Name = "addToFavoritesToolStripMenuItem";
-            this.addToFavoritesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToFavoritesToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.addToFavoritesToolStripMenuItem.Text = "Add to Favorites";
             this.addToFavoritesToolStripMenuItem.Click += new System.EventHandler(this.addToFavoritesToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(157, 6);
             // 
             // makeCopyToolStripMenuItem
             // 
@@ -385,7 +386,7 @@
             this.copyAsIE});
             this.makeCopyToolStripMenuItem.Image = global::XwRemote.Properties.Resources.copy;
             this.makeCopyToolStripMenuItem.Name = "makeCopyToolStripMenuItem";
-            this.makeCopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.makeCopyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.makeCopyToolStripMenuItem.Text = "Make Copy as...";
             // 
             // copyAsRDP
@@ -456,7 +457,7 @@
             // 
             this.ExportServer.Image = global::XwRemote.Properties.Resources.inout;
             this.ExportServer.Name = "ExportServer";
-            this.ExportServer.Size = new System.Drawing.Size(180, 22);
+            this.ExportServer.Size = new System.Drawing.Size(160, 22);
             this.ExportServer.Text = "Export Server";
             this.ExportServer.Click += new System.EventHandler(this.ExportServer_Click);
             // 
@@ -545,12 +546,23 @@
             this.NewAzureFile.UseVisualStyleBackColor = true;
             this.NewAzureFile.Click += new System.EventHandler(this.NewAzureFile_Click);
             // 
+            // textSearch
+            // 
+            this.textSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textSearch.Location = new System.Drawing.Point(12, 604);
+            this.textSearch.Name = "textSearch";
+            this.textSearch.Size = new System.Drawing.Size(404, 20);
+            this.textSearch.TabIndex = 13;
+            this.textSearch.TextChanged += new System.EventHandler(this.textSearch_TextChanged);
+            // 
             // ServerManager
             // 
             this.AcceptButton = this.ConnectBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(572, 636);
+            this.Controls.Add(this.textSearch);
             this.Controls.Add(this.NewAzureFile);
             this.Controls.Add(this.NewS3);
             this.Controls.Add(this.NewSFTP);
@@ -585,6 +597,7 @@
             this.contextGroup.ResumeLayout(false);
             this.contextServer.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -629,5 +642,6 @@
         private System.Windows.Forms.ToolStripMenuItem copyAsAzureFile;
         private System.Windows.Forms.ToolStripMenuItem ImportServer;
         private System.Windows.Forms.ToolStripMenuItem ExportServer;
+        private System.Windows.Forms.TextBox textSearch;
     }
 }

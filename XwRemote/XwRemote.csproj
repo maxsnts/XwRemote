@@ -586,13 +586,13 @@
       <LogicalName>Poderosa.Protocols.strings.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\TerminalControl\Properties\Resources.resx">
-          <LogicalName>Poderosa.TerminalControl.Properties.Resources.resources</LogicalName>
+      <LogicalName>Poderosa.TerminalControl.Properties.Resources.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\Properties\Resources.resx">
       <LogicalName>Poderosa.TerminalEmulator.Properties.Resources.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\rulechars.resx">
-            <LogicalName>Poderosa.TerminalEmulator.rulechars.resources</LogicalName>
+      <LogicalName>Poderosa.TerminalEmulator.rulechars.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Misc\Poderosa\TerminalEmulator\strings.resx">
       <LogicalName>Poderosa.TerminalEmulator.strings.resources</LogicalName>
@@ -794,6 +794,7 @@
     <Content Include="Misc\Poderosa\TerminalSession\stringresource.xml" />
     <Content Include="putty\puttygen.exe" />
     <Content Include="Resources\inout.png" />
+    <None Include="Resources\magnifier.png" />
     <Content Include="Resources\XwUpdater.exe" />
     <EmbeddedResource Include="Resources\whynot.txt" />
     <None Include="x64\SQLite.Interop.dll">

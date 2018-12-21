@@ -201,6 +201,13 @@ namespace XwRemote.Misc
         {
             try
             {
+                //kill putty otherwise update may fail
+                foreach (var process in Process.GetProcessesByName("putty"))
+                {
+                    if (process.MainModule.FileName.Contains(Environment.CurrentDirectory))
+                        process.Kill();
+                }
+
                 string path = Environment.CurrentDirectory;
                 File.WriteAllBytes(Path.Combine(path, "XwUpdater.exe"), Resources.XwUpdater);
 

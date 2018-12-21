@@ -62,9 +62,12 @@ namespace XwRemote
                     break;
             }
 
-            SelectNode();
-            treeServers.Focus();
-            tmpSelectedNode = null;
+            if (!textSearch.Focused)
+            {
+                SelectNode();
+                treeServers.Focus();
+                tmpSelectedNode = null;
+            }
             Main.config.SetValue("ServerManagerSelectedTab", SelectedTab.ToString());
         }
 
@@ -80,6 +83,13 @@ namespace XwRemote
             //Load Grouped Servers
             foreach (Server server in Main.servers)
             {
+                if (textSearch.Text.Length > 0)
+                {
+                    string search = $"{server.Name} {server.Host} {server.Port} {server.Notes} {server.Username}";
+                    if (search.IndexOf(textSearch.Text, StringComparison.InvariantCultureIgnoreCase) == -1)
+                        continue;
+                }
+
                 Color color = (mainForm.IsServerOpen(server)) ? Color.Green : SystemColors.ControlText;
                 
                 string image = server.GetIcon();
@@ -117,6 +127,13 @@ namespace XwRemote
         {
             foreach (Server server in Main.servers)
             {
+                if (textSearch.Text.Length > 0)
+                {
+                    string search = $"{server.Name} {server.Host} {server.Port} {server.Notes} {server.Username}";
+                    if (search.IndexOf(textSearch.Text, StringComparison.InvariantCultureIgnoreCase) == -1)
+                        continue;
+                }
+
                 Color color = (mainForm.IsServerOpen(server)) ? Color.Green : SystemColors.ControlText;
 
                 TreeNode[] node = treeServers.Nodes.Find($"G{server.GroupID}", false);
@@ -670,6 +687,12 @@ namespace XwRemote
         {
             InOut inout = new InOut(true, null);
             inout.ShowDialog();
+            LoadList();
+        }
+
+        //********************************************************************************************
+        private void textSearch_TextChanged(object sender, EventArgs e)
+        {
             LoadList();
         }
     }
