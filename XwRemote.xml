@@ -90,8 +90,8 @@ It supports:
 		<Application_URLs>
 			<Application_Info_URL>https://github.com/maxsnts/XwRemote</Application_Info_URL>
 			<Application_Order_URL />
-			<Application_Screenshot_URL>https://github.com/maxsnts/XwRemote/blob/master/Images/ServerManager.png</Application_Screenshot_URL>
-			<Application_Icon_URL>https://github.com/maxsnts/XwRemote/blob/master/Images/Icon.png</Application_Icon_URL>
+			<Application_Screenshot_URL>https://raw.githubusercontent.com/maxsnts/XwRemote/master/Images/ServerManager.png</Application_Screenshot_URL>
+			<Application_Icon_URL>https://raw.githubusercontent.com/maxsnts/XwRemote/master/XwRemote/Resources/xwremote.png</Application_Icon_URL>
 			<Application_XML_File_URL>https://raw.githubusercontent.com/maxsnts/XwRemote/master/XwRemote.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
