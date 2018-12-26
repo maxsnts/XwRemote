@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using XwMaxLib.Data;
+using XwMaxLib.Extensions;
 
 namespace XwRemote.Settings
 {
@@ -119,6 +120,13 @@ namespace XwRemote.Settings
 
             MessageBox.Show("Password removed", "XwRemote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             Close();
+        }
+
+        //************************************************************************************
+        private void butOK_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+                Main.config.SetValue("EXPERIMENTAL-STUFF", (!Main.config.GetValue("EXPERIMENTAL-STUFF", false.ToString()).ToBoolOrDefault(false)).ToString());
         }
     }
 }

@@ -95,5 +95,11 @@ namespace XwRemote.Settings
             if (e.KeyCode == Keys.F12)
                 PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
         }
+
+        //**************************************************************************************
+        private void buttonShowPassword_Click(object sender, EventArgs e)
+        {
+            PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
+        }
     }
 }

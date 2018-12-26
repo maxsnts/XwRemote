@@ -323,8 +323,7 @@ namespace XwRemote.Servers
         //********************************************************************************************
         private void FTPForm_Enter(object sender, EventArgs e)
         {
-            //if(server != null)
-            //    mainPtr.ServerTabs.TabGradient.ColorEnd = Color.FromArgb(server.TabColor);
+            
         }
     }
 }

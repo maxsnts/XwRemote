@@ -52,6 +52,7 @@
             this.buttonOpenSshKey = new System.Windows.Forms.Button();
             this.SshKeyLabel = new System.Windows.Forms.Label();
             this.SshKeyBox = new System.Windows.Forms.TextBox();
+            this.buttonShowPassword = new System.Windows.Forms.Button();
             this.dividerPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,7 +147,7 @@
             // 
             this.PassBox.Location = new System.Drawing.Point(66, 135);
             this.PassBox.Name = "PassBox";
-            this.PassBox.Size = new System.Drawing.Size(317, 20);
+            this.PassBox.Size = new System.Drawing.Size(294, 20);
             this.PassBox.TabIndex = 3;
             this.PassBox.UseSystemPasswordChar = true;
             this.PassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PassBox_KeyDown);
@@ -295,6 +296,16 @@
             this.SshKeyBox.Visible = false;
             this.SshKeyBox.WordWrap = false;
             // 
+            // buttonShowPassword
+            // 
+            this.buttonShowPassword.Image = global::XwRemote.Properties.Resources.eye;
+            this.buttonShowPassword.Location = new System.Drawing.Point(360, 134);
+            this.buttonShowPassword.Name = "buttonShowPassword";
+            this.buttonShowPassword.Size = new System.Drawing.Size(23, 22);
+            this.buttonShowPassword.TabIndex = 38;
+            this.buttonShowPassword.UseVisualStyleBackColor = true;
+            this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
+            // 
             // IOSettings
             // 
             this.AcceptButton = this.butOK;
@@ -302,6 +313,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
             this.ClientSize = new System.Drawing.Size(395, 446);
+            this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.buttonOpenSshKey);
             this.Controls.Add(this.SshKeyLabel);
             this.Controls.Add(this.SshKeyBox);
@@ -365,5 +377,6 @@
         private System.Windows.Forms.Button buttonOpenSshKey;
         private System.Windows.Forms.Label SshKeyLabel;
         private System.Windows.Forms.TextBox SshKeyBox;
+        private System.Windows.Forms.Button buttonShowPassword;
     }
 }

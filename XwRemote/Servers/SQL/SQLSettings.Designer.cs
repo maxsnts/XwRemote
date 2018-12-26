@@ -50,6 +50,7 @@
             this.UserBox = new System.Windows.Forms.TextBox();
             this.EngineBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.buttonShowPassword = new System.Windows.Forms.Button();
             this.dividerPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,7 +135,7 @@
             // 
             this.PassBox.Location = new System.Drawing.Point(66, 162);
             this.PassBox.Name = "PassBox";
-            this.PassBox.Size = new System.Drawing.Size(317, 20);
+            this.PassBox.Size = new System.Drawing.Size(293, 20);
             this.PassBox.TabIndex = 4;
             this.PassBox.UseSystemPasswordChar = true;
             this.PassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PassBox_KeyDown);
@@ -267,6 +268,16 @@
             this.label6.TabIndex = 31;
             this.label6.Text = "Engine";
             // 
+            // buttonShowPassword
+            // 
+            this.buttonShowPassword.Image = global::XwRemote.Properties.Resources.eye;
+            this.buttonShowPassword.Location = new System.Drawing.Point(360, 161);
+            this.buttonShowPassword.Name = "buttonShowPassword";
+            this.buttonShowPassword.Size = new System.Drawing.Size(23, 22);
+            this.buttonShowPassword.TabIndex = 40;
+            this.buttonShowPassword.UseVisualStyleBackColor = true;
+            this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
+            // 
             // SQLSettings
             // 
             this.AcceptButton = this.butOK;
@@ -274,6 +285,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
             this.ClientSize = new System.Drawing.Size(391, 372);
+            this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.EngineBox);
             this.Controls.Add(this.label4);
@@ -333,5 +345,6 @@
         private System.Windows.Forms.TextBox UserBox;
         private System.Windows.Forms.ComboBox EngineBox;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button buttonShowPassword;
     }
 }

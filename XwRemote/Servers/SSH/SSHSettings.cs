@@ -120,5 +120,11 @@ namespace XwRemote.Settings
                 SshKeyBox.Text = File.ReadAllText(open.FileName);
             }
         }
+
+        //**************************************************************************************
+        private void buttonShowPassword_Click(object sender, EventArgs e)
+        {
+            PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
+        }
     }
 }

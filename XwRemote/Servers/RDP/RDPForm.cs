@@ -66,7 +66,7 @@ namespace XwRemote.Servers
             loadingCircle1.Visible = true;
 
             rdpControl.AdvancedSettings7.AcceleratorPassthrough = 1;
-            rdpControl.AdvancedSettings7.allowBackgroundInput = 1;
+            rdpControl.AdvancedSettings7.allowBackgroundInput = 0;
             rdpControl.AdvancedSettings7.AudioRedirectionMode = (uint)((server.UseSound) ? 0 : 1);
             //rdpControl.AdvancedSettings7.AuthenticationLevel;
             //rdpControl.AdvancedSettings7.AuthenticationServiceClass;
@@ -412,8 +412,6 @@ namespace XwRemote.Servers
         //********************************************************************************************
         public void OnTabFocus()
         {
-            //if (server != null)
-            //    mainPtr.ServerTabs.TabGradient.ColorEnd = Color.FromArgb(server.TabColor);
             rdpControl.Focus();
         }
 

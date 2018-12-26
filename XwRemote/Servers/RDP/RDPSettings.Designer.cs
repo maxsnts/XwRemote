@@ -59,6 +59,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.NotesBox = new System.Windows.Forms.TextBox();
             this.Encryption = new System.Windows.Forms.CheckBox();
+            this.buttonShowPassword = new System.Windows.Forms.Button();
             this.dividerPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -114,7 +115,7 @@
             // 
             this.PassBox.Location = new System.Drawing.Point(70, 136);
             this.PassBox.Name = "PassBox";
-            this.PassBox.Size = new System.Drawing.Size(317, 20);
+            this.PassBox.Size = new System.Drawing.Size(294, 20);
             this.PassBox.TabIndex = 4;
             this.PassBox.UseSystemPasswordChar = true;
             this.PassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PassBox_KeyDown);
@@ -255,7 +256,6 @@
             this.Certificates.TabIndex = 2;
             this.Certificates.Text = "This Server requires Certificates (CredSsp)";
             this.Certificates.UseVisualStyleBackColor = true;
-            this.Certificates.CheckedChanged += new System.EventHandler(this.Certificates_CheckedChanged);
             // 
             // btnOK
             // 
@@ -363,6 +363,16 @@
             this.Encryption.Text = "Enable Encryption";
             this.Encryption.UseVisualStyleBackColor = true;
             // 
+            // buttonShowPassword
+            // 
+            this.buttonShowPassword.Image = global::XwRemote.Properties.Resources.eye;
+            this.buttonShowPassword.Location = new System.Drawing.Point(365, 135);
+            this.buttonShowPassword.Name = "buttonShowPassword";
+            this.buttonShowPassword.Size = new System.Drawing.Size(23, 22);
+            this.buttonShowPassword.TabIndex = 39;
+            this.buttonShowPassword.UseVisualStyleBackColor = true;
+            this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
+            // 
             // RDPSettings
             // 
             this.AcceptButton = this.btnOK;
@@ -370,6 +380,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(395, 558);
+            this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.Encryption);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.NotesBox);
@@ -447,5 +458,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox NotesBox;
         private System.Windows.Forms.CheckBox Encryption;
+        private System.Windows.Forms.Button buttonShowPassword;
     }
 }

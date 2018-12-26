@@ -221,6 +221,8 @@ namespace XwRemote
             if (tab == null)
                 return;
             Server server = (Server)((TabPageEx)tab).SomeUserObject;
+            ServerTabs.TabGradient.GradientStyle = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+            ServerTabs.TabGradient.ColorEnd = Color.FromArgb(server.TabColor);
             server?.OnTabFocus();
         }
 
@@ -349,6 +351,13 @@ namespace XwRemote
         {
             Stuff stuff = new Stuff();
             stuff.ShowDialog();
+        }
+
+        //**********************************************************************************************
+        private void toolScanner_Click(object sender, EventArgs e)
+        {
+            Scanner scanner = new Scanner();
+            scanner.Show(this);
         }
     }
 }

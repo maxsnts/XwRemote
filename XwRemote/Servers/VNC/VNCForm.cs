@@ -97,9 +97,6 @@ namespace XwRemote.Servers
             loadingCircle1.Active = false;
             loadingCircle1.Visible = false;
             vnc.Dispose();
-            
-            //if (Parent!=null)
-                //mainPtr.ServerTabs.TabPages.Remove((TabPageEx)Parent);
         }
 
         //********************************************************************************************
@@ -114,8 +111,6 @@ namespace XwRemote.Servers
         //********************************************************************************************
         public void OnTabFocus()
         {
-            //if (server != null)
-                //mainPtr.ServerTabs.TabGradient.ColorEnd = Color.FromArgb(server.TabColor);
             vnc.Focus();
         }
 

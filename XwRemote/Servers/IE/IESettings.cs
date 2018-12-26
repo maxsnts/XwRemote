@@ -86,5 +86,11 @@ namespace XwRemote.Servers
             passIDbox.Enabled = checkUseHtml.Checked;
             loginIDbox.Enabled = checkUseHtml.Checked;
         }
+
+        //**************************************************************************************
+        private void buttonShowPassword_Click(object sender, EventArgs e)
+        {
+            PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
+        }
     }
 }

@@ -40,8 +40,9 @@
             this.Toolbar_Favorites = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolSettings = new System.Windows.Forms.ToolStripButton();
-            this.Toolbar_Stuff = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_CanYouHelp = new System.Windows.Forms.ToolStripButton();
+            this.Toolbar_Stuff = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.MainToolbar.SuspendLayout();
@@ -126,6 +127,7 @@
             this.toolStripSeparator4,
             this.Toolbar_Favorites,
             this.toolStripSeparator5,
+            this.toolStripButton1,
             this.toolSettings,
             this.Toolbar_CanYouHelp,
             this.toolStripSeparator3,
@@ -160,12 +162,23 @@
             // 
             // toolSettings
             // 
-            this.toolSettings.Image = global::XwRemote.Properties.Resources.settings;
+            this.toolSettings.Image = global::XwRemote.Properties.Resources.magnifier;
             this.toolSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolSettings.Name = "toolSettings";
             this.toolSettings.Size = new System.Drawing.Size(69, 22);
-            this.toolSettings.Text = "Settings";
-            this.toolSettings.Click += new System.EventHandler(this.toolSettings_Click);
+            this.toolSettings.Text = "Scanner";
+            this.toolSettings.ToolTipText = "Network scanner";
+            this.toolSettings.Click += new System.EventHandler(this.toolScanner_Click);
+            // 
+            // Toolbar_CanYouHelp
+            // 
+            this.Toolbar_CanYouHelp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Toolbar_CanYouHelp.Image = global::XwRemote.Properties.Resources.paypal;
+            this.Toolbar_CanYouHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_CanYouHelp.Name = "Toolbar_CanYouHelp";
+            this.Toolbar_CanYouHelp.Size = new System.Drawing.Size(102, 22);
+            this.Toolbar_CanYouHelp.Text = "Can you help?";
+            this.Toolbar_CanYouHelp.Click += new System.EventHandler(this.Toolbar_CanYouHelp_Click);
             // 
             // Toolbar_Stuff
             // 
@@ -177,15 +190,14 @@
             this.Toolbar_Stuff.Text = "Stuff";
             this.Toolbar_Stuff.Click += new System.EventHandler(this.Toolbar_Stuff_Click);
             // 
-            // Toolbar_CanYouHelp
+            // toolStripButton1
             // 
-            this.Toolbar_CanYouHelp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Toolbar_CanYouHelp.Image = global::XwRemote.Properties.Resources.paypal;
-            this.Toolbar_CanYouHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_CanYouHelp.Name = "Toolbar_CanYouHelp";
-            this.Toolbar_CanYouHelp.Size = new System.Drawing.Size(102, 22);
-            this.Toolbar_CanYouHelp.Text = "Can you help?";
-            this.Toolbar_CanYouHelp.Click += new System.EventHandler(this.Toolbar_CanYouHelp_Click);
+            this.toolStripButton1.Image = global::XwRemote.Properties.Resources.settings;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(69, 22);
+            this.toolStripButton1.Text = "Settings";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolSettings_Click);
             // 
             // Main
             // 
@@ -227,6 +239,7 @@
         private System.Windows.Forms.ToolStripButton toolSettings;
         private System.Windows.Forms.ToolStripButton Toolbar_CanYouHelp;
         private System.Windows.Forms.ToolStripButton Toolbar_Stuff;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 

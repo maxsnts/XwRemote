@@ -110,6 +110,7 @@
             this.butOK.Text = "OK";
             this.butOK.UseVisualStyleBackColor = true;
             this.butOK.Click += new System.EventHandler(this.butOK_Click);
+            this.butOK.KeyDown += new System.Windows.Forms.KeyEventHandler(this.butOK_KeyDown);
             // 
             // faTabStrip1
             // 

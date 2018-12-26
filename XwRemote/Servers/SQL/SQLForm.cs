@@ -94,7 +94,7 @@ namespace XwRemote.Servers
         //********************************************************************************************
         public void OnTabFocus()
         {
-            //mainPtr.ServerTabs.TabGradient.ColorEnd = Color.FromArgb(server.TabColor);
+            
         }
     }
 }

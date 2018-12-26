@@ -428,7 +428,7 @@ namespace XwRemote.Servers
                 key.SetValue("TelnetRet", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("LocalEcho", 0x00000002, RegistryValueKind.DWord);
                 key.SetValue("LocalEdit", 0x00000002, RegistryValueKind.DWord);
-                key.SetValue("AlwaysOnTop", 0x00000000, RegistryValueKind.DWord);
+                key.SetValue("AlwaysOnTop", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("FullScreenOnAltEnter", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("HideMousePtr", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("SunkenEdge", 0x00000000, RegistryValueKind.DWord);

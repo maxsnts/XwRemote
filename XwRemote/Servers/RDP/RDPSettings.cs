@@ -194,28 +194,16 @@ namespace XwRemote.Servers
         }
 
         //*****************************************************************************************
-        private void Certificates_CheckedChanged(object sender, EventArgs e)
-        {
-            /*
-            if (Certificates.Checked)
-            {
-                UserBox.Enabled = false;
-                PassBox.Enabled = false;
-            }
-            else
-            {
-                UserBox.Enabled = true;
-                PassBox.Enabled = true;
-            }
-            */
-        }
-
-        //*****************************************************************************************
         private void PassBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F12)
                 PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
         }
 
+        //*****************************************************************************************
+        private void buttonShowPassword_Click(object sender, EventArgs e)
+        {
+            PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
+        }
     }
 }

@@ -47,6 +47,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.NotesBox = new System.Windows.Forms.TextBox();
+            this.buttonShowPassword = new System.Windows.Forms.Button();
             this.dividerPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,7 +132,7 @@
             // 
             this.PassBox.Location = new System.Drawing.Point(66, 109);
             this.PassBox.Name = "PassBox";
-            this.PassBox.Size = new System.Drawing.Size(317, 20);
+            this.PassBox.Size = new System.Drawing.Size(293, 20);
             this.PassBox.TabIndex = 2;
             this.PassBox.UseSystemPasswordChar = true;
             this.PassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PassBox_KeyDown);
@@ -236,6 +237,16 @@
             this.NotesBox.Size = new System.Drawing.Size(317, 77);
             this.NotesBox.TabIndex = 26;
             // 
+            // buttonShowPassword
+            // 
+            this.buttonShowPassword.Image = global::XwRemote.Properties.Resources.eye;
+            this.buttonShowPassword.Location = new System.Drawing.Point(360, 108);
+            this.buttonShowPassword.Name = "buttonShowPassword";
+            this.buttonShowPassword.Size = new System.Drawing.Size(23, 22);
+            this.buttonShowPassword.TabIndex = 40;
+            this.buttonShowPassword.UseVisualStyleBackColor = true;
+            this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
+            // 
             // VNCSettings
             // 
             this.AcceptButton = this.butOK;
@@ -243,6 +254,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
             this.ClientSize = new System.Drawing.Size(392, 339);
+            this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.NotesBox);
             this.Controls.Add(this.tabColorBox);
@@ -296,6 +308,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox NotesBox;
-
+        private System.Windows.Forms.Button buttonShowPassword;
     }
 }

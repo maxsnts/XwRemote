@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using XwMaxLib.Data;
+using XwMaxLib.Extensions;
 using XwRemote.Misc;
-using XwRemote.Servers;
 
 namespace XwRemote.Settings
 {
@@ -262,6 +259,8 @@ namespace XwRemote.Settings
                     sql.ExecuteTX("ALTER TABLE Servers ADD COLUMN SshKey TEXT;");
                     sql.ExecuteTX("UPDATE Servers SET SshKey=''");
                 }
+
+                sql.ExecuteTX("UPDATE Servers SET TabColor=-4144960 WHERE TabColor=0");
             }
         }
 
@@ -524,6 +523,12 @@ namespace XwRemote.Settings
                 sql.AddParameter("ID", group.ID);
                 sql.ExecuteTX("UPDATE groups SET Expanded=1 WHERE ID=@ID");
             }
+        }
+
+        //**************************************************************************************************
+        public bool ShowExperimentalFeatures()
+        {
+            return Main.config.GetValue("EXPERIMENTAL-STUFF", false.ToString()).ToBoolOrDefault(false);
         }
     }
 }

@@ -124,6 +124,28 @@ namespace SuperPutty
             
         }
 
+        private const int WM_ACTIVATEAPP = 0x001C;
+        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+        protected override void WndProc(ref Message m)
+        {
+            // Listen for operating system messages.
+            switch (m.Msg)
+            {
+                // The WM_ACTIVATEAPP message occurs when the application
+                // becomes the active application or becomes inactive.
+                case WM_ACTIVATEAPP:
+
+                    // The WParam value identifies what is occurring.
+                    
+
+                    // Invalidate to get new text painted.
+                    this.Invalidate();
+
+                    break;
+            }
+            base.WndProc(ref m);
+        }
+
         /// <summary>Enumeration of the different ways of showing a window using
         /// ShowWindow</summary>
         private enum WindowShowStyle : uint

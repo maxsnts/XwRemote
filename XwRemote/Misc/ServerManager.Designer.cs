@@ -69,12 +69,14 @@
             this.NewS3 = new System.Windows.Forms.Button();
             this.NewAzureFile = new System.Windows.Forms.Button();
             this.textSearch = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.tabStrip1.SuspendLayout();
             this.contextGroup.SuspendLayout();
             this.contextServer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripContainer1
@@ -550,11 +552,21 @@
             // 
             this.textSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textSearch.Location = new System.Drawing.Point(12, 604);
+            this.textSearch.Location = new System.Drawing.Point(32, 604);
             this.textSearch.Name = "textSearch";
-            this.textSearch.Size = new System.Drawing.Size(404, 20);
+            this.textSearch.Size = new System.Drawing.Size(366, 20);
             this.textSearch.TabIndex = 13;
             this.textSearch.TextChanged += new System.EventHandler(this.textSearch_TextChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox1.Image = global::XwRemote.Properties.Resources.magnifier;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 604);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(18, 20);
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
             // 
             // ServerManager
             // 
@@ -562,6 +574,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(572, 636);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.textSearch);
             this.Controls.Add(this.NewAzureFile);
             this.Controls.Add(this.NewS3);
@@ -596,6 +609,7 @@
             this.tabStrip1.PerformLayout();
             this.contextGroup.ResumeLayout(false);
             this.contextServer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -643,5 +657,6 @@
         private System.Windows.Forms.ToolStripMenuItem ImportServer;
         private System.Windows.Forms.ToolStripMenuItem ExportServer;
         private System.Windows.Forms.TextBox textSearch;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

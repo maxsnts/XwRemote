@@ -54,6 +54,7 @@ namespace XwRemote.Servers
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.NotesBox = new System.Windows.Forms.TextBox();
+            this.buttonShowPassword = new System.Windows.Forms.Button();
             this.dividerPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,7 +104,7 @@ namespace XwRemote.Servers
             // 
             this.PassBox.Location = new System.Drawing.Point(70, 135);
             this.PassBox.Name = "PassBox";
-            this.PassBox.Size = new System.Drawing.Size(317, 20);
+            this.PassBox.Size = new System.Drawing.Size(295, 20);
             this.PassBox.TabIndex = 3;
             this.PassBox.UseSystemPasswordChar = true;
             this.PassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PassBox_KeyDown);
@@ -278,6 +279,16 @@ namespace XwRemote.Servers
             this.NotesBox.Size = new System.Drawing.Size(317, 77);
             this.NotesBox.TabIndex = 26;
             // 
+            // buttonShowPassword
+            // 
+            this.buttonShowPassword.Image = global::XwRemote.Properties.Resources.eye;
+            this.buttonShowPassword.Location = new System.Drawing.Point(365, 134);
+            this.buttonShowPassword.Name = "buttonShowPassword";
+            this.buttonShowPassword.Size = new System.Drawing.Size(23, 22);
+            this.buttonShowPassword.TabIndex = 28;
+            this.buttonShowPassword.UseVisualStyleBackColor = true;
+            this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
+            // 
             // IESettings
             // 
             this.AcceptButton = this.btnOK;
@@ -285,6 +296,7 @@ namespace XwRemote.Servers
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(395, 418);
+            this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.NotesBox);
             this.Controls.Add(this.tabColorBox);
@@ -347,5 +359,6 @@ namespace XwRemote.Servers
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox NotesBox;
+        private Button buttonShowPassword;
     }
 }

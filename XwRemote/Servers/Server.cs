@@ -57,7 +57,7 @@ namespace XwRemote.Settings
         {
             //How the hell can i use MemberwiseClone while changing type?!?
             //Server copy = (Server)MemberwiseClone();
-            //Oh well, i wiull just copy the members
+            //Oh well, i will just copy the members
             //it may be betters since i need to make changes
             //to the values when converting between types
             Server copy = Server.GetServerInstance(newType);
@@ -88,6 +88,7 @@ namespace XwRemote.Settings
             copy.Notes = Notes;
             copy.SshTerminal = SshTerminal;
             copy.SshKey = SshKey;
+            //don't copy the port, use the protocols default
             copy.Port = GetDefaultServerPort(newType);
             return copy;
         }
