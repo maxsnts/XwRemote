@@ -33,10 +33,12 @@
             // 
             // webBrowser
             // 
+            this.webBrowser.CausesValidation = false;
             this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser.Location = new System.Drawing.Point(0, 0);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScriptErrorsSuppressed = true;
             this.webBrowser.Size = new System.Drawing.Size(706, 595);
             this.webBrowser.TabIndex = 0;
             // 

@@ -34,7 +34,6 @@ namespace XwRemote.Servers
             SendKeys.Checked = server.SendKeys;
             ConnectDrives.Checked = server.ConnectDrives;
             IsFavorite.Checked = server.IsFavorite;
-            checkConsole.Checked = server.Console;
             checkThemes.Checked = server.Themes;
             Certificates.Checked = server.Certificates;
             NotesBox.Text = server.Notes;
@@ -101,7 +100,6 @@ namespace XwRemote.Servers
             server.ConnectDrives = ConnectDrives.Checked;
             server.SendKeys = SendKeys.Checked;
             server.Port = PortBox.Text.ToIntOrDefault(3389);
-            server.Console = checkConsole.Checked;
             server.Themes = checkThemes.Checked;
             server.Certificates = Certificates.Checked;
             server.TabColor = tabColorBox.SelectedColor.ToArgb();

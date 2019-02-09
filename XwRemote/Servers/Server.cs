@@ -36,7 +36,6 @@ namespace XwRemote.Settings
         public int Color = 15;
         public int Width = 0;
         public int Height = 0;
-        public bool Console = false;
         public bool AutoScale = true;
         public bool SSH1 = false;
         public bool Passive = true;
@@ -73,7 +72,6 @@ namespace XwRemote.Settings
             copy.Color = Color;
             copy.Width = Width;
             copy.Height = Height;
-            copy.Console = Console;
             copy.AutoScale = AutoScale;
             copy.SSH1 = SSH1;
             copy.Passive = Passive;

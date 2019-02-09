@@ -39,10 +39,10 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.Toolbar_Favorites = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolSettings = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_CanYouHelp = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_Stuff = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.MainToolbar.SuspendLayout();
@@ -160,6 +160,15 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::XwRemote.Properties.Resources.settings;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(69, 22);
+            this.toolStripButton1.Text = "Settings";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolSettings_Click);
+            // 
             // toolSettings
             // 
             this.toolSettings.Image = global::XwRemote.Properties.Resources.magnifier;
@@ -189,15 +198,6 @@
             this.Toolbar_Stuff.Size = new System.Drawing.Size(52, 22);
             this.Toolbar_Stuff.Text = "Stuff";
             this.Toolbar_Stuff.Click += new System.EventHandler(this.Toolbar_Stuff_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = global::XwRemote.Properties.Resources.settings;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(69, 22);
-            this.toolStripButton1.Text = "Settings";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolSettings_Click);
             // 
             // Main
             // 

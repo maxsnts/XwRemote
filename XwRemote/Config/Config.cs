@@ -345,7 +345,6 @@ namespace XwRemote.Settings
                     server.Color = sql.Value("Color").ToInt32();
                     server.Width = sql.Value("X").ToInt32();
                     server.Height = sql.Value("Y").ToInt32();
-                    server.Console = sql.Value("Console").ToBoolean();
                     server.AutoScale = sql.Value("AutoScale").ToBoolean();
                     server.SSH1 = sql.Value("SSH1").ToBoolean();
                     server.Passive = sql.Value("Passive").ToBoolean();
