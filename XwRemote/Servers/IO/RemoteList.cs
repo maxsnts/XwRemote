@@ -507,7 +507,6 @@ namespace XwRemote.Servers
                 DiskItem disk = (DiskItem)item.Tag;
                 form.QueueList.QueueDownloadItem(disk.IsDirectory, disk.path, form.LocalList.CurrentDirectory, disk.name, item.ImageIndex, disk.size);
             }
-
             form.QueueList.StartQueue();
         }
 

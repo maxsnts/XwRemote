@@ -36,14 +36,11 @@ namespace XwRemote.Servers
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.LocalTree = new XwMaxLib.UI.Shell.XwShellTree();
             this.statusLocal = new System.Windows.Forms.StatusStrip();
-            this.LocalList = new XwRemote.Servers.LocalList();
             this.LocalPath = new System.Windows.Forms.ComboBox();
             this.statusRemote = new System.Windows.Forms.StatusStrip();
             this.RemotePin = new System.Windows.Forms.Button();
-            this.RemoteList = new XwRemote.Servers.RemoteList();
             this.RemotePath = new System.Windows.Forms.ComboBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.QueueList = new XwRemote.Servers.QueueList();
             this.StatusBox = new System.Windows.Forms.RichTextBox();
             this.statusLocalCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusRemoteCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -55,6 +52,10 @@ namespace XwRemote.Servers
             this.toolStripStatusTransferRate = new System.Windows.Forms.ToolStripStatusLabel();
             this.faTabStripItem4 = new FarsiLibrary.Win.FATabStripItem();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.currentItem = new System.Windows.Forms.ToolStripStatusLabel();
+            this.LocalList = new XwRemote.Servers.LocalList();
+            this.RemoteList = new XwRemote.Servers.RemoteList();
+            this.QueueList = new XwRemote.Servers.QueueList();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerStatus)).BeginInit();
             this.splitContainerStatus.Panel1.SuspendLayout();
             this.splitContainerStatus.Panel2.SuspendLayout();
@@ -71,6 +72,7 @@ namespace XwRemote.Servers
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.statusMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerStatus
@@ -189,23 +191,6 @@ namespace XwRemote.Servers
             this.statusLocal.TabIndex = 1;
             this.statusLocal.Text = "statusLocal";
             // 
-            // LocalList
-            // 
-            this.LocalList.AllowDrop = true;
-            this.LocalList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LocalList.AutoArrange = false;
-            this.LocalList.Cursor = System.Windows.Forms.Cursors.Default;
-            this.LocalList.FullRowSelect = true;
-            this.LocalList.HideSelection = false;
-            this.LocalList.Location = new System.Drawing.Point(0, 0);
-            this.LocalList.Name = "LocalList";
-            this.LocalList.Size = new System.Drawing.Size(318, 481);
-            this.LocalList.TabIndex = 0;
-            this.LocalList.UseCompatibleStateImageBehavior = false;
-            this.LocalList.View = System.Windows.Forms.View.Details;
-            // 
             // LocalPath
             // 
             this.LocalPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -241,22 +226,6 @@ namespace XwRemote.Servers
             this.RemotePin.UseVisualStyleBackColor = true;
             this.RemotePin.Click += new System.EventHandler(this.RemotePin_Click);
             // 
-            // RemoteList
-            // 
-            this.RemoteList.AllowDrop = true;
-            this.RemoteList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RemoteList.AutoArrange = false;
-            this.RemoteList.FullRowSelect = true;
-            this.RemoteList.HideSelection = false;
-            this.RemoteList.Location = new System.Drawing.Point(0, 21);
-            this.RemoteList.Name = "RemoteList";
-            this.RemoteList.Size = new System.Drawing.Size(330, 481);
-            this.RemoteList.TabIndex = 1;
-            this.RemoteList.UseCompatibleStateImageBehavior = false;
-            this.RemoteList.View = System.Windows.Forms.View.Details;
-            // 
             // RemotePath
             // 
             this.RemotePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -285,20 +254,6 @@ namespace XwRemote.Servers
             this.splitContainer2.Size = new System.Drawing.Size(896, 138);
             this.splitContainer2.SplitterDistance = 561;
             this.splitContainer2.TabIndex = 4;
-            // 
-            // QueueList
-            // 
-            this.QueueList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.QueueList.FullRowSelect = true;
-            this.QueueList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.QueueList.Location = new System.Drawing.Point(0, 0);
-            this.QueueList.Name = "QueueList";
-            this.QueueList.OwnerDraw = true;
-            this.QueueList.ShowItemToolTips = true;
-            this.QueueList.Size = new System.Drawing.Size(561, 138);
-            this.QueueList.TabIndex = 1;
-            this.QueueList.UseCompatibleStateImageBehavior = false;
-            this.QueueList.View = System.Windows.Forms.View.Details;
             // 
             // StatusBox
             // 
@@ -353,6 +308,8 @@ namespace XwRemote.Servers
             // 
             // statusMain
             // 
+            this.statusMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.currentItem});
             this.statusMain.Location = new System.Drawing.Point(0, 670);
             this.statusMain.Name = "statusMain";
             this.statusMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
@@ -399,6 +356,59 @@ namespace XwRemote.Servers
             this.statusLabel.TabIndex = 4;
             this.statusLabel.Text = "Connecting...";
             // 
+            // currentItem
+            // 
+            this.currentItem.AutoSize = false;
+            this.currentItem.Name = "currentItem";
+            this.currentItem.Size = new System.Drawing.Size(600, 17);
+            // 
+            // LocalList
+            // 
+            this.LocalList.AllowDrop = true;
+            this.LocalList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LocalList.AutoArrange = false;
+            this.LocalList.Cursor = System.Windows.Forms.Cursors.Default;
+            this.LocalList.FullRowSelect = true;
+            this.LocalList.HideSelection = false;
+            this.LocalList.Location = new System.Drawing.Point(0, 0);
+            this.LocalList.Name = "LocalList";
+            this.LocalList.Size = new System.Drawing.Size(318, 481);
+            this.LocalList.TabIndex = 0;
+            this.LocalList.UseCompatibleStateImageBehavior = false;
+            this.LocalList.View = System.Windows.Forms.View.Details;
+            // 
+            // RemoteList
+            // 
+            this.RemoteList.AllowDrop = true;
+            this.RemoteList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RemoteList.AutoArrange = false;
+            this.RemoteList.FullRowSelect = true;
+            this.RemoteList.HideSelection = false;
+            this.RemoteList.Location = new System.Drawing.Point(0, 21);
+            this.RemoteList.Name = "RemoteList";
+            this.RemoteList.Size = new System.Drawing.Size(330, 481);
+            this.RemoteList.TabIndex = 1;
+            this.RemoteList.UseCompatibleStateImageBehavior = false;
+            this.RemoteList.View = System.Windows.Forms.View.Details;
+            // 
+            // QueueList
+            // 
+            this.QueueList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.QueueList.FullRowSelect = true;
+            this.QueueList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.QueueList.Location = new System.Drawing.Point(0, 0);
+            this.QueueList.Name = "QueueList";
+            this.QueueList.OwnerDraw = true;
+            this.QueueList.ShowItemToolTips = true;
+            this.QueueList.Size = new System.Drawing.Size(561, 138);
+            this.QueueList.TabIndex = 1;
+            this.QueueList.UseCompatibleStateImageBehavior = false;
+            this.QueueList.View = System.Windows.Forms.View.Details;
+            // 
             // IOForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +443,8 @@ namespace XwRemote.Servers
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.statusMain.ResumeLayout(false);
+            this.statusMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -446,7 +458,6 @@ namespace XwRemote.Servers
         private FarsiLibrary.Win.FATabStripItem faTabStripItem4;
         public System.Windows.Forms.ComboBox LocalPath;
         public System.Windows.Forms.ComboBox RemotePath;
-        private System.Windows.Forms.StatusStrip statusMain;
         private System.Windows.Forms.SplitContainer splitContainer1;
         public  LocalList LocalList;
         public  RemoteList RemoteList;
@@ -466,5 +477,7 @@ namespace XwRemote.Servers
         private System.Windows.Forms.SplitContainer splitContainer2;
         public QueueList QueueList;
         private System.Windows.Forms.RichTextBox StatusBox;
+        public System.Windows.Forms.StatusStrip statusMain;
+        public System.Windows.Forms.ToolStripStatusLabel currentItem;
     }
 }

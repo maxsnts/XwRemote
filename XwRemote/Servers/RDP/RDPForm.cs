@@ -1,7 +1,6 @@
-﻿using System;
-using System.Drawing;
+﻿using KRBTabControlNS.CustomTab;
+using System;
 using System.Windows.Forms;
-using KRBTabControlNS.CustomTab;
 using XwMaxLib.Extensions;
 using XwRemote.Settings;
 
@@ -65,113 +64,61 @@ namespace XwRemote.Servers
             loadingCircle1.Left = (this.Width / 2) - 40;
             loadingCircle1.Visible = true;
 
-            rdpControl.AdvancedSettings7.AcceleratorPassthrough = 1;
-            rdpControl.AdvancedSettings7.allowBackgroundInput = 0;
-            rdpControl.AdvancedSettings7.AudioRedirectionMode = (uint)((server.UseSound) ? 0 : 1);
-            //rdpControl.AdvancedSettings7.AuthenticationLevel;
-            //rdpControl.AdvancedSettings7.AuthenticationServiceClass;
-            //rdpControl.AdvancedSettings7.AuthenticationType;
-            //rdpControl.AdvancedSettings7.BitmapCacheSize;
-            rdpControl.AdvancedSettings7.BitmapPeristence = 1;
-            //rdpControl.AdvancedSettings7.BitmapPersistence;
-            //rdpControl.AdvancedSettings7.BitmapVirtualCache16BppSize;
-            //rdpControl.AdvancedSettings7.BitmapVirtualCache24BppSize;
-            //rdpControl.AdvancedSettings7.BitmapVirtualCache32BppSize;
-            //rdpControl.AdvancedSettings7.BitmapVirtualCacheSize;
-            //rdpControl.AdvancedSettings7.brushSupportLevel;
-            //rdpControl.AdvancedSettings7.CachePersistenceActive;
-            //rdpControl.AdvancedSettings7.CanAutoReconnect;
+
+            //CONNECT
+            rdpControl.Server = server.Host;
+            rdpControl.AdvancedSettings7.RDPPort = server.Port;
+            rdpControl.AdvancedSettings7.EnableAutoReconnect = true;
+            rdpControl.AdvancedSettings7.MaxReconnectAttempts = 10;
+            rdpControl.AdvancedSettings7.EncryptionEnabled = server.Encryption.ToIntOrDefault(0);
+            rdpControl.AdvancedSettings7.keepAliveInterval = 30000;
+            //rdpControl.AdvancedSettings7.ConnectToAdministerServer = true;
+            //rdpControl.AdvancedSettings7.singleConnectionTimeout;
+
+            //AUTH
+            rdpControl.AdvancedSettings7.DisableCtrlAltDel = 1;
+            rdpControl.AdvancedSettings7.EnableCredSspSupport = server.Certificates;
+            rdpControl.UserName = server.Username;
             if (!String.IsNullOrEmpty(server.Password))
                 rdpControl.AdvancedSettings7.ClearTextPassword = server.Password;
-            rdpControl.AdvancedSettings7.Compress = 1;
-            rdpControl.AdvancedSettings7.ConnectionBarShowMinimizeButton = true;
-            rdpControl.AdvancedSettings7.ConnectionBarShowPinButton = true;
-            rdpControl.AdvancedSettings7.ConnectionBarShowRestoreButton = true;
-            //rdpControl.AdvancedSettings6.ConnectToAdministerServer = false;
-            rdpControl.AdvancedSettings7.ConnectToServerConsole = server.Console;
-            rdpControl.AdvancedSettings7.ContainerHandledFullScreen = 1;
-            //rdpControl.AdvancedSettings7.DedicatedTerminal;
-            rdpControl.AdvancedSettings7.DisableCtrlAltDel = 1;
-            //rdpControl.AdvancedSettings7.DisableRdpdr;
-            rdpControl.AdvancedSettings7.DisplayConnectionBar = false;
-            rdpControl.AdvancedSettings7.DoubleClickDetect = 0;
-            rdpControl.AdvancedSettings7.EnableAutoReconnect = true;
-            rdpControl.AdvancedSettings7.EnableCredSspSupport = server.Certificates;
-            //rdpControl.AdvancedSettings7.EnableMouse;
-            rdpControl.AdvancedSettings7.EnableWindowsKey = 1;
-            rdpControl.AdvancedSettings7.EncryptionEnabled = server.Encryption.ToIntOrDefault(0);
+            rdpControl.AdvancedSettings7.AuthenticationLevel = 0;
+           
+            //INPUT
+            rdpControl.SecuredSettings2.KeyboardHookMode = 1;
+            rdpControl.AdvancedSettings7.allowBackgroundInput = 0;
             rdpControl.AdvancedSettings7.GrabFocusOnConnect = true;
-            //rdpControl.AdvancedSettings7.HotKeyAltEsc;
-            //rdpControl.AdvancedSettings7.HotKeyAltShiftTab;
-            //rdpControl.AdvancedSettings7.HotKeyAltSpace;
-            //rdpControl.AdvancedSettings7.HotKeyAltTab;
-            //rdpControl.AdvancedSettings7.HotKeyCtrlAltDel;
-            //rdpControl.AdvancedSettings7.HotKeyCtrlEsc;
-            //rdpControl.AdvancedSettings7.HotKeyFocusReleaseLeft;
-            //rdpControl.AdvancedSettings7.HotKeyFocusReleaseRight;
-            //rdpControl.AdvancedSettings7.HotKeyFullScreen;
-            //rdpControl.AdvancedSettings7.IconFile;
-            //rdpControl.AdvancedSettings7.IconIndex;
-            //rdpControl.AdvancedSettings7.InputEventsAtOnce;
-            //rdpControl.AdvancedSettings7.keepAliveInterval;
-            //rdpControl.AdvancedSettings7.KeyboardFunctionKey;
-            //rdpControl.AdvancedSettings7.KeyBoardLayoutStr;
-            //rdpControl.AdvancedSettings7.KeyboardSubType;
-            //rdpControl.AdvancedSettings7.KeyboardType;
-            //rdpControl.AdvancedSettings7.LoadBalanceInfo;
-            //rdpControl.AdvancedSettings7.maxEventCount;
-            //rdpControl.AdvancedSettings7.MaximizeShell;
-            //rdpControl.AdvancedSettings7.MaxReconnectAttempts;
-            //rdpControl.AdvancedSettings7.minInputSendInterval;
-            //rdpControl.AdvancedSettings7.MinutesToIdleTimeout;
-            //rdpControl.AdvancedSettings7.NotifyTSPublicKey;
-            //rdpControl.AdvancedSettings7.NumBitmapCaches;
-            //rdpControl.AdvancedSettings7.orderDrawThreshold;
-            //rdpControl.AdvancedSettings7.overallConnectionTimeout;
-            //rdpControl.AdvancedSettings7.PCB;
-            rdpControl.AdvancedSettings7.PerformanceFlags =
-                ((int)PerformanceFlags.TS_PERF_DISABLE_CURSOR_SHADOW) 
-                | ((int)PerformanceFlags.TS_PERF_DISABLE_CURSORSETTINGS) 
-                | ((int)PerformanceFlags.TS_PERF_DISABLE_FULLWINDOWDRAG) 
-                | ((int)PerformanceFlags.TS_PERF_DISABLE_MENUANIMATIONS) 
-                | ((server.Themes) ? 0 : ((int)PerformanceFlags.TS_PERF_DISABLE_THEMING)) 
-                //| ((int)PerformanceFlags.TS_PERF_DISABLE_WALLPAPER)
-                ;
-            //rdpControl.AdvancedSettings7.PersistCacheDirectory;
-            //rdpControl.AdvancedSettings7.PinConnectionBar;
-            //rdpControl.AdvancedSettings7.PluginDlls;
-            //rdpControl.AdvancedSettings7.PublicMode;
-            //rdpControl.AdvancedSettings7.RdpdrClipCleanTempDirString;
-            //rdpControl.AdvancedSettings7.RdpdrClipPasteInfoString;
-            //rdpControl.AdvancedSettings7.RdpdrLocalPrintingDocName;
-            rdpControl.AdvancedSettings7.RDPPort = server.Port;
+            rdpControl.AdvancedSettings7.EnableWindowsKey = 1;
+            rdpControl.AdvancedSettings7.DoubleClickDetect = 1; //??
+
+            //DEVICES
             rdpControl.AdvancedSettings7.RedirectClipboard = true;
-            rdpControl.AdvancedSettings7.RedirectDevices = false;
+            rdpControl.AdvancedSettings7.AudioRedirectionMode = (uint)((server.UseSound) ? 0 : 1);
             rdpControl.AdvancedSettings7.RedirectDrives = server.ConnectDrives;
+            rdpControl.AdvancedSettings7.RedirectDevices = false;
             rdpControl.AdvancedSettings7.RedirectPorts = false;
-            //rdpControl.AdvancedSettings7.RedirectPOSDevices;
             rdpControl.AdvancedSettings7.RedirectPrinters = false;
             rdpControl.AdvancedSettings7.RedirectSmartCards = false;
-            //rdpControl.AdvancedSettings7.RelativeMouseMode;
-            //rdpControl.AdvancedSettings7.SasSequence;
-            //rdpControl.AdvancedSettings7.ScaleBitmapCachesByBPP;
-            //rdpControl.AdvancedSettings7.ShadowBitmap;
-            //rdpControl.AdvancedSettings7.shutdownTimeout;
-            //rdpControl.AdvancedSettings7.singleConnectionTimeout;
-            rdpControl.AdvancedSettings7.SmartSizing = true;
-            //rdpControl.AdvancedSettings7.SmoothScroll;
-            //rdpControl.AdvancedSettings7.TransportType;
-            //rdpControl.AdvancedSettings7.WinceFixedPalette;
 
-            rdpControl.SecuredSettings2.FullScreen = 0;
-            rdpControl.SecuredSettings2.KeyboardHookMode = 1;
-
-            rdpControl.AutoSize = true;
+            //PERFORMANCE
             rdpControl.ColorDepth = server.Color;
+            rdpControl.AdvancedSettings7.BitmapPeristence = 1;
+            rdpControl.AdvancedSettings7.Compress = 1;
+            rdpControl.AdvancedSettings7.PerformanceFlags =
+                  ((int)PerformanceFlags.TS_PERF_DISABLE_CURSOR_SHADOW)
+                | ((int)PerformanceFlags.TS_PERF_DISABLE_CURSORSETTINGS)
+                | ((int)PerformanceFlags.TS_PERF_DISABLE_FULLWINDOWDRAG)
+                | ((int)PerformanceFlags.TS_PERF_DISABLE_MENUANIMATIONS)
+                //| ((int)PerformanceFlags.TS_PERF_ENABLE_FONT_SMOOTHING)
+                | ((int)PerformanceFlags.TS_PERF_ENABLE_DESKTOP_COMPOSITION)
+                | ((server.Themes) ? 0 : ((int)PerformanceFlags.TS_PERF_DISABLE_THEMING))
+                ;
+
+            //SIZE
+            rdpControl.AutoSize = true;
+            rdpControl.SecuredSettings2.FullScreen = 0;
+            rdpControl.AdvancedSettings7.SmartSizing = true;
             rdpControl.DesktopWidth = (server.Width == 0) ? Width : server.Width;
             rdpControl.DesktopHeight = (server.Height == 0) ? Height : server.Height;
-            rdpControl.Server = server.Host;
-            rdpControl.UserName = server.Username;
 
             rdpControl.Connect();
         }

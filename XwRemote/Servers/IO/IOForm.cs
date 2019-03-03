@@ -85,7 +85,8 @@ namespace XwRemote.Servers
                         server.Host,
                         server.Port,
                         server.Username,
-                        server.Password);
+                        server.Password,
+                        server.FtpDataType);
                     break;
                 case ServerType.SFTP:
                 result = await remoteIO.ConnectToSFTP(

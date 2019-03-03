@@ -90,6 +90,8 @@ namespace XwRemote.Servers
         //**********************************************************************************************
         public void QueueUploadItem(bool IsDir, string source, string destination, string name, int ImageIndex, long size)
         {
+            form.currentItem.Text = $"Queueing {source}";
+
             QueueItem queue = new QueueItem();
             queue.Download = false;
             queue.SourceIsdir = IsDir;
@@ -125,6 +127,9 @@ namespace XwRemote.Servers
         //**********************************************************************************************
         public void QueueDownloadItem(bool IsDir, string source, string destination, string name, int ImageIndex, long size)
         {
+            form.currentItem.Text = $"Queueing {source}";
+
+            Cursor.Current = Cursors.WaitCursor;
             QueueItem queue = new QueueItem();
             queue.Download = true;
             queue.SourceIsdir = IsDir;
@@ -177,6 +182,8 @@ namespace XwRemote.Servers
         //**********************************************************************************************
         public async void StartQueue(bool force = false)
         {
+            form.currentItem.Text = "";
+
             if (QueueRunning && !force)
                 return;
             
@@ -193,6 +200,7 @@ namespace XwRemote.Servers
                 form.TotalQueueText.Text = String.Format("{0} Items in queue", Items.Count);
                 QueueItem item = new QueueItem();
                 bool refreshLists = true;
+                bool alldone = true;
                 foreach (ListViewItem listitem in Items)
                 {
                     if (((QueueItem)listitem.Tag).Status == QueueStatus.Queue)
@@ -201,8 +209,15 @@ namespace XwRemote.Servers
                         item = (QueueItem)listitem.Tag;
                         listitem.EnsureVisible();
                         refreshLists = false;
+                        alldone = false;
                         break;
                     }
+                }
+
+                if (alldone)
+                {
+                    QueueRunning = false;
+                    return;
                 }
 
                 if (refreshLists)

@@ -65,6 +65,7 @@ namespace XwRemote.Servers.IO
         private string Username = "";
         private string Password = "";
         private string SshKey = "";
+        private int FtpDataType = 2;
         private Engine engine;
         private FtpClient ftp = null;
         private SftpClient sftp = null;
@@ -113,7 +114,7 @@ namespace XwRemote.Servers.IO
         }
         
         //**********************************************************************************************
-        public async Task<XwRemoteIOResult> ConnectToFTP(string Hostname, int Port, string Username, string Password)
+        public async Task<XwRemoteIOResult> ConnectToFTP(string Hostname, int Port, string Username, string Password, int DataType)
         {
             XwRemoteIOResult result = new XwRemoteIOResult();
             try
@@ -123,8 +124,11 @@ namespace XwRemote.Servers.IO
                 this.Port = Port;
                 this.Username = Username;
                 this.Password = Password;
+                this.FtpDataType = DataType;
 
                 ftp = new FtpClient(Hostname, Port, Username, Password);
+                ftp.DataConnectionType = (FtpDataConnectionType)DataType;
+                ftp.Encoding = Encoding.Default;
                 await ftp.ConnectAsync();
                 result.Success = true;
                 result.Message = $"OK   : Connect: {Hostname}:{Port}";
@@ -258,7 +262,7 @@ namespace XwRemote.Servers.IO
                 switch (engine)
                 {
                     case Engine.FTP:
-                        return await ConnectToFTP(Hostname, Port, Username, Password);
+                        return await ConnectToFTP(Hostname, Port, Username, Password, FtpDataType);
                     case Engine.SFTP:
                         return await ConnectToSFTP(Hostname, Port, Username, Password, SshKey);
                     case Engine.S3:

@@ -44,7 +44,6 @@
             this.PortLabel = new System.Windows.Forms.Label();
             this.PortBox = new System.Windows.Forms.TextBox();
             this.DefaultPort = new System.Windows.Forms.CheckBox();
-            this.IsPassive = new System.Windows.Forms.CheckBox();
             this.tabColorBox = new ColorComboTestApp.ColorComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -53,6 +52,8 @@
             this.SshKeyLabel = new System.Windows.Forms.Label();
             this.SshKeyBox = new System.Windows.Forms.TextBox();
             this.buttonShowPassword = new System.Windows.Forms.Button();
+            this.FtpDataType = new System.Windows.Forms.ComboBox();
+            this.FtpDataTypeLabel = new System.Windows.Forms.Label();
             this.dividerPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             this.dividerPanel1.Controls.Add(this.butOK);
             this.dividerPanel1.Controls.Add(this.IsFavorite);
             this.dividerPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dividerPanel1.Location = new System.Drawing.Point(0, 401);
+            this.dividerPanel1.Location = new System.Drawing.Point(0, 417);
             this.dividerPanel1.Name = "dividerPanel1";
             this.dividerPanel1.Size = new System.Drawing.Size(395, 45);
             this.dividerPanel1.TabIndex = 13;
@@ -212,24 +213,11 @@
             this.DefaultPort.UseVisualStyleBackColor = true;
             this.DefaultPort.CheckedChanged += new System.EventHandler(this.DefaultPort_CheckedChanged);
             // 
-            // IsPassive
-            // 
-            this.IsPassive.AutoSize = true;
-            this.IsPassive.Checked = true;
-            this.IsPassive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.IsPassive.Location = new System.Drawing.Point(66, 187);
-            this.IsPassive.Name = "IsPassive";
-            this.IsPassive.Size = new System.Drawing.Size(147, 17);
-            this.IsPassive.TabIndex = 6;
-            this.IsPassive.Text = "Connect in Passive Mode";
-            this.IsPassive.UseVisualStyleBackColor = true;
-            this.IsPassive.Visible = false;
-            // 
             // tabColorBox
             // 
             this.tabColorBox.Extended = true;
             this.tabColorBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabColorBox.Location = new System.Drawing.Point(64, 371);
+            this.tabColorBox.Location = new System.Drawing.Point(64, 377);
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
@@ -238,7 +226,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 376);
+            this.label1.Location = new System.Drawing.Point(4, 382);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 24;
@@ -247,7 +235,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 306);
+            this.label9.Location = new System.Drawing.Point(7, 312);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 27;
@@ -256,7 +244,7 @@
             // NotesBox
             // 
             this.NotesBox.AcceptsReturn = true;
-            this.NotesBox.Location = new System.Drawing.Point(66, 306);
+            this.NotesBox.Location = new System.Drawing.Point(66, 312);
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 59);
@@ -264,7 +252,7 @@
             // 
             // buttonOpenSshKey
             // 
-            this.buttonOpenSshKey.Location = new System.Drawing.Point(16, 238);
+            this.buttonOpenSshKey.Location = new System.Drawing.Point(16, 244);
             this.buttonOpenSshKey.Name = "buttonOpenSshKey";
             this.buttonOpenSshKey.Size = new System.Drawing.Size(26, 23);
             this.buttonOpenSshKey.TabIndex = 37;
@@ -276,7 +264,7 @@
             // SshKeyLabel
             // 
             this.SshKeyLabel.AutoSize = true;
-            this.SshKeyLabel.Location = new System.Drawing.Point(7, 209);
+            this.SshKeyLabel.Location = new System.Drawing.Point(7, 215);
             this.SshKeyLabel.Name = "SshKeyLabel";
             this.SshKeyLabel.Size = new System.Drawing.Size(43, 13);
             this.SshKeyLabel.TabIndex = 36;
@@ -287,7 +275,7 @@
             // 
             this.SshKeyBox.AcceptsReturn = true;
             this.SshKeyBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SshKeyBox.Location = new System.Drawing.Point(65, 210);
+            this.SshKeyBox.Location = new System.Drawing.Point(65, 216);
             this.SshKeyBox.Multiline = true;
             this.SshKeyBox.Name = "SshKeyBox";
             this.SshKeyBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -306,13 +294,33 @@
             this.buttonShowPassword.UseVisualStyleBackColor = true;
             this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
             // 
+            // FtpDataType
+            // 
+            this.FtpDataType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.FtpDataType.FormattingEnabled = true;
+            this.FtpDataType.Location = new System.Drawing.Point(132, 188);
+            this.FtpDataType.Name = "FtpDataType";
+            this.FtpDataType.Size = new System.Drawing.Size(250, 21);
+            this.FtpDataType.TabIndex = 39;
+            // 
+            // FtpDataTypeLabel
+            // 
+            this.FtpDataTypeLabel.AutoSize = true;
+            this.FtpDataTypeLabel.Location = new System.Drawing.Point(7, 191);
+            this.FtpDataTypeLabel.Name = "FtpDataTypeLabel";
+            this.FtpDataTypeLabel.Size = new System.Drawing.Size(88, 13);
+            this.FtpDataTypeLabel.TabIndex = 40;
+            this.FtpDataTypeLabel.Text = "Connection Type";
+            // 
             // IOSettings
             // 
             this.AcceptButton = this.butOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
-            this.ClientSize = new System.Drawing.Size(395, 446);
+            this.ClientSize = new System.Drawing.Size(395, 462);
+            this.Controls.Add(this.FtpDataTypeLabel);
+            this.Controls.Add(this.FtpDataType);
             this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.buttonOpenSshKey);
             this.Controls.Add(this.SshKeyLabel);
@@ -321,7 +329,6 @@
             this.Controls.Add(this.NotesBox);
             this.Controls.Add(this.tabColorBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.IsPassive);
             this.Controls.Add(this.DefaultPort);
             this.Controls.Add(this.PortLabel);
             this.Controls.Add(this.PortBox);
@@ -369,7 +376,6 @@
         private System.Windows.Forms.Label PortLabel;
         private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.CheckBox DefaultPort;
-        private System.Windows.Forms.CheckBox IsPassive;
         private ColorComboTestApp.ColorComboBox tabColorBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label9;
@@ -378,5 +384,7 @@
         private System.Windows.Forms.Label SshKeyLabel;
         private System.Windows.Forms.TextBox SshKeyBox;
         private System.Windows.Forms.Button buttonShowPassword;
+        private System.Windows.Forms.ComboBox FtpDataType;
+        private System.Windows.Forms.Label FtpDataTypeLabel;
     }
 }

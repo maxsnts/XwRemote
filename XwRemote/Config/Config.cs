@@ -260,6 +260,12 @@ namespace XwRemote.Settings
                     sql.ExecuteTX("UPDATE Servers SET SshKey=''");
                 }
 
+                if (!sql.ColumnExists("Servers", "FtpDataType"))
+                {
+                    sql.ExecuteTX("ALTER TABLE Servers ADD COLUMN FtpDataType INTEGER;");
+                    sql.ExecuteTX("UPDATE Servers SET FtpDataType=2 WHERE ServerType=3;");
+                }
+
                 sql.ExecuteTX("UPDATE Servers SET TabColor=-4144960 WHERE TabColor=0");
             }
         }
@@ -322,6 +328,7 @@ namespace XwRemote.Settings
                     ,SshTerminal
                     ,Encryption
                     ,SshKey
+                    ,FtpDataType
                     FROM Servers
                     ORDER BY name
                     COLLATE NOCASE");
@@ -345,7 +352,6 @@ namespace XwRemote.Settings
                     server.Color = sql.Value("Color").ToInt32();
                     server.Width = sql.Value("X").ToInt32();
                     server.Height = sql.Value("Y").ToInt32();
-                    server.Console = sql.Value("Console").ToBoolean();
                     server.AutoScale = sql.Value("AutoScale").ToBoolean();
                     server.SSH1 = sql.Value("SSH1").ToBoolean();
                     server.Passive = sql.Value("Passive").ToBoolean();
@@ -360,6 +366,7 @@ namespace XwRemote.Settings
                     server.SshTerminal = sql.Value("SshTerminal").ToInt32();
                     server.Encryption = sql.Value("Encryption").ToBoolean();
                     server.SshKey = sql.Value("SshKey").ToString();
+                    server.FtpDataType = sql.Value("FtpDataType").ToInt32();
                     Main.servers.Add(server);
                 }
             }
@@ -430,6 +437,7 @@ namespace XwRemote.Settings
                 sql.AddParameter("SshTerminal", server.SshTerminal);
                 sql.AddParameter("Encryption", server.Encryption);
                 sql.AddParameter("SshKey", server.SshKey);
+                sql.AddParameter("FtpDataType", server.FtpDataType);
 
                 if (server.ID == 0)
                 {

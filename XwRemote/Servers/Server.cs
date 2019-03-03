@@ -36,7 +36,6 @@ namespace XwRemote.Settings
         public int Color = 15;
         public int Width = 0;
         public int Height = 0;
-        public bool Console = false;
         public bool AutoScale = true;
         public bool SSH1 = false;
         public bool Passive = true;
@@ -51,6 +50,7 @@ namespace XwRemote.Settings
         public string Notes;
         public int SshTerminal = 1;
         public string SshKey = "";
+        public int FtpDataType = 2;
 
         //**********************************************************************************************
         public Server Copy(ServerType newType)
@@ -73,7 +73,6 @@ namespace XwRemote.Settings
             copy.Color = Color;
             copy.Width = Width;
             copy.Height = Height;
-            copy.Console = Console;
             copy.AutoScale = AutoScale;
             copy.SSH1 = SSH1;
             copy.Passive = Passive;
@@ -88,6 +87,7 @@ namespace XwRemote.Settings
             copy.Notes = Notes;
             copy.SshTerminal = SshTerminal;
             copy.SshKey = SshKey;
+            copy.FtpDataType = FtpDataType;
             //don't copy the port, use the protocols default
             copy.Port = GetDefaultServerPort(newType);
             return copy;

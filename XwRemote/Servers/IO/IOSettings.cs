@@ -21,13 +21,14 @@ namespace XwRemote.Settings
         //**************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
+            LoadFtpDataType(server.FtpDataType);
+
             NameBox.Text       = server.Name;
             HostBox.Text       = server.Host;
             PortBox.Text       = server.Port.ToString();
             UserBox.Text       = server.Username;
             PassBox.Text       = server.Password;
             IsFavorite.Checked = server.IsFavorite;
-            IsPassive.Checked   = server.Passive;
             NotesBox.Text = server.Notes;
             tabColorBox.SelectedColor = Color.FromArgb(server.TabColor);
             SshKeyBox.Text = server.SshKey;
@@ -71,6 +72,8 @@ namespace XwRemote.Settings
                         SshKeyBox.Visible = true;
                         SshKeyLabel.Visible = true;
                         buttonOpenSshKey.Visible = true;
+                        FtpDataType.Visible = false;
+                        FtpDataTypeLabel.Visible = false;
                     }
                     break;
                 case ServerType.AWSS3:
@@ -87,6 +90,8 @@ namespace XwRemote.Settings
                         UsernameLabel.Text = "AccessKey";
                         PasswordLabel.Text = "SecretKey";
                         PassBox.UseSystemPasswordChar = false;
+                        FtpDataType.Visible = false;
+                        FtpDataTypeLabel.Visible = false;
                     }
                     break;
                 case ServerType.AZUREFILE:
@@ -104,7 +109,32 @@ namespace XwRemote.Settings
                         UsernameLabel.Text = "Storage";
                         PasswordLabel.Text = "Key";
                         PassBox.UseSystemPasswordChar = false;
+                        FtpDataType.Visible = false;
+                        FtpDataTypeLabel.Visible = false;
                     }
+                    break;
+            }
+        }
+
+
+        //*****************************************************************************************
+        private void LoadFtpDataType(int type)
+        {
+            FtpDataType.Items.Clear();
+            FtpDataType.Items.Add(new ListItem(2, "Passive - No routing info - Recomended"));
+            FtpDataType.Items.Add(new ListItem(0, "Passive - With routing info - Recomended"));
+            FtpDataType.Items.Add(new ListItem(4, "Active"));
+
+            switch (type)
+            {
+                case 2:
+                    FtpDataType.SelectedIndex = 0;
+                    break;
+                case 0:
+                    FtpDataType.SelectedIndex = 1;
+                    break;
+                case 4:
+                    FtpDataType.SelectedIndex = 2;
                     break;
             }
         }
@@ -124,7 +154,7 @@ namespace XwRemote.Settings
             server.Password   = PassBox.Text;
             server.IsFavorite = IsFavorite.Checked;
             server.Port = PortBox.Text.ToIntOrDefault(21);
-            server.Passive      = IsPassive.Checked;
+            server.FtpDataType = ((ListItem)FtpDataType.SelectedItem).ID;
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
             server.Notes = NotesBox.Text;
             server.SshKey = SshKeyBox.Text;

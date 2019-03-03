@@ -378,7 +378,7 @@ namespace XwRemote.Servers
                 key.SetValue("CloseOnExit", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("WarnOnClose", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("PingInterval", 0x00000000, RegistryValueKind.DWord);
-                key.SetValue("PingIntervalSecs", 0x00000000, RegistryValueKind.DWord);
+                key.SetValue("PingIntervalSecs", 0x0000003c, RegistryValueKind.DWord);
                 key.SetValue("TCPNoDelay", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("TCPKeepalives", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("AddressFamily", 0x00000000, RegistryValueKind.DWord);
