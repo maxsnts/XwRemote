@@ -236,7 +236,7 @@ namespace XwRemote
                 using (WebClient client = new WebClient())
                 {
                     string content = client.DownloadString($"https://github.com/maxsnts/{Main.UpdateRepo}/releases/latest");
-                    Match m = Regex.Match(content, @"(?isx)/releases/tag/v(?<VERSION>.*?)""");
+                    Match m = Regex.Match(content, @"(?isx)/releases/tag/v(?<VERSION>\d+\.\d+\.\d+\.\d+)""");
                     string latestVersion = m.Result("${VERSION}");
 
                     if (latestVersion != Main.CurrentVersion)

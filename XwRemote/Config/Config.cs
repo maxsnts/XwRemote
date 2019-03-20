@@ -263,7 +263,7 @@ namespace XwRemote.Settings
                 if (!sql.ColumnExists("Servers", "FtpDataType"))
                 {
                     sql.ExecuteTX("ALTER TABLE Servers ADD COLUMN FtpDataType INTEGER;");
-                    sql.ExecuteTX("UPDATE Servers SET FtpDataType=2 WHERE ServerType=3;");
+                    sql.ExecuteTX("UPDATE Servers SET FtpDataType=0 WHERE ServerType=3;");
                 }
 
                 sql.ExecuteTX("UPDATE Servers SET TabColor=-4144960 WHERE TabColor=0");

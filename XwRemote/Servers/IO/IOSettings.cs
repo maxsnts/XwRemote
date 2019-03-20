@@ -121,8 +121,8 @@ namespace XwRemote.Settings
         private void LoadFtpDataType(int type)
         {
             FtpDataType.Items.Clear();
-            FtpDataType.Items.Add(new ListItem(2, "Passive - No routing info - Recomended"));
-            FtpDataType.Items.Add(new ListItem(0, "Passive - With routing info - Recomended"));
+            FtpDataType.Items.Add(new ListItem(0, "Passive - With routing info - Recommended"));
+            FtpDataType.Items.Add(new ListItem(2, "Passive - No routing info"));
             FtpDataType.Items.Add(new ListItem(4, "Active"));
 
             switch (type)

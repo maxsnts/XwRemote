@@ -114,7 +114,7 @@ namespace XwRemote.Misc
                 try
                 {
                     string content = await client.DownloadStringTaskAsync(URL);
-                    Match m = Regex.Match(content, @"(?isx)/releases/tag/v(?<VERSION>.*?)""");
+                    Match m = Regex.Match(content, @"(?isx)/releases/tag/v(?<VERSION>\d+\.\d+\.\d+\.\d+)""");
                     string latestVersion = m.Result("${VERSION}");
 
                     if (latestVersion != Main.CurrentVersion)
