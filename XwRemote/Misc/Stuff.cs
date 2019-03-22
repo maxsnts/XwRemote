@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -201,6 +202,16 @@ namespace XwRemote.Misc
         {
             try
             {
+                string path = Environment.CurrentDirectory;
+
+                //check if zip file exists
+                string zipFile = Path.Combine(path, "XwRemote.zip");
+                if (!File.Exists(zipFile))
+                    throw new Exception("no file");
+
+                //check if zip file is OK
+                using (ZipArchive archive = ZipFile.Open(zipFile, ZipArchiveMode.Read)) { }
+
                 //kill putty otherwise update may fail
                 foreach (var process in Process.GetProcessesByName("putty"))
                 {
@@ -208,9 +219,7 @@ namespace XwRemote.Misc
                         process.Kill();
                 }
 
-                string path = Environment.CurrentDirectory;
                 File.WriteAllBytes(Path.Combine(path, "XwUpdater.exe"), Resources.XwUpdater);
-
                 using (Process process = new Process())
                 {
                     process.StartInfo.FileName = Path.Combine(path, "XwUpdater.exe");
