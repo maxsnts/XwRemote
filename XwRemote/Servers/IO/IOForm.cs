@@ -113,6 +113,7 @@ namespace XwRemote.Servers
 
             if (result.Success)
             {
+                Log(result.Message);
                 await RemoteList.Load();
             }
             else
@@ -162,16 +163,16 @@ namespace XwRemote.Servers
 
             if (text.StartsWith("ERROR:"))
                 textColor = Color.Red;
-            
+
             Invoke((Action)(() =>
             {
                 lock (StatusBox)
                 {
                     try
                     {
-                        string str = text + "\r\n";
+                        string str = text.Replace("\r\n", "\n") + "\n";
                         StatusBox.AppendText(str);
-                        StatusBox.Select(StatusBox.Text.Length - (str.Length - 1), str.Length);
+                        StatusBox.Select(StatusBox.Text.Length - str.Length, str.Length);
                         StatusBox.SelectionColor = textColor;
 
                         if (StatusBox.Text.Length > 2048)

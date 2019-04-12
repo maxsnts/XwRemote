@@ -545,12 +545,19 @@
         </member>
         <member name="P:FluentFTP.FtpClient.SystemType">
             <summary>
-            Gets the type of system/server that we're
-            connected to.
+            Gets the type of system/server that we're connected to. Typically begins with "WINDOWS" or "UNIX".
+            </summary>
+        </member>
+        <member name="P:FluentFTP.FtpClient.ServerType">
+            <summary>
+            Gets the type of the FTP server software that we're connected to.
             </summary>
         </member>
         <member name="P:FluentFTP.FtpClient.ConnectionType">
             <summary> Gets the connection type </summary>
+        </member>
+        <member name="P:FluentFTP.FtpClient.LastReply">
+            <summary> Gets the last reply recieved from the server</summary>
         </member>
         <member name="M:FluentFTP.FtpClient.#ctor">
             <summary>
@@ -729,6 +736,18 @@
             </summary>
             <param name="ar"><see cref="T:System.IAsyncResult"/> returned from <see cref="M:FluentFTP.FtpClient.BeginConnect(System.AsyncCallback,System.Object)"/></param>
             <example><code source="..\Examples\BeginConnect.cs" lang="cs" /></example>
+        </member>
+        <member name="M:FluentFTP.FtpClient.DetectFtpServer">
+            <summary>
+            Detect the FTP Server based on the welcome message sent by the server after getting the 220 connection command.
+            Its the primary method.
+            </summary>
+        </member>
+        <member name="M:FluentFTP.FtpClient.DetectFtpServerBySyst">
+            <summary>
+            Detect the FTP Server based on the response to the SYST connection command.
+            Its a fallback method if the server did not send an identifying welcome message.
+            </summary>
         </member>
         <member name="M:FluentFTP.FtpClient.Authenticate">
             <summary>
@@ -1931,8 +1950,8 @@
         </member>
         <member name="P:FluentFTP.FtpClient.RecursiveList">
             <summary>
-            Check if your server supports a recursive LIST command (LIST -R).
-            If you know for sure that this is unsupported, set it to false.
+            Detect if your FTP server supports the recursive LIST command (LIST -R).
+            If you know for sure that this is supported, return true here.
             </summary>
         </member>
         <member name="P:FluentFTP.FtpClient.BulkListing">
@@ -2140,6 +2159,26 @@
             be retrieved.
             </remarks>
             <returns>An array of items retrieved in the listing</returns>
+        </member>
+        <member name="M:FluentFTP.FtpClient.GetListingRecursive(System.String,FluentFTP.FtpListOption)">
+            <summary>
+            Recursive method of GetListing, to recurse through directories on servers that do not natively support recursion.
+            Automatically called by GetListing where required.
+            Uses flat recursion instead of head recursion.
+            </summary>
+            <param name="path">The path of the directory to list</param>
+            <param name="options">Options that dictacte how a list is performed and what information is gathered.</param>
+            <returns>An array of FtpListItem objects</returns>
+        </member>
+        <member name="M:FluentFTP.FtpClient.GetListingRecursiveAsync(System.String,FluentFTP.FtpListOption)">
+            <summary>
+            Recursive method of GetListingAsync, to recurse through directories on servers that do not natively support recursion.
+            Automatically called by GetListingAsync where required.
+            Uses flat recursion instead of head recursion.
+            </summary>
+            <param name="path">The path of the directory to list</param>
+            <param name="options">Options that dictacte how a list is performed and what information is gathered.</param>
+            <returns>An array of FtpListItem objects</returns>
         </member>
         <member name="M:FluentFTP.FtpClient.GetNameListing">
             <summary>
@@ -3925,6 +3964,12 @@
             Append to the file if it exists, by checking the length and adding the missing data.
             </summary>
         </member>
+        <member name="F:FluentFTP.FtpExists.AppendNoCheck">
+            <summary>
+            Append to the file, but don't check if it exists and add missing data.   This might be required if you don't have permissions on the server to list files in the folder.
+            Only use this if you are SURE that the file does not exist on the server otherwise it can cause the UploadFile method to hang due to filesize mismatch.
+            </summary>
+        </member>
         <member name="T:FluentFTP.FtpTraceLevel">
             <summary>
             Defines the level of the tracing message.  Depending on the framework version this is translated
@@ -4045,6 +4090,52 @@
         <member name="F:FluentFTP.FtpDate.UTC">
             <summary>
             The date is converted to UTC, based on the TimeOffset property in FtpClient.
+            </summary>
+        </member>
+        <member name="T:FluentFTP.FtpServer">
+            <summary>
+            Defines the type of the FTP server software.
+            Add constants here as you add detection scripts for individual server types.
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.Unknown">
+            <summary>
+            Unknown FTP server software
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.PureFTPd">
+            <summary>
+            Definitely PureFTPd server
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.VsFTPd">
+            <summary>
+            Definitely VsFTPd server
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.ProFTPD">
+            <summary>
+            Definitely ProFTPD server
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.FileZilla">
+            <summary>
+            Definitely FileZilla server
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.OpenVMS">
+            <summary>
+            Definitely OpenVMS server
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.WindowsCE">
+            <summary>
+            Definitely WindowsCE server
+            </summary>
+        </member>
+        <member name="F:FluentFTP.FtpServer.WuFTPd">
+            <summary>
+            Definitely WuFTPd server
             </summary>
         </member>
         <member name="T:FluentFTP.FtpSslValidation">
@@ -4726,7 +4817,22 @@
             </summary>
             <param name="stream">The existing socket stream</param>
         </member>
+        <member name="M:FluentFTP.Proxy.FtpClientHttp11Proxy.ConnectAsync(FluentFTP.FtpSocketStream)">
+            <summary>
+            Connects to the server using an existing <see cref="T:FluentFTP.FtpSocketStream"/>
+            </summary>
+            <param name="stream">The existing socket stream</param>
+        </member>
         <member name="M:FluentFTP.Proxy.FtpClientHttp11Proxy.Connect(FluentFTP.FtpSocketStream,System.String,System.Int32,FluentFTP.FtpIpVersion)">
+            <summary>
+            Connects to the server using an existing <see cref="T:FluentFTP.FtpSocketStream"/>
+            </summary>
+            <param name="stream">The existing socket stream</param>
+            <param name="host">Host name</param>
+            <param name="port">Port number</param>
+            <param name="ipVersions">IP version to use</param>
+        </member>
+        <member name="M:FluentFTP.Proxy.FtpClientHttp11Proxy.ConnectAsync(FluentFTP.FtpSocketStream,System.String,System.Int32,FluentFTP.FtpIpVersion)">
             <summary>
             Connects to the server using an existing <see cref="T:FluentFTP.FtpSocketStream"/>
             </summary>
@@ -4748,6 +4854,10 @@
             <param name="proxy">Proxy information</param>
         </member>
         <member name="M:FluentFTP.Proxy.FtpClientProxy.Connect(FluentFTP.FtpSocketStream)">
+            <summary> Redefine connect for FtpClient : authentication on the Proxy  </summary>
+            <param name="stream">The socket stream.</param>
+        </member>
+        <member name="M:FluentFTP.Proxy.FtpClientProxy.ConnectAsync(FluentFTP.FtpSocketStream)">
             <summary> Redefine connect for FtpClient : authentication on the Proxy  </summary>
             <param name="stream">The socket stream.</param>
         </member>

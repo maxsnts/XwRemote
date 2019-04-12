@@ -127,11 +127,17 @@ namespace XwRemote.Servers.IO
                 this.FtpDataType = DataType;
 
                 ftp = new FtpClient(Hostname, Port, Username, Password);
-                ftp.DataConnectionType = (FtpDataConnectionType)DataType;
-                ftp.Encoding = Encoding.Default;
+                
                 await ftp.ConnectAsync();
+
+                ftp.Encoding = Encoding.Default;
+                if (ftp.Capabilities.HasFlag(FtpCapability.UTF8))
+                    ftp.Encoding = Encoding.UTF8;
+
+                ftp.DataConnectionType = (FtpDataConnectionType)DataType;
+
                 result.Success = true;
-                result.Message = $"OK   : Connect: {Hostname}:{Port}";
+                result.Message = $"OK   : Connect: {Hostname}:{Port}\n  Capabilities: {ftp.Capabilities}";
             }
             catch (Exception ex)
             {

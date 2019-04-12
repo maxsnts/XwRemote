@@ -5,6 +5,7 @@ using XwMaxLib.Objects;
 using XwMaxLib.Extensions;
 using XwMaxLib.Extentions;
 using System.IO;
+using FluentFTP;
 
 namespace XwRemote.Settings
 {
@@ -121,19 +122,19 @@ namespace XwRemote.Settings
         private void LoadFtpDataType(int type)
         {
             FtpDataType.Items.Clear();
-            FtpDataType.Items.Add(new ListItem(0, "Passive - With routing info - Recommended"));
-            FtpDataType.Items.Add(new ListItem(2, "Passive - No routing info"));
-            FtpDataType.Items.Add(new ListItem(4, "Active"));
+            FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.PASV, "Passive - Use routing info - Recommended"));
+            FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.PASVEX, "Passive - Ignore routing info"));
+            FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.AutoActive, "Active"));
 
-            switch (type)
+            switch ((FtpDataConnectionType)type)
             {
-                case 2:
+                case FtpDataConnectionType.PASV:
                     FtpDataType.SelectedIndex = 0;
                     break;
-                case 0:
+                case FtpDataConnectionType.PASVEX:
                     FtpDataType.SelectedIndex = 1;
                     break;
-                case 4:
+                case FtpDataConnectionType.AutoActive:
                     FtpDataType.SelectedIndex = 2;
                     break;
             }
