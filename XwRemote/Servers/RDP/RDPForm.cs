@@ -22,8 +22,8 @@ namespace XwRemote.Servers
     public partial class RDPForm : Form
     {
         private Server server = null;
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         public RDPForm(Server server)
         {
             InitializeComponent();
@@ -31,8 +31,8 @@ namespace XwRemote.Servers
             TopLevel = false;
             this.server = server;
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             rdpControl.Visible = true;
@@ -42,7 +42,7 @@ namespace XwRemote.Servers
             buttonConnect.BringToFront();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnShown(object sender, EventArgs e)
         {
             if (server.Port == 0)
@@ -51,7 +51,7 @@ namespace XwRemote.Servers
             Connect();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void Connect()
         {
             buttonConnect.Visible = false;
@@ -79,7 +79,7 @@ namespace XwRemote.Servers
             rdpControl.AdvancedSettings7.DisableCtrlAltDel = 1;
             rdpControl.AdvancedSettings7.EnableCredSspSupport = server.Certificates;
             rdpControl.UserName = server.Username;
-            if (!String.IsNullOrEmpty(server.Password))
+            if (!string.IsNullOrEmpty(server.Password))
                 rdpControl.AdvancedSettings7.ClearTextPassword = server.Password;
             rdpControl.AdvancedSettings7.AuthenticationLevel = 0;
            
@@ -123,14 +123,14 @@ namespace XwRemote.Servers
             rdpControl.Connect();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnConnected(object sender, EventArgs e)
         {
             loadingCircle1.Active = false;
             loadingCircle1.Visible = false;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             loadingCircle1.Active = false;
@@ -292,14 +292,14 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnFatalError(object sender, AxMSTSCLib.IMsTscAxEvents_OnFatalErrorEvent e)
         {
             loadingCircle1.Active = false;
             loadingCircle1.Visible = false;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void RDPForm_SizeChanged(object sender, EventArgs e)
         {
             loadingCircle1.Top = (this.Height / 2) + 10;
@@ -308,43 +308,43 @@ namespace XwRemote.Servers
             buttonConnect.Left = (this.Width / 2) - 60;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void buttonConnect_Click(object sender, EventArgs e)
         {
             Connect();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnLeaveFullScreenMode(object sender, EventArgs e)
         {
 
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnRequestGoFullScreen(object sender, EventArgs e)
         {
 
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnEnterFullScreenMode(object sender, EventArgs e)
         {
 
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnWarning(object sender, AxMSTSCLib.IMsTscAxEvents_OnWarningEvent e)
         {
             //MessageBox.Show(e.warningCode.ToString());
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void rdpControl_OnRequestLeaveFullScreen(object sender, EventArgs e)
         {
 
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public bool OnTabClose()
         {
             try
@@ -356,22 +356,22 @@ namespace XwRemote.Servers
             return true;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void OnTabFocus()
         {
             rdpControl.Focus();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnEnter(object sender, EventArgs e)
         {
             OnTabFocus();
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         private void rdpControl_Enter(object sender, EventArgs e)
         {
-             rdpControl.Focus();
+            rdpControl.Focus();
         }
     }
 }

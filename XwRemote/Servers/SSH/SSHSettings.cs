@@ -10,14 +10,15 @@ namespace XwRemote.Settings
     public partial class SSHSettings : Form
     {
         private Server server = null;
-        //**************************************************************************************
+
+        //*************************************************************************************************************
         public SSHSettings(Server server)
         {
             InitializeComponent();
             this.server = server;
         }
-        
-        //**************************************************************************************
+
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             server.Type = ServerType.SSH;
@@ -32,9 +33,6 @@ namespace XwRemote.Settings
             NotesBox.Text = server.Notes;
             SshKeyBox.Text = server.SshKey;
 
-            if (server.SshTerminal == 2)
-                radioPoderosa.Checked = true;
-
             if (server.Port == 22 || server.Port == 0)
             {
                 DefaultPort.Checked = true;
@@ -48,7 +46,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (NameBox.Text.Trim() == string.Empty)
@@ -73,24 +71,19 @@ namespace XwRemote.Settings
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
             server.Notes = NotesBox.Text;
             server.SshKey = SshKeyBox.Text;
-
-            if (radioPoderosa.Checked)
-                server.SshTerminal = 2;
-            else
-                server.SshTerminal = 1;
+            server.SshTerminal = 1;
 
             Main.config.SaveServer(server);
             Close();
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void DefaultPort_CheckedChanged(object sender, EventArgs e)
         {
             if (DefaultPort.Checked)
@@ -104,14 +97,14 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void PassBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F12)
                 PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void buttonOpenSshKey_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
@@ -121,7 +114,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void buttonShowPassword_Click(object sender, EventArgs e)
         {
             PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;

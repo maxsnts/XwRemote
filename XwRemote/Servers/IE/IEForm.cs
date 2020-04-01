@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows.Forms;
-using Microsoft.Win32;
 using XwRemote.Settings;
 
 namespace XwRemote.Servers
@@ -10,15 +10,19 @@ namespace XwRemote.Servers
         private Server server = null;
         bool tryAutoLogin = true;
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public IEForm(Server srv)
         {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", RegistryKeyPermissionCheck.ReadWriteSubTree))
+            using (RegistryKey key = 
+                Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", 
+                RegistryKeyPermissionCheck.ReadWriteSubTree))
             {
                 key.SetValue(System.AppDomain.CurrentDomain.FriendlyName, 11000, RegistryValueKind.DWord);
             }
 
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", RegistryKeyPermissionCheck.ReadWriteSubTree))
+            using (RegistryKey key = 
+                Registry.CurrentUser.CreateSubKey(@"SOFTWARE\WOW6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", 
+                RegistryKeyPermissionCheck.ReadWriteSubTree))
             {
                 key.SetValue(System.AppDomain.CurrentDomain.FriendlyName, 11000, RegistryValueKind.DWord);
             }
@@ -29,7 +33,7 @@ namespace XwRemote.Servers
             server = srv;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             if (server.Port == 0)
@@ -38,13 +42,13 @@ namespace XwRemote.Servers
 
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnShown(object sender, EventArgs e)
         {
             Connect();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void Connect()
         {
             if (server.UseHtmlLogin)
@@ -57,31 +61,31 @@ namespace XwRemote.Servers
                 if (server.Username.Trim() != string.Empty)
                 {
                     host = server.Host.Replace("http://", "");
-                    host = String.Format("http://{0}:{1}@{2}", server.Username, server.Password, host);
+                    host = string.Format("http://{0}:{1}@{2}", server.Username, server.Password, host);
                 }
                 webBrowser.Navigate(host);
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public bool OnTabClose()
         {
             return true;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void OnTabFocus()
         {
             
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnEnter(object sender, EventArgs e)
         {
             OnTabFocus();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             if (server.UseHtmlLogin)
@@ -118,7 +122,5 @@ namespace XwRemote.Servers
                 }
             }
         }
-
-      
     }
 }

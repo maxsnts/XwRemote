@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XwMaxLib.Extensions;
@@ -16,11 +17,15 @@ namespace XwRemote.Misc
     {
         private ImageList imageList = new ImageList();
         bool cancel = false;
+        bool close = false;
         bool running = false;
+        int tasksToRun = 0;
         
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         public Scanner()
         {
+            imageList.Images.Add(global::XwRemote.Properties.Resources.play);
             imageList.Images.Add(global::XwRemote.Properties.Resources.rdp);
             imageList.Images.Add(global::XwRemote.Properties.Resources.ssh);
             imageList.Images.Add(global::XwRemote.Properties.Resources.vnc);
@@ -29,7 +34,7 @@ namespace XwRemote.Misc
             InitializeComponent();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Scanner_Load(object sender, EventArgs e)
         {
             ipAddressControlFrom.Text = Main.config.GetValue("LASTSCANFROMADDRESS");
@@ -53,38 +58,65 @@ namespace XwRemote.Misc
             Scanner_Resize(sender, e);
 
             timerUI.Start();
-
-            //get a list of vendors
-            try
-            {
-                if (!File.Exists("oui.txt"))
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(oui_DownloadStringCompleted);
-                        client.DownloadStringAsync(new Uri("http://standards-oui.ieee.org/oui/oui.txt"));
-                    }
-                }
-            }
-            catch {/*not important, let the scan continue*/}
         }
 
-        //**********************************************************************************************
-        void oui_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        //*************************************************************************************************************
+        private void oui_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            string text = e.Result;
-            File.WriteAllText("oui.txt", text);
+            BeginInvoke((Action)(() =>
+            {
+                progressBar.Value = e.ProgressPercentage;
+            }));
         }
 
-        //**********************************************************************************************
-        private async void buttonStart_Click(object sender, EventArgs e)
+        //*************************************************************************************************************
+        private void Client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            File.WriteAllText("oui.txt", e.Result);
+            Run();
+        }
+
+        //*************************************************************************************************************
+        private void buttonStart_Click(object sender, EventArgs e)
         {
             if (running)
             {
                 cancel = true;
                 return;
             }
+            else
+            {
+                cancel = false;
+                close = false;
+            }
 
+            try
+            {
+                if (!File.Exists("oui.txt"))
+                {
+                    MessageBox.Show("We need to download the MAC address info (one time)");
+
+                    using (WebClient client = new WebClient())
+                    {
+                        client.DownloadStringCompleted += Client_DownloadStringCompleted;
+                        client.DownloadProgressChanged += oui_DownloadProgressChanged;
+                        client.DownloadStringAsync(new Uri("http://standards-oui.ieee.org/oui/oui.txt"));
+                    }
+                }
+                else
+                {
+                    Run();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unable to download networkcard information.\n\n{ex.Message}", "NIC info");
+            }
+        }
+
+        //*************************************************************************************************************
+        private void Run()
+        {
             listViewHosts.Items.Clear();
             progressBar.Value = 0;
 
@@ -104,7 +136,6 @@ namespace XwRemote.Misc
                 Main.config.GetValue("LASTSCANPORTS", textTcpPorts.Text);
                 running = true;
 
-
                 byte[] fromOctets = fromIP.GetAddressBytes();
                 byte[] toOctets = toIP.GetAddressBytes();
 
@@ -118,6 +149,7 @@ namespace XwRemote.Misc
 
                 progressBar.Maximum = numberOfHosts;
 
+                SuspendLayout();
                 for (int O1 = fromOctets[0]; O1 <= toOctets[0]; O1++)
                 {
                     for (int O2 = fromOctets[1]; O2 <= toOctets[1]; O2++)
@@ -131,83 +163,128 @@ namespace XwRemote.Misc
                                     cancel = false;
                                     return;
                                 }
-                                
+
                                 string ip = $"{O1}.{O2}.{O3}.{O4}";
-                                string foundports = checkTcpPorts.Checked ? "" : "not checked";
 
-                                if (checkTcpPorts.Checked)
-                                {
-                                    await Task.Run(() =>
-                                    {
-                                        string[] ports = textTcpPorts.Text.Split(",");
-                                        foreach (string port in ports)
-                                        {
-                                            if (TestTcpPort(ip, port.ToIntOrDefault(0)))
-                                                foundports += port + ",";
-                                        }
-                                    });
-                                }
+                                ListViewItem item = new ListViewItem();
+                                item.Text = ip;
+                                item.Tag = false;
+                                item.SubItems.Add("");
+                                item.SubItems.Add("");
+                                item.SubItems.Add("");
+                                item.SubItems.Add("");
+                                item.SubItems.Add("");
+                                item.SubItems.Add("");
+                                listViewHosts.Items.Add(item);
 
-                                bool ping = await PingHost(ip);
-                                if (ping || foundports.Length > 0)
-                                {
-                                    ListViewItem item = new ListViewItem();
-                                    item.ImageIndex = GetIcon(foundports);
-                                    item.Text = ip;
-                                    item.Tag = string.Empty;
-                                    item.SubItems.Add(GetReverseDNS(ip));
-                                    item.SubItems.Add(GetNetbiosName(ip));
-                                    item.SubItems.Add(ping ? "yes" : "no");
-                                    item.SubItems.Add(foundports);
-                                    string mac = GetMacAddress(ip, out string vendor);
-                                    item.SubItems.Add(mac);
-                                    item.SubItems.Add(GetMACVendor(vendor));
-
-                                    if (cancel)
-                                    {
-                                        cancel = false;
-                                        return;
-                                    }
-
-                                    Invoke((Action)(() =>
-                                    {
-                                        listViewHosts.Items.Add(item);
-                                        item.EnsureVisible();
-                                    }));
-                                }
-
-                                progressBar.Increment(1);
+                                
                             }
                         }
                     }
                 }
+                ResumeLayout();
+                Scan();
             }
             catch (Exception ex)
             {
+                running = false;
                 MessageBox.Show(ex.Message);
             }
-            finally
+        }
+
+        //*************************************************************************************************************
+        private void Scan()
+        {
+            foreach (ListViewItem item in listViewHosts.Items)
             {
-                running = false;
+                if (cancel)
+                    return;
+
+                tasksToRun++;
+                Task.Run(() => ScanIp(item));
             }
         }
 
-        //**********************************************************************************************
-        private int GetIcon(string ports)
+        //*************************************************************************************************************
+        private async void ScanIp(ListViewItem item)
         {
-            if (ports.Contains("3389"))
-                return 0;
-            if (ports.Contains("22"))
-                return 1;
-            //imageList.Images.Add(global::XwRemote.Properties.Resources.vnc);
-            if (ports.Contains("80") || ports.Contains("443"))
-                return 3;
-            if (ports.Contains("21"))
-                return 4;
-            return -1;
+            tasksToRun--;
+
+            if (cancel)
+                return;
+
+            Invoke((Action)(() =>
+            {
+                item.ImageIndex = 0;
+            }));
+
+            string ip = item.Text;
+            string foundports = " ";
+
+            if (checkTcpPorts.Checked)
+            {
+                await Task.Run(() =>
+                {
+                    string[] ports = textTcpPorts.Text.Split(",");
+                    foreach (string port in ports)
+                    {
+                        if (cancel)
+                            return;
+
+                        if (TestTcpPort(ip, port.ToIntOrDefault(0)))
+                            foundports += port + " ";
+                    }
+                });
+            }
+
+            int image = GetIcon(foundports);
+            bool ping = await PingHost(ip);
+            string mac = GetMacAddress(ip);
+            string dns = "";//GetReverseDNS(ip);
+            string netbios = "";//GetNetbiosName(ip);
+            string vendor = GetMACVendor(mac);
+            bool dead = ping == false && foundports.Trim() == "" && mac == "";
+
+            if (cancel)
+                return;
+
+            Invoke((Action)(() =>
+            {
+                if (dead)
+                {
+                    item.Remove();
+                }
+                else
+                {
+                    item.ImageIndex = image;
+                    item.SubItems[1].Text = dns;
+                    item.SubItems[2].Text = netbios;
+                    item.SubItems[3].Text = ping ? "yes" : "no";
+                    item.SubItems[4].Text = foundports;
+                    item.SubItems[5].Text = mac;
+                    item.SubItems[6].Text = vendor;
+                    item.EnsureVisible();
+                }
+
+                progressBar.Increment(1);
+            }));
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
+        private int GetIcon(string ports)
+        {
+            if (ports.Contains(" 3389 "))
+                return 1;
+            if (ports.Contains(" 22 "))
+                return 2;
+            if (ports.Contains(" 80 ") || ports.Contains(" 443 "))
+                return 4;
+            if (ports.Contains(" 21 "))
+                return 5;
+            return 1;
+        }
+
+        //*************************************************************************************************************
         private void Scanner_Resize(object sender, EventArgs e)
         {
             if (listViewHosts.Columns.Count == 0)
@@ -220,7 +297,7 @@ namespace XwRemote.Misc
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<bool> PingHost(string nameOrAddress)
         {
             //Jeeasssusss... 
@@ -238,9 +315,9 @@ namespace XwRemote.Misc
                 }
             }
             catch { return false; }
-       }
+        }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public bool TestTcpPort(string host, int port)
         {
             using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
@@ -262,7 +339,7 @@ namespace XwRemote.Misc
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void ipAddressControlFrom_TextChanged(object sender, EventArgs e)
         {
             try
@@ -276,7 +353,7 @@ namespace XwRemote.Misc
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void ipAddressControlTo_TextChanged(object sender, EventArgs e)
         {
             try
@@ -290,29 +367,41 @@ namespace XwRemote.Misc
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void checkTcpPorts_CheckedChanged(object sender, EventArgs e)
         {
             textTcpPorts.Enabled = checkTcpPorts.Checked;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Scanner_FormClosing(object sender, FormClosingEventArgs e)
         {
-            cancel = true;
+            if (!close)
+            {
+                cancel = true;
+                close = true;
+                e.Cancel = true;
+            }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void timerUI_Tick(object sender, EventArgs e)
         {
+            if (progressBar.Value == 100 || tasksToRun == 0)
+                running = false;
+
+            if (tasksToRun == 0 && close)
+                Close();
+
             ipAddressControlFrom.Enabled = !running;
             ipAddressControlTo.Enabled = !running;
             checkTcpPorts.Enabled = !running;
+            checkBoxHideDead.Enabled = !running;
             textTcpPorts.Enabled = checkTcpPorts.Checked && !running;
             buttonStart.Text = running ? "Cancel" : "Start"; 
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private delegate IPHostEntry GetHostEntryHandler(string ip);
         public string GetReverseDNS(string ip, int timeout = 100)
         {
@@ -335,7 +424,7 @@ namespace XwRemote.Misc
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         // The following byte stream contains the necessary message
         // to request a NetBios name from a machine
         static byte[] NameRequest = new byte[]{
@@ -382,8 +471,8 @@ namespace XwRemote.Misc
             return "";
         }
 
-        //**********************************************************************************************
-        public string GetMacAddress(string ipAddress, out string vendor)
+        //*************************************************************************************************************
+        public string GetMacAddress(string ipAddress)
         {
             string macAddress = string.Empty;
             System.Diagnostics.Process pProcess = new System.Diagnostics.Process();
@@ -397,14 +486,19 @@ namespace XwRemote.Misc
             Regex reg = new Regex(@"(?i)\b(?<one>[0-9A-F]{2})(?<delimiter>[-:]?)(?<two>[0-9A-F]{2})\k<delimiter>(?<three>[0-9A-F]{2})\k<delimiter>(?<four>[0-9A-F]{2})\k<delimiter>(?<five>[0-9A-F]{2})\k<delimiter>(?<six>[0-9A-F]{2})\b", RegexOptions.Compiled);
             Match m = reg.Match(strOutput);
             macAddress = $"{m.Groups["one"]}:{m.Groups["two"]}:{m.Groups["three"]}:{m.Groups["four"]}:{m.Groups["five"]}:{m.Groups["six"]}";
-            vendor = $"{m.Groups["one"]}-{m.Groups["two"]}-{m.Groups["three"]}";
-            return macAddress.ToUpper();
+            return macAddress == ":::::" ? "" : macAddress.ToUpper();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         string temporatyListOfVendors = null;
-        public string GetMACVendor(string macVendorBytes)
+        public string GetMACVendor(string mac)
         {
+            string[] b = mac.Split(":");
+            if (b.Length != 6)
+                return "";
+
+            string vendor = $"{b[0]}-{b[1]}-{b[2]}";
+
             if (temporatyListOfVendors == null)
             {
                 try
@@ -423,12 +517,14 @@ namespace XwRemote.Misc
 
             if (temporatyListOfVendors != "")
             {
-                Regex reg = new Regex($@"(?ixm){macVendorBytes}\s*\(hex\)\s*(?<Vendor>.*?)$", RegexOptions.Compiled);
+                Regex reg = new Regex($@"(?ixm){vendor}\s*\(hex\)\s*(?<Vendor>.*?)$", RegexOptions.Compiled);
                 Match m = reg.Match(temporatyListOfVendors);
                 return m.Groups["Vendor"].ToString();
             }
 
             return "";
         }
+
+
     }
 }

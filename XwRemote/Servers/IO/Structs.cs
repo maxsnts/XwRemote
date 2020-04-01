@@ -1,4 +1,6 @@
 ﻿
+using System.Threading;
+
 namespace XwRemote.Servers
 {
     struct DiskItem
@@ -40,6 +42,7 @@ namespace XwRemote.Servers
         public string TransferID;
         public long Size;
         public long Transferred;
+        public CancellationTokenSource CancelTokenSource;
     }
 
     struct LoadRemotePath

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using XwMaxLib.Data;
-using XwRemote.Servers;
 using XwRemote.Settings;
 
 namespace XwRemote.Servers
@@ -14,7 +12,7 @@ namespace XwRemote.Servers
         private string connectionString = string.Empty;
         private string connectionProvider = string.Empty;
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public SQLForm(Server srv)
         {
             InitializeComponent();
@@ -24,7 +22,7 @@ namespace XwRemote.Servers
             server = srv;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             if (server.Port == 0)
@@ -40,13 +38,13 @@ namespace XwRemote.Servers
             connectionProvider = $"Data.MySqlClient";
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnShown(object sender, EventArgs e)
         {
             Connect();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void Connect()
         {
             loadingCircle1.Active = true;
@@ -68,8 +66,7 @@ namespace XwRemote.Servers
             splitContainer.Visible = true;
         }
 
-
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void SetStatusText(string txt)
         {
             statusLabel.Text = txt;
@@ -77,21 +74,21 @@ namespace XwRemote.Servers
             statusLabel.Top = (this.Height / 2) - (statusLabel.Height / 2) - 10;
             statusLabel.Left = (this.Width / 2) - (statusLabel.Width / 2);
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         private void OnEnter(object sender, EventArgs e)
         {
             OnTabFocus();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public bool OnTabClose()
         {
             connection.Close();
             return true;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void OnTabFocus()
         {
             

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharpRaven;
+using SharpRaven.Data;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -7,8 +9,6 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SharpRaven;
-using SharpRaven.Data;
 using XwMaxLib.Extentions;
 using XwRemote.Properties;
 
@@ -17,8 +17,8 @@ namespace XwRemote.Misc
     public partial class Stuff : Form
     {
         private string NewVersion = "";
-        
-        //************************************************************************************
+
+        //*************************************************************************************************************
         public Stuff()
         {
             InitializeComponent();
@@ -26,13 +26,13 @@ namespace XwRemote.Misc
             faTabStrip1.SelectedItem = faTabAbout;
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLabel1.Text);
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void Stuff_Load(object sender, EventArgs e)
         {
             buttonUpdate.Enabled = false;
@@ -45,13 +45,13 @@ namespace XwRemote.Misc
             scroller1.TextToScroll = Resources.whynot;
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.LinkText);
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private async void faTabStrip1_TabStripItemSelectionChanged(FarsiLibrary.Win.TabStripItemChangedEventArgs e)
         {
             scroller1.Stop();
@@ -62,7 +62,7 @@ namespace XwRemote.Misc
                 await CheckUpdates();
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void buttonSend_Click(object sender, EventArgs e)
         {
             if (CommentBox.Text.Trim() == "")
@@ -88,20 +88,19 @@ namespace XwRemote.Misc
             Close();
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLabel2.Text);
         }
 
-        //************************************************************************************
-     
+        //*************************************************************************************************************
         private void linkLabel3_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.paypal.me/maxsnts");
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private async Task CheckUpdates()
         {
             using (WebClient client = new WebClient())
@@ -156,7 +155,7 @@ namespace XwRemote.Misc
             }
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
@@ -188,7 +187,7 @@ namespace XwRemote.Misc
             }
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             BeginInvoke((Action)(() =>
@@ -197,7 +196,7 @@ namespace XwRemote.Misc
             }));
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             try
@@ -240,13 +239,13 @@ namespace XwRemote.Misc
             }
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void linkLatest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLatest.Text);
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void linkReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkReleases.Text);

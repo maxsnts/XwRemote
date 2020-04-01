@@ -70,7 +70,6 @@
             this.Text = "SSHForm";
             this.Load += new System.EventHandler(this.OnLoad);
             this.Shown += new System.EventHandler(this.OnShown);
-            this.Enter += new System.EventHandler(this.OnEnter);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿using KRBTabControlNS.CustomTab;
+using System;
 using System.Drawing;
-using KRBTabControlNS.CustomTab;
 using XwRemote.Servers;
 
 namespace XwRemote.Settings
@@ -52,7 +51,7 @@ namespace XwRemote.Settings
         public string SshKey = "";
         public int FtpDataType = 2;
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public Server Copy(ServerType newType)
         {
             //How the hell can i use MemberwiseClone while changing type?!?
@@ -93,7 +92,7 @@ namespace XwRemote.Settings
             return copy;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public static Server GetServerInstance(ServerType type)
         {
             switch (type)
@@ -118,7 +117,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public int GetDefaultServerPort(ServerType type)
         {
             switch (type)
@@ -137,7 +136,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         // Virtuals, usually empty
         public virtual void Open(TabPageEx tab)
         {

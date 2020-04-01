@@ -32,8 +32,10 @@ namespace XwRemote.Servers
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RDPForm));
             this.loadingCircle1 = new MRG.Controls.UI.LoadingCircle();
-            this.rdpControl = new AxMSTSCLib.AxMsRdpClient7NotSafeForScripting();
             this.buttonConnect = new System.Windows.Forms.Button();
+            this.axMsRdpClient10NotSafeForScripting1 = new AxMSTSCLib.AxMsRdpClient10NotSafeForScripting();
+            this.rdpControl = new AxMSTSCLib.AxMsRdpClient9NotSafeForScripting();
+            ((System.ComponentModel.ISupportInitialize)(this.axMsRdpClient10NotSafeForScripting1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdpControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,9 +56,25 @@ namespace XwRemote.Servers
             this.loadingCircle1.TabIndex = 1;
             this.loadingCircle1.Text = "loadingCircle1";
             // 
+            // buttonConnect
+            // 
+            this.buttonConnect.Location = new System.Drawing.Point(328, 315);
+            this.buttonConnect.Name = "buttonConnect";
+            this.buttonConnect.Size = new System.Drawing.Size(114, 35);
+            this.buttonConnect.TabIndex = 2;
+            this.buttonConnect.Text = "Connect";
+            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
+            // 
+            // axMsRdpClient10NotSafeForScripting1
+            // 
+            this.axMsRdpClient10NotSafeForScripting1.Enabled = true;
+            this.axMsRdpClient10NotSafeForScripting1.Location = new System.Drawing.Point(0, 0);
+            this.axMsRdpClient10NotSafeForScripting1.Name = "axMsRdpClient10NotSafeForScripting1";
+            this.axMsRdpClient10NotSafeForScripting1.TabIndex = 0;
+            // 
             // rdpControl
             // 
-            this.rdpControl.CausesValidation = false;
             this.rdpControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rdpControl.Enabled = true;
             this.rdpControl.Location = new System.Drawing.Point(0, 0);
@@ -73,16 +91,6 @@ namespace XwRemote.Servers
             this.rdpControl.OnFatalError += new AxMSTSCLib.IMsTscAxEvents_OnFatalErrorEventHandler(this.rdpControl_OnFatalError);
             this.rdpControl.OnWarning += new AxMSTSCLib.IMsTscAxEvents_OnWarningEventHandler(this.rdpControl_OnWarning);
             this.rdpControl.Enter += new System.EventHandler(this.rdpControl_Enter);
-            // 
-            // buttonConnect
-            // 
-            this.buttonConnect.Location = new System.Drawing.Point(328, 315);
-            this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(114, 35);
-            this.buttonConnect.TabIndex = 2;
-            this.buttonConnect.Text = "Connect";
-            this.buttonConnect.UseVisualStyleBackColor = true;
-            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
             // RDPForm
             // 
@@ -102,17 +110,16 @@ namespace XwRemote.Servers
             this.Shown += new System.EventHandler(this.OnShown);
             this.SizeChanged += new System.EventHandler(this.RDPForm_SizeChanged);
             this.Enter += new System.EventHandler(this.OnEnter);
+            ((System.ComponentModel.ISupportInitialize)(this.axMsRdpClient10NotSafeForScripting1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdpControl)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private AxMsRdpClient7NotSafeForScripting rdpControl;
         private MRG.Controls.UI.LoadingCircle loadingCircle1;
         private System.Windows.Forms.Button buttonConnect;
-
-
+        private AxMsRdpClient10NotSafeForScripting axMsRdpClient10NotSafeForScripting1;
+        private AxMsRdpClient9NotSafeForScripting rdpControl;
     }
 }

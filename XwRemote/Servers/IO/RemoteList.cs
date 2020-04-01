@@ -1,15 +1,13 @@
-﻿using System;
+﻿using ShellDll;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ShellDll;
-using XwMaxLib.Objects;
 using XwMaxLib.Data;
 using XwMaxLib.Extensions;
-using XwMaxLib.Log;
+using XwMaxLib.Objects;
 using XwRemote.Properties;
 using XwRemote.Servers.IO;
 using XwRemote.Settings;
@@ -19,15 +17,15 @@ namespace XwRemote.Servers
 {
     public class RemoteList : ListView
     {
-        //********************************************************************************************
+        //*************************************************************************************************************
         private IOForm form = null;
         private ContextMenuStrip contextMenu = new ContextMenuStrip();
         public string CurrentDirectory = "/";
-        ListViewDataSorter sorter = null;
+        FileListSorter sorter = null;
         public bool CheckLick = false;
         private XwRemoteIO remoteIO = null;
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public RemoteList()
         {
             FullRowSelect = true;
@@ -45,7 +43,7 @@ namespace XwRemote.Servers
             ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.List_ColumnClick);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void Init(IOForm f, XwRemoteIO remote)
         {
             form = f;
@@ -54,7 +52,7 @@ namespace XwRemote.Servers
             ContextMenuStrip = contextMenu;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private async void this_DoubleClick(object sender, EventArgs e)
         {
             if (SelectedItems.Count == 0)
@@ -67,7 +65,7 @@ namespace XwRemote.Servers
                 Menu_Download_Click(sender, e);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void this_ItemDrag(object sender, ItemDragEventArgs e)
         {
             form.LocalList.AllowDrop = true;
@@ -75,19 +73,18 @@ namespace XwRemote.Servers
             DoDragDrop(SelectedItems, DragDropEffects.Move);
         }
 
-
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void this_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void this_DragDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) //from explorer
             {
-                String[] filePaths = (String[])e.Data.GetData("FileDrop");
+                string[] filePaths = (string[])e.Data.GetData("FileDrop");
                 Cursor.Current = Cursors.WaitCursor;
                 foreach (string path in filePaths)
                 {
@@ -105,7 +102,8 @@ namespace XwRemote.Servers
                         disk = new DiskItem(false, false, path, Path.GetFileName(path), f.Length);
                         imageIndex = ShellImageList.GetFileImageIndex(disk.path, File.GetAttributes(path));
                     }
-                    form.QueueList.QueueUploadItem(disk.IsDirectory, disk.path, CurrentDirectory, disk.name, imageIndex, disk.size);
+                    form.QueueList.QueueUploadItem(disk.IsDirectory, disk.path, 
+                        CurrentDirectory, disk.name, imageIndex, disk.size);
                 }
             }
             else //from listview
@@ -117,7 +115,8 @@ namespace XwRemote.Servers
                 foreach (ListViewItem item in items)
                 {
                     DiskItem disk = (DiskItem)item.Tag;
-                    form.QueueList.QueueUploadItem(disk.IsDirectory, disk.path, CurrentDirectory, disk.name, item.ImageIndex, disk.size);
+                    form.QueueList.QueueUploadItem(disk.IsDirectory, disk.path, 
+                        CurrentDirectory, disk.name, item.ImageIndex, disk.size);
                 }
             }
 
@@ -127,10 +126,11 @@ namespace XwRemote.Servers
             AllowDrop = true;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private async Task DeleteSelectedItems()
         {
-            if (MessageBox.Show("Delete the selected items?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+            if (MessageBox.Show("Delete the selected items?", "", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
                 Cursor.Current = Cursors.WaitCursor;
 
@@ -172,7 +172,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public async Task Load()
         {
             form.loadingCircle1.Active = false;
@@ -216,10 +216,12 @@ namespace XwRemote.Servers
             await LoadList("/");
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public async Task LoadList(string path)
         {
             Cursor.Current = Cursors.WaitCursor;
+            BackColor = Color.FromArgb(240, 240, 240);
+
             try
             {
                 if (!remoteIO.IsConnected)
@@ -258,12 +260,16 @@ namespace XwRemote.Servers
                         {
                         new ListViewItem.ListViewSubItem(item, " - - - "),
                         new ListViewItem.ListViewSubItem(item,
-                        (remoteItem.Modified == DateTime.MinValue) ? "- - -" : remoteItem.Modified.ToString("yyyy-MM-dd HH:mm:ss"))
+                        (remoteItem.Modified == DateTime.MinValue) 
+                        ? "- - -" 
+                        : remoteItem.Modified.ToString("yyyy-MM-dd HH:mm:ss"))
                         };
 
                         item.SubItems.AddRange(subItems);
-                        item.Tag = new DiskItem(remoteItem.IsDirectory, remoteItem.IsSymlink, remoteItem.FullName, remoteItem.Name);
-                        item.ImageIndex = ShellImageList.GetFileImageIndex(remoteItem.Name, FileAttributes.Directory | ((remoteItem.IsSymlink) ? FileAttributes.Compressed : 0));
+                        item.Tag = new DiskItem(remoteItem.IsDirectory, 
+                            remoteItem.IsSymlink, remoteItem.FullName, remoteItem.Name);
+                        item.ImageIndex = ShellImageList.GetFileImageIndex(remoteItem.Name, 
+                            FileAttributes.Directory | ((remoteItem.IsSymlink) ? FileAttributes.Compressed : 0));
 
                         Items.Add(item);
                     }
@@ -276,32 +282,36 @@ namespace XwRemote.Servers
                         item = new ListViewItem(remoteItem.Name, 0);
                         subItems = new ListViewItem.ListViewSubItem[]
                         {
-                        new ListViewItem.ListViewSubItem(item, String.Format("{0:0,0}", remoteItem.Size)),
+                        new ListViewItem.ListViewSubItem(item, string.Format("{0:0,0}", remoteItem.Size)),
                         new ListViewItem.ListViewSubItem(item,
-                        (remoteItem.Modified == DateTime.MinValue) ? "- - -" : remoteItem.Modified.ToString("yyyy-MM-dd HH:mm:ss"))
+                        (remoteItem.Modified == DateTime.MinValue) 
+                        ? "- - -" 
+                        : remoteItem.Modified.ToString("yyyy-MM-dd HH:mm:ss"))
                         };
 
                         item.SubItems.AddRange(subItems);
-                        item.Tag = new DiskItem(remoteItem.IsDirectory, remoteItem.IsSymlink, remoteItem.FullName, remoteItem.Name, remoteItem.Size);
-                        item.ImageIndex = ShellImageList.GetFileImageIndex(remoteItem.Name, FileAttributes.Normal | ((remoteItem.IsSymlink) ? FileAttributes.Compressed : 0));
+                        item.Tag = new DiskItem(remoteItem.IsDirectory, remoteItem.IsSymlink, 
+                            remoteItem.FullName, remoteItem.Name, remoteItem.Size);
+                        item.ImageIndex = ShellImageList.GetFileImageIndex(remoteItem.Name, 
+                            FileAttributes.Normal | ((remoteItem.IsSymlink) ? FileAttributes.Compressed : 0));
 
                         Items.Add(item);
                     }
 
                     EndUpdate();
                         
-                    form.statusRemoteCount.Text = String.Format("{0} Items", (Items.Count > 2) ? Items.Count - 2 : 0);
+                    form.statusRemoteCount.Text = string.Format("{0} Items", (Items.Count > 2) ? Items.Count - 2 : 0);
 
                     CurrentDirectory = path;
                     form.RemotePath.Text = CurrentDirectory;
-                    Cursor.Current = Cursors.Default;
                     CheckPin();
                 }
                 else
                 {
                     if (form.splitContainerStatus.Visible) //connecting
                     {
-                        form.Log($"An error occurred while retrieving the directory list.\nReason: {result.Message}", Color.Red);
+                        form.Log($"An error occurred while retrieving the directory list.\nReason: {result.Message}", 
+                            Color.Red);
                     }
                     else
                     {
@@ -317,11 +327,14 @@ namespace XwRemote.Servers
                 form.Log(ex.Message, Color.Red);
                 Enabled = true;
             }
+
+            Cursor.Current = Cursors.Default;
+            BackColor = SystemColors.Window;
         }
 
         #region PINS
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void LoadPins()
         {
             ComboBox box = form.RemotePath;
@@ -334,8 +347,8 @@ namespace XwRemote.Servers
                     box.Items.Add(new ListItem(sql.Value("ID").ToInt32(), sql.Value("Path").ToString()));
             }
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         public int PinFolder()
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -359,7 +372,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void UnpinFolder()
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -378,12 +391,9 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private async void CheckPin()
         {
-            if (!CheckLick)
-                return;
-            
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
             {
                 sql.ExecuteTX($"SELECT * FROM pins WHERE Local=0 AND path='{CurrentDirectory}' AND ServerID={form.server.ID}");
@@ -391,21 +401,22 @@ namespace XwRemote.Servers
                 {
                     form.RemotePin.Image = Resources.PinDown;
                     form.remotePinTip.SetToolTip(form.RemotePin, "Unpin Folder");
+                    
+                    if (CheckLick)
+                        await form.CheckLink(CurrentDirectory, false);
                 }
                 else
                 {
                     form.RemotePin.Image = Resources.PinUp;
                     form.remotePinTip.SetToolTip(form.RemotePin, "Pin Folder for future use");
                 }
-
-                await form.CheckLink(CurrentDirectory, false);
             }
 
             CheckLick = false;
         }
         #endregion
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void this_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -414,31 +425,36 @@ namespace XwRemote.Servers
 
                 ListViewHitTestInfo info = HitTest(new Point(e.X, e.Y));
 
-                ToolStripMenuItem menuitemRefresh = new ToolStripMenuItem("Refresh", Resources.refresh, Menu_Refresh_Click, "Refresh");
+                ToolStripMenuItem menuitemRefresh = new ToolStripMenuItem("Refresh", 
+                    Resources.refresh, Menu_Refresh_Click, "Refresh");
                 menuitemRefresh.ShortcutKeyDisplayString = "F5";
                 contextMenu.Items.Add(menuitemRefresh);
 
                 if (info.Item != null)
                 {
-                    ToolStripMenuItem menuitemDownload = new ToolStripMenuItem("Download", Resources.download, Menu_Download_Click, "Download");
+                    ToolStripMenuItem menuitemDownload = new ToolStripMenuItem("Download", 
+                        Resources.download, Menu_Download_Click, "Download");
                     contextMenu.Items.Add(menuitemDownload);
 
-                    ToolStripMenuItem menuitemDelete = new ToolStripMenuItem("Delete", Resources.delete, Menu_Delete_Click, "Delete");
+                    ToolStripMenuItem menuitemDelete = new ToolStripMenuItem("Delete", 
+                        Resources.delete, Menu_Delete_Click, "Delete");
                     menuitemDelete.ShortcutKeyDisplayString = "Del";
                     contextMenu.Items.Add(menuitemDelete);
 
-                    ToolStripMenuItem menuitemRename = new ToolStripMenuItem("Rename", Resources.rename, Menu_Rename_Click, "Rename");
+                    ToolStripMenuItem menuitemRename = new ToolStripMenuItem("Rename", 
+                        Resources.rename, Menu_Rename_Click, "Rename");
                     menuitemRename.ShortcutKeyDisplayString = "F2";
                     contextMenu.Items.Add(menuitemRename);
                 }
 
-                ToolStripMenuItem menuitemCreateFolder = new ToolStripMenuItem("Create Folder", Resources.folder, Menu_CreateFolder_Click, "CreateFolder");
+                ToolStripMenuItem menuitemCreateFolder = new ToolStripMenuItem("Create Folder", 
+                    Resources.folder, Menu_CreateFolder_Click, "CreateFolder");
                 menuitemCreateFolder.ShortcutKeyDisplayString = "  ";
                 contextMenu.Items.Add(menuitemCreateFolder);
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Menu_CreateFolder_Click(object sender, EventArgs e)
         {
             LabelEdit = true;
@@ -447,7 +463,7 @@ namespace XwRemote.Servers
             item.EnsureVisible();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private async void this_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
             string CurDir = CurrentDirectory;
@@ -458,7 +474,8 @@ namespace XwRemote.Servers
                 {
                     if (Regex.IsMatch(e.Label, @"[:\*\\/\?""<>|]"))
                     {
-                        MessageBox.Show("The provided name has some invalid characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("The provided name has some invalid characters", "Error", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Items[e.Item].BeginEdit();
                         return;
                     }
@@ -480,7 +497,9 @@ namespace XwRemote.Servers
                     {
                         DiskItem disk = (DiskItem)Items[e.Item].Tag;
                         if (await remoteIO.Exists(newDir))
-                            MessageBox.Show(String.Format("There is already a {0} with that name", (disk.IsDirectory) ? "folder" : "file"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(string.Format("There is already a {0} with that name", 
+                                (disk.IsDirectory) ? "folder" : "file"), "Error", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                         else
                         {
                             var result = await remoteIO.Rename(disk.path, newDir);
@@ -497,7 +516,7 @@ namespace XwRemote.Servers
             await LoadList(CurDir);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Menu_Download_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.ListView.SelectedListViewItemCollection items = SelectedItems;
@@ -505,24 +524,25 @@ namespace XwRemote.Servers
             foreach (ListViewItem item in items)
             {
                 DiskItem disk = (DiskItem)item.Tag;
-                form.QueueList.QueueDownloadItem(disk.IsDirectory, disk.path, form.LocalList.CurrentDirectory, disk.name, item.ImageIndex, disk.size);
+                form.QueueList.QueueDownloadItem(disk.IsDirectory, disk.path, 
+                    form.LocalList.CurrentDirectory, disk.name, item.ImageIndex, disk.size);
             }
             form.QueueList.StartQueue();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private async void Menu_Delete_Click(object sender, EventArgs e)
         {
             await DeleteSelectedItems();
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         private async void Menu_Refresh_Click(object sender, EventArgs e)
         {
             await LoadList(CurrentDirectory);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Menu_Rename_Click(object sender, EventArgs e)
         {
             if (SelectedItems.Count > 0)
@@ -540,11 +560,11 @@ namespace XwRemote.Servers
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void List_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (sorter == null)
-                sorter = new ListViewDataSorter();
+                sorter = new FileListSorter();
 
             sorter.column = e.Column;
 
@@ -565,7 +585,7 @@ namespace XwRemote.Servers
             Sort();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private async void this_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using KRBTabControlNS.CustomTab;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using KRBTabControlNS.CustomTab;
 using XwMaxLib.Extensions;
 using XwRemote.Misc;
 using XwRemote.Properties;
@@ -15,7 +15,7 @@ namespace XwRemote
 {
     public partial class Main : Form
     {
-        //********************************************************************************************************
+        //*************************************************************************************************************
         public static ImageList myImageList = new ImageList();
         public static Config config = new Config();
         public static List<Server> servers = new List<Server>();
@@ -26,16 +26,17 @@ namespace XwRemote
         private System.Windows.Forms.Timer timerCloseTab = new System.Windows.Forms.Timer();
         private bool retryClose = false;
         private TabPageEx tryCloseTab = null;
-                
-        //********************************************************************************************************
+
+        //*************************************************************************************************************
         public Main()
         {
             InitializeComponent();
-            CurrentVersion += System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetAssembly(typeof(Main)).Location).FileVersion.ToString();
+            CurrentVersion += System.Diagnostics.FileVersionInfo.GetVersionInfo(
+                System.Reflection.Assembly.GetAssembly(typeof(Main)).Location).FileVersion.ToString();
             Text = $"XwRemote {CurrentVersion}";
         }
 
-        //********************************************************************************************************
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             config.Load();
@@ -61,7 +62,8 @@ namespace XwRemote
             ServerTabs.ImageList = myImageList;
 
             Visible = false;
-            WindowState = (FormWindowState)FormWindowState.Parse(WindowState.GetType(), config.GetValue("MainFormState", "Normal"));
+            WindowState = (FormWindowState)FormWindowState.Parse(WindowState.GetType(), 
+                config.GetValue("MainFormState", "Normal"));
             int X = config.GetValue("MainFormLocationX").ToIntOrDefault(50);
             int Y = config.GetValue("MainFormLocationY").ToIntOrDefault(50);
             int W = config.GetValue("MainFormLocationW").ToIntOrDefault(700);
@@ -84,20 +86,21 @@ namespace XwRemote
             LoadFavorites();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Main_Shown(object sender, EventArgs e)
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadCheckUpdates), this);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void OnClosing(object sender, FormClosingEventArgs e)
         {
             if (!retryClose) //first try
             {
                 if (ServerTabs.TabPages.Count > 0)
                 {
-                    if (MessageBox.Show("You have open connections. \r\nAre you sure you want to close application?", "Close?",
+                    if (MessageBox.Show("You have open connections. \r\nAre you sure you want to close application?", 
+                        "Close?",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.No)
                     {
                         e.Cancel = true;
@@ -124,7 +127,7 @@ namespace XwRemote
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Toolbar_ServerManager_Click(object sender, EventArgs e)
         {
             ServerManager serverManager = new ServerManager(this);
@@ -132,8 +135,8 @@ namespace XwRemote
                 ConnectToServer(serverManager.ConnectToThisServer);
             LoadFavorites();
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         private void timerClose_Tick(object sender, EventArgs e)
         {
             retryClose = true;
@@ -141,14 +144,14 @@ namespace XwRemote
             Close();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void timerCloseTab_Tick(object sender, EventArgs e)
         {
             timerCloseTab.Stop();
             ServerTabs.CloseTabByButton(tryCloseTab);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public void ConnectToServer(Server server)
         {
             TabPageEx tab = new TabPageEx(server.Name);
@@ -162,7 +165,7 @@ namespace XwRemote
             FocusSelectedTab();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public bool IsServerOpen(Server server)
         {
             foreach(TabPageEx page in ServerTabs.TabPages)
@@ -173,8 +176,8 @@ namespace XwRemote
             
             return false;
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         private void ServerTabs_TabClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             TabPageEx tab = ((TabPageEx)ServerTabs.SelectedTab);
@@ -202,19 +205,19 @@ namespace XwRemote
             FocusSelectedTab();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void ServerTabs_Selected(object sender, TabControlEventArgs e)
         {
             FocusSelectedTab();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Main_Activated(object sender, EventArgs e)
         {
             FocusSelectedTab();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public void FocusSelectedTab()
         {
             TabPage tab = ServerTabs.SelectedTab;
@@ -226,7 +229,7 @@ namespace XwRemote
             server?.OnTabFocus();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         static void ThreadCheckUpdates(object state)
         {
             try
@@ -271,19 +274,20 @@ namespace XwRemote
             catch
             { /* Not important */}
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         private void MainToolbar_MouseEnter(object sender, EventArgs e)
         {
             Focus();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void toolStripUpdates_Click(object sender, EventArgs e)
         {
             if (ServerTabs.TabPages.Count > 0)
             {
-                MessageBox.Show("You have open connections. \r\nClose server connections before update XwRemote", "Connections...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You have open connections. \r\nClose server connections before update XwRemote", 
+                    "Connections...", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -291,8 +295,8 @@ namespace XwRemote
             stuff.faTabStrip1.SelectedItem = stuff.faTabUpdates;
             stuff.ShowDialog();
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         private void LoadFavorites()
         {
             Toolbar_Favorites.DropDownItems.Clear();
@@ -311,12 +315,13 @@ namespace XwRemote
 
             if (Toolbar_Favorites.DropDownItems.Count == 0)
             {
-                ToolStripItem item = Toolbar_Favorites.DropDownItems.Add("no favorites: mark servers as favorites on the server settings window", null);
+                ToolStripItem item = Toolbar_Favorites.DropDownItems.Add(
+                    "no favorites: mark servers as favorites on the server settings window", null);
                 item.Enabled = false;
             }
         }
-         
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         private void Toolbar_Favorites_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Tag == null)
@@ -325,20 +330,20 @@ namespace XwRemote
             ConnectToServer((Server)e.ClickedItem.Tag);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void toolSettings_Click(object sender, EventArgs e)
         {
             GlobalSettings settings = new GlobalSettings();
             settings.ShowDialog();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void ServerTabs_MouseMove(object sender, MouseEventArgs e)
         {
             BringToFront();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Toolbar_CanYouHelp_Click(object sender, EventArgs e)
         {
             Stuff stuff = new Stuff();
@@ -346,14 +351,14 @@ namespace XwRemote
             stuff.ShowDialog();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Toolbar_Stuff_Click(object sender, EventArgs e)
         {
             Stuff stuff = new Stuff();
             stuff.ShowDialog();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void toolScanner_Click(object sender, EventArgs e)
         {
             Scanner scanner = new Scanner();

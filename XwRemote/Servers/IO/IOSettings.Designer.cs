@@ -54,6 +54,8 @@
             this.buttonShowPassword = new System.Windows.Forms.Button();
             this.FtpDataType = new System.Windows.Forms.ComboBox();
             this.FtpDataTypeLabel = new System.Windows.Forms.Label();
+            this.UseTLS = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.dividerPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,7 +83,7 @@
             this.dividerPanel1.Controls.Add(this.butOK);
             this.dividerPanel1.Controls.Add(this.IsFavorite);
             this.dividerPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dividerPanel1.Location = new System.Drawing.Point(0, 417);
+            this.dividerPanel1.Location = new System.Drawing.Point(0, 461);
             this.dividerPanel1.Name = "dividerPanel1";
             this.dividerPanel1.Size = new System.Drawing.Size(395, 45);
             this.dividerPanel1.TabIndex = 13;
@@ -217,7 +219,7 @@
             // 
             this.tabColorBox.Extended = true;
             this.tabColorBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabColorBox.Location = new System.Drawing.Point(64, 377);
+            this.tabColorBox.Location = new System.Drawing.Point(64, 403);
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
@@ -226,7 +228,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 382);
+            this.label1.Location = new System.Drawing.Point(4, 408);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 24;
@@ -235,7 +237,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 312);
+            this.label9.Location = new System.Drawing.Point(7, 338);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 27;
@@ -244,7 +246,7 @@
             // NotesBox
             // 
             this.NotesBox.AcceptsReturn = true;
-            this.NotesBox.Location = new System.Drawing.Point(66, 312);
+            this.NotesBox.Location = new System.Drawing.Point(66, 338);
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 59);
@@ -252,7 +254,7 @@
             // 
             // buttonOpenSshKey
             // 
-            this.buttonOpenSshKey.Location = new System.Drawing.Point(16, 244);
+            this.buttonOpenSshKey.Location = new System.Drawing.Point(16, 270);
             this.buttonOpenSshKey.Name = "buttonOpenSshKey";
             this.buttonOpenSshKey.Size = new System.Drawing.Size(26, 23);
             this.buttonOpenSshKey.TabIndex = 37;
@@ -264,7 +266,7 @@
             // SshKeyLabel
             // 
             this.SshKeyLabel.AutoSize = true;
-            this.SshKeyLabel.Location = new System.Drawing.Point(7, 215);
+            this.SshKeyLabel.Location = new System.Drawing.Point(7, 241);
             this.SshKeyLabel.Name = "SshKeyLabel";
             this.SshKeyLabel.Size = new System.Drawing.Size(43, 13);
             this.SshKeyLabel.TabIndex = 36;
@@ -275,7 +277,7 @@
             // 
             this.SshKeyBox.AcceptsReturn = true;
             this.SshKeyBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SshKeyBox.Location = new System.Drawing.Point(65, 216);
+            this.SshKeyBox.Location = new System.Drawing.Point(65, 242);
             this.SshKeyBox.Multiline = true;
             this.SshKeyBox.Name = "SshKeyBox";
             this.SshKeyBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -312,13 +314,36 @@
             this.FtpDataTypeLabel.TabIndex = 40;
             this.FtpDataTypeLabel.Text = "Connection Type";
             // 
+            // UseTLS
+            // 
+            this.UseTLS.AutoSize = true;
+            this.UseTLS.Checked = true;
+            this.UseTLS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.UseTLS.Location = new System.Drawing.Point(64, 219);
+            this.UseTLS.Name = "UseTLS";
+            this.UseTLS.Size = new System.Drawing.Size(164, 17);
+            this.UseTLS.TabIndex = 41;
+            this.UseTLS.Text = "Use TLS to connect to FTPS";
+            this.UseTLS.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(5, 220);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(27, 13);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "TLS";
+            // 
             // IOSettings
             // 
             this.AcceptButton = this.butOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
-            this.ClientSize = new System.Drawing.Size(395, 462);
+            this.ClientSize = new System.Drawing.Size(395, 506);
+            this.Controls.Add(this.UseTLS);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.FtpDataTypeLabel);
             this.Controls.Add(this.FtpDataType);
             this.Controls.Add(this.buttonShowPassword);
@@ -386,5 +411,7 @@
         private System.Windows.Forms.Button buttonShowPassword;
         private System.Windows.Forms.ComboBox FtpDataType;
         private System.Windows.Forms.Label FtpDataTypeLabel;
+        private System.Windows.Forms.CheckBox UseTLS;
+        private System.Windows.Forms.Label label3;
     }
 }

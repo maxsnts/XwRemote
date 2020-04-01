@@ -51,6 +51,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CommentBox = new System.Windows.Forms.TextBox();
             this.faTabUpdates = new FarsiLibrary.Win.FATabStripItem();
+            this.UpdateProgress = new System.Windows.Forms.ProgressBar();
             this.linkReleases = new System.Windows.Forms.LinkLabel();
             this.ReleaseNotes = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -62,7 +63,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
-            this.UpdateProgress = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).BeginInit();
             this.faTabStrip1.SuspendLayout();
             this.faTabAbout.SuspendLayout();
@@ -97,11 +97,11 @@
             this.faTabStrip1.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.faTabStrip1.Items.AddRange(new FarsiLibrary.Win.FATabStripItem[] {
             this.faTabAbout,
-            this.faTabCredits,
-            this.faTabWhyNot,
-            this.faTabContact,
             this.faTabUpdates,
-            this.faTabDonation});
+            this.faTabContact,
+            this.faTabDonation,
+            this.faTabCredits,
+            this.faTabWhyNot});
             this.faTabStrip1.Location = new System.Drawing.Point(0, 50);
             this.faTabStrip1.Name = "faTabStrip1";
             this.faTabStrip1.SelectedItem = this.faTabAbout;
@@ -169,7 +169,7 @@
             this.faTabCredits.IsDrawn = true;
             this.faTabCredits.Name = "faTabCredits";
             this.faTabCredits.Size = new System.Drawing.Size(557, 367);
-            this.faTabCredits.TabIndex = 1;
+            this.faTabCredits.TabIndex = 4;
             this.faTabCredits.Title = "Credits";
             // 
             // richTextBox1
@@ -190,7 +190,7 @@
             this.faTabWhyNot.IsDrawn = true;
             this.faTabWhyNot.Name = "faTabWhyNot";
             this.faTabWhyNot.Size = new System.Drawing.Size(557, 367);
-            this.faTabWhyNot.TabIndex = 2;
+            this.faTabWhyNot.TabIndex = 5;
             this.faTabWhyNot.Title = "Why Not";
             // 
             // scroller1
@@ -224,7 +224,7 @@
             this.faTabContact.IsDrawn = true;
             this.faTabContact.Name = "faTabContact";
             this.faTabContact.Size = new System.Drawing.Size(557, 367);
-            this.faTabContact.TabIndex = 3;
+            this.faTabContact.TabIndex = 2;
             this.faTabContact.Title = "Contact";
             // 
             // linkLabel2
@@ -323,8 +323,16 @@
             this.faTabUpdates.IsDrawn = true;
             this.faTabUpdates.Name = "faTabUpdates";
             this.faTabUpdates.Size = new System.Drawing.Size(557, 367);
-            this.faTabUpdates.TabIndex = 4;
+            this.faTabUpdates.TabIndex = 1;
             this.faTabUpdates.Title = "Updates";
+            // 
+            // UpdateProgress
+            // 
+            this.UpdateProgress.Location = new System.Drawing.Point(10, 77);
+            this.UpdateProgress.Name = "UpdateProgress";
+            this.UpdateProgress.Size = new System.Drawing.Size(535, 10);
+            this.UpdateProgress.TabIndex = 22;
+            this.UpdateProgress.Visible = false;
             // 
             // linkReleases
             // 
@@ -400,7 +408,7 @@
             this.faTabDonation.IsDrawn = true;
             this.faTabDonation.Name = "faTabDonation";
             this.faTabDonation.Size = new System.Drawing.Size(557, 367);
-            this.faTabDonation.TabIndex = 5;
+            this.faTabDonation.TabIndex = 3;
             this.faTabDonation.Title = "Can you Help?";
             // 
             // label8
@@ -440,14 +448,6 @@
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "Make a contribution however small using paypal";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked_1);
-            // 
-            // UpdateProgress
-            // 
-            this.UpdateProgress.Location = new System.Drawing.Point(10, 77);
-            this.UpdateProgress.Name = "UpdateProgress";
-            this.UpdateProgress.Size = new System.Drawing.Size(535, 10);
-            this.UpdateProgress.TabIndex = 22;
-            this.UpdateProgress.Visible = false;
             // 
             // Stuff
             // 

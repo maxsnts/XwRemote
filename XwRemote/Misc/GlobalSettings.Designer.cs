@@ -33,6 +33,16 @@
             this.butCancel = new System.Windows.Forms.Button();
             this.butOK = new System.Windows.Forms.Button();
             this.faTabStrip1 = new FarsiLibrary.Win.FATabStrip();
+            this.tabSecurity = new FarsiLibrary.Win.FATabStripItem();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textPasswordRepeat = new System.Windows.Forms.TextBox();
+            this.butRemovePass = new System.Windows.Forms.Button();
+            this.butSetPassword = new System.Windows.Forms.Button();
+            this.textMasterPassword = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabFTP = new FarsiLibrary.Win.FATabStripItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnBrowseFolder = new System.Windows.Forms.Button();
@@ -43,24 +53,18 @@
             this.radioDesktop = new System.Windows.Forms.RadioButton();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabSSH = new FarsiLibrary.Win.FATabStripItem();
+            this.checkBoxCorrectFocus = new System.Windows.Forms.CheckBox();
             this.sshFontSize = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabSecurity = new FarsiLibrary.Win.FATabStripItem();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textPasswordRepeat = new System.Windows.Forms.TextBox();
-            this.butRemovePass = new System.Windows.Forms.Button();
-            this.butSetPassword = new System.Windows.Forms.Button();
-            this.textMasterPassword = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.dividerPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).BeginInit();
             this.faTabStrip1.SuspendLayout();
+            this.tabSecurity.SuspendLayout();
             this.tabFTP.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabSSH.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sshFontSize)).BeginInit();
-            this.tabSecurity.SuspendLayout();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -97,7 +101,7 @@
             this.butCancel.Location = new System.Drawing.Point(338, 10);
             this.butCancel.Name = "butCancel";
             this.butCancel.Size = new System.Drawing.Size(75, 23);
-            this.butCancel.TabIndex = 2;
+            this.butCancel.TabIndex = 1;
             this.butCancel.Text = "Cancel";
             this.butCancel.UseVisualStyleBackColor = true;
             // 
@@ -106,7 +110,7 @@
             this.butOK.Location = new System.Drawing.Point(257, 10);
             this.butOK.Name = "butOK";
             this.butOK.Size = new System.Drawing.Size(75, 23);
-            this.butOK.TabIndex = 1;
+            this.butOK.TabIndex = 0;
             this.butOK.Text = "OK";
             this.butOK.UseVisualStyleBackColor = true;
             this.butOK.Click += new System.EventHandler(this.butOK_Click);
@@ -119,15 +123,115 @@
             this.faTabStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.faTabStrip1.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.faTabStrip1.Items.AddRange(new FarsiLibrary.Win.FATabStripItem[] {
+            this.tabSecurity,
             this.tabFTP,
-            this.tabSSH,
-            this.tabSecurity});
+            this.tabSSH});
             this.faTabStrip1.Location = new System.Drawing.Point(0, 50);
             this.faTabStrip1.Name = "faTabStrip1";
-            this.faTabStrip1.SelectedItem = this.tabFTP;
+            this.faTabStrip1.SelectedItem = this.tabSecurity;
             this.faTabStrip1.Size = new System.Drawing.Size(424, 241);
             this.faTabStrip1.TabIndex = 15;
             this.faTabStrip1.Text = "faTabStrip1";
+            // 
+            // tabSecurity
+            // 
+            this.tabSecurity.CanClose = false;
+            this.tabSecurity.Controls.Add(this.label6);
+            this.tabSecurity.Controls.Add(this.label5);
+            this.tabSecurity.Controls.Add(this.label4);
+            this.tabSecurity.Controls.Add(this.label3);
+            this.tabSecurity.Controls.Add(this.textPasswordRepeat);
+            this.tabSecurity.Controls.Add(this.butRemovePass);
+            this.tabSecurity.Controls.Add(this.butSetPassword);
+            this.tabSecurity.Controls.Add(this.textMasterPassword);
+            this.tabSecurity.Controls.Add(this.label2);
+            this.tabSecurity.IsDrawn = true;
+            this.tabSecurity.Name = "tabSecurity";
+            this.tabSecurity.Selected = true;
+            this.tabSecurity.Size = new System.Drawing.Size(422, 220);
+            this.tabSecurity.TabIndex = 0;
+            this.tabSecurity.Title = "Security";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 36);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(341, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "If you forget the master password, you will loose all the configuration";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 59);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(187, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Be careful to remember the password";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 14);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(386, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "This allows you to keep your passwords secure by encrypting the configuration";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 122);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(91, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Repeat password";
+            // 
+            // textPasswordRepeat
+            // 
+            this.textPasswordRepeat.Location = new System.Drawing.Point(183, 119);
+            this.textPasswordRepeat.Name = "textPasswordRepeat";
+            this.textPasswordRepeat.Size = new System.Drawing.Size(228, 21);
+            this.textPasswordRepeat.TabIndex = 1;
+            this.textPasswordRepeat.UseSystemPasswordChar = true;
+            // 
+            // butRemovePass
+            // 
+            this.butRemovePass.Location = new System.Drawing.Point(222, 176);
+            this.butRemovePass.Name = "butRemovePass";
+            this.butRemovePass.Size = new System.Drawing.Size(189, 23);
+            this.butRemovePass.TabIndex = 3;
+            this.butRemovePass.Text = "Remove Password";
+            this.butRemovePass.UseVisualStyleBackColor = true;
+            this.butRemovePass.Click += new System.EventHandler(this.butRemovePass_Click);
+            // 
+            // butSetPassword
+            // 
+            this.butSetPassword.Location = new System.Drawing.Point(13, 176);
+            this.butSetPassword.Name = "butSetPassword";
+            this.butSetPassword.Size = new System.Drawing.Size(194, 23);
+            this.butSetPassword.TabIndex = 2;
+            this.butSetPassword.Text = "Set Password";
+            this.butSetPassword.UseVisualStyleBackColor = true;
+            this.butSetPassword.Click += new System.EventHandler(this.butSetPassword_Click);
+            // 
+            // textMasterPassword
+            // 
+            this.textMasterPassword.Location = new System.Drawing.Point(183, 92);
+            this.textMasterPassword.Name = "textMasterPassword";
+            this.textMasterPassword.Size = new System.Drawing.Size(228, 21);
+            this.textMasterPassword.TabIndex = 0;
+            this.textMasterPassword.UseSystemPasswordChar = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 94);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(155, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Master configuration password";
             // 
             // tabFTP
             // 
@@ -137,9 +241,8 @@
             this.tabFTP.Image = global::XwRemote.Properties.Resources.ftp;
             this.tabFTP.IsDrawn = true;
             this.tabFTP.Name = "tabFTP";
-            this.tabFTP.Selected = true;
             this.tabFTP.Size = new System.Drawing.Size(422, 220);
-            this.tabFTP.TabIndex = 0;
+            this.tabFTP.TabIndex = 1;
             this.tabFTP.Title = "File Location";
             // 
             // groupBox1
@@ -229,13 +332,26 @@
             // tabSSH
             // 
             this.tabSSH.CanClose = false;
+            this.tabSSH.Controls.Add(this.checkBoxCorrectFocus);
             this.tabSSH.Controls.Add(this.sshFontSize);
             this.tabSSH.Controls.Add(this.label1);
             this.tabSSH.IsDrawn = true;
             this.tabSSH.Name = "tabSSH";
             this.tabSSH.Size = new System.Drawing.Size(422, 220);
-            this.tabSSH.TabIndex = 1;
+            this.tabSSH.TabIndex = 2;
             this.tabSSH.Title = "SSH";
+            // 
+            // checkBoxCorrectFocus
+            // 
+            this.checkBoxCorrectFocus.Checked = true;
+            this.checkBoxCorrectFocus.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCorrectFocus.Location = new System.Drawing.Point(59, 40);
+            this.checkBoxCorrectFocus.Name = "checkBoxCorrectFocus";
+            this.checkBoxCorrectFocus.Size = new System.Drawing.Size(272, 34);
+            this.checkBoxCorrectFocus.TabIndex = 2;
+            this.checkBoxCorrectFocus.Text = "Try correct focus on putty. If you have problems with some keys on putty, try dis" +
+    "able this.";
+            this.checkBoxCorrectFocus.UseVisualStyleBackColor = true;
             // 
             // sshFontSize
             // 
@@ -260,78 +376,8 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Font Size";
             // 
-            // tabSecurity
-            // 
-            this.tabSecurity.CanClose = false;
-            this.tabSecurity.Controls.Add(this.label3);
-            this.tabSecurity.Controls.Add(this.textPasswordRepeat);
-            this.tabSecurity.Controls.Add(this.butRemovePass);
-            this.tabSecurity.Controls.Add(this.butSetPassword);
-            this.tabSecurity.Controls.Add(this.textMasterPassword);
-            this.tabSecurity.Controls.Add(this.label2);
-            this.tabSecurity.IsDrawn = true;
-            this.tabSecurity.Name = "tabSecurity";
-            this.tabSecurity.Size = new System.Drawing.Size(422, 220);
-            this.tabSecurity.TabIndex = 2;
-            this.tabSecurity.Title = "Security";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 45);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Repeat password";
-            // 
-            // textPasswordRepeat
-            // 
-            this.textPasswordRepeat.Location = new System.Drawing.Point(172, 41);
-            this.textPasswordRepeat.Name = "textPasswordRepeat";
-            this.textPasswordRepeat.Size = new System.Drawing.Size(228, 21);
-            this.textPasswordRepeat.TabIndex = 4;
-            this.textPasswordRepeat.UseSystemPasswordChar = true;
-            // 
-            // butRemovePass
-            // 
-            this.butRemovePass.Location = new System.Drawing.Point(211, 99);
-            this.butRemovePass.Name = "butRemovePass";
-            this.butRemovePass.Size = new System.Drawing.Size(189, 23);
-            this.butRemovePass.TabIndex = 3;
-            this.butRemovePass.Text = "Remove Password";
-            this.butRemovePass.UseVisualStyleBackColor = true;
-            this.butRemovePass.Click += new System.EventHandler(this.butRemovePass_Click);
-            // 
-            // butSetPassword
-            // 
-            this.butSetPassword.Location = new System.Drawing.Point(11, 99);
-            this.butSetPassword.Name = "butSetPassword";
-            this.butSetPassword.Size = new System.Drawing.Size(194, 23);
-            this.butSetPassword.TabIndex = 2;
-            this.butSetPassword.Text = "Set Password";
-            this.butSetPassword.UseVisualStyleBackColor = true;
-            this.butSetPassword.Click += new System.EventHandler(this.butSetPassword_Click);
-            // 
-            // textMasterPassword
-            // 
-            this.textMasterPassword.Location = new System.Drawing.Point(172, 14);
-            this.textMasterPassword.Name = "textMasterPassword";
-            this.textMasterPassword.Size = new System.Drawing.Size(228, 21);
-            this.textMasterPassword.TabIndex = 1;
-            this.textMasterPassword.UseSystemPasswordChar = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 17);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(155, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Master configuration password";
-            // 
             // GlobalSettings
             // 
-            this.AcceptButton = this.butOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
@@ -351,6 +397,8 @@
             this.dividerPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).EndInit();
             this.faTabStrip1.ResumeLayout(false);
+            this.tabSecurity.ResumeLayout(false);
+            this.tabSecurity.PerformLayout();
             this.tabFTP.ResumeLayout(false);
             this.tabFTP.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -358,8 +406,6 @@
             this.tabSSH.ResumeLayout(false);
             this.tabSSH.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sshFontSize)).EndInit();
-            this.tabSecurity.ResumeLayout(false);
-            this.tabSecurity.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -391,5 +437,9 @@
         private System.Windows.Forms.Button butSetPassword;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textPasswordRepeat;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox checkBoxCorrectFocus;
     }
 }

@@ -9,14 +9,15 @@ namespace XwRemote.Servers
     public partial class IESettings : Form
     {
         private Server server = null;
-        //**************************************************************************************
+        
+        //*************************************************************************************************************
         public IESettings(Server server)
         {
             InitializeComponent();
             this.server = server;
         }
-        
-        //**************************************************************************************
+
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             server.Type = ServerType.IE;
@@ -36,13 +37,13 @@ namespace XwRemote.Servers
             tabColorBox.SelectedColor = Color.FromArgb(server.TabColor);
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (NameBox.Text.Trim() == string.Empty)
@@ -72,14 +73,14 @@ namespace XwRemote.Servers
             Close();
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void PassBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F12)
                 PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void checkUseHtml_CheckedChanged(object sender, EventArgs e)
         {
             userIDbox.Enabled = checkUseHtml.Checked;
@@ -87,7 +88,7 @@ namespace XwRemote.Servers
             loginIDbox.Enabled = checkUseHtml.Checked;
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void buttonShowPassword_Click(object sender, EventArgs e)
         {
             PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;

@@ -14,7 +14,7 @@ namespace XwRemote.Settings
         private Dictionary<string, string> values = new Dictionary<string, string>();
         public static string MasterPassword = "";
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void Load()
         {
             string fullPath = System.Reflection.Assembly.GetAssembly(typeof(Main)).Location;
@@ -22,7 +22,9 @@ namespace XwRemote.Settings
 
             if (!IsDirectoryWritable(theDirectory, false))
             {
-                MessageBox.Show($"This application was built to be portable.\n\nIt needs to be able to write the configuration in {theDirectory}", "XwRemote", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    $"This application was built to be portable.\n\nIt needs to be able to write the configuration in {theDirectory}", 
+                    "XwRemote", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(1);
             }
 
@@ -35,7 +37,7 @@ namespace XwRemote.Settings
             Refresh();
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
         {
             try
@@ -54,7 +56,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         private void Refresh()
         {
             LoadValues();
@@ -62,7 +64,7 @@ namespace XwRemote.Settings
             LoadServers();
         }
 
-        //********************************************************************************************************
+        //*************************************************************************************************************
         public static string GetDBPath()
         {
             string fullPath = System.Reflection.Assembly.GetAssembly(typeof(Main)).Location;
@@ -70,7 +72,7 @@ namespace XwRemote.Settings
             return Path.Combine(theDirectory, "#XwRemoteServerDatabase#");
         }
 
-        //********************************************************************************************************
+        //*************************************************************************************************************
         public static string GetConnectionString()
         {
             string connString = $"Data Source={GetDBPath()};Version=3;";
@@ -79,7 +81,7 @@ namespace XwRemote.Settings
             return connString;
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         //This could be condensed in fewer commands, but would breake compatibility with previous versions
         private void UpgradeConfigDB()
         {
@@ -111,7 +113,8 @@ namespace XwRemote.Settings
                                 {
                                     if (ex2.Message.Contains("file is not a database"))
                                     {
-                                        MessageBox.Show("Bad password or config is corrupted.", "XwRemote", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                        MessageBox.Show("Bad password or config is corrupted.", "XwRemote", 
+                                            MessageBoxButtons.OK, MessageBoxIcon.Stop);
                                         Environment.Exit(1);
                                     }
                                 }
@@ -270,7 +273,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public string GetValue(string key, string defaultValue = "")
         {
             if (!values.ContainsKey(key))
@@ -279,7 +282,7 @@ namespace XwRemote.Settings
             return values[key];
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void SetValue(string key, string value)
         {
             values[key] = value;
@@ -291,7 +294,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         private void LoadServers()
         {
             Main.servers.Clear();
@@ -372,7 +375,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         private void LoadGroups()
         {
             groups.Clear();
@@ -390,7 +393,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         private void LoadValues()
         {
             values.Clear();
@@ -404,7 +407,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public  void SaveServer(Server server)
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -455,7 +458,7 @@ namespace XwRemote.Settings
             Refresh();
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void DeleteServer(Server server)
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -466,7 +469,7 @@ namespace XwRemote.Settings
             Refresh();
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void SetServerFavourite(Server server)
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -477,7 +480,7 @@ namespace XwRemote.Settings
             Refresh();
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void SaveGroup(Group group)
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -499,7 +502,7 @@ namespace XwRemote.Settings
         }
 
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void DeleteGroup(Group group)
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -511,7 +514,7 @@ namespace XwRemote.Settings
             Refresh();
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void CollapseGroup(Group group)
         {
             group.Expanded = false;
@@ -522,7 +525,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public void ExpandGroup(Group group)
         {
             group.Expanded = true;
@@ -533,7 +536,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public bool ShowExperimentalFeatures()
         {
             return Main.config.GetValue("EXPERIMENTAL-STUFF", false.ToString()).ToBoolOrDefault(false);

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Amazon;
+﻿using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
@@ -16,13 +8,20 @@ using Microsoft.WindowsAzure.Storage.Core.Util;
 using Microsoft.WindowsAzure.Storage.File;
 using Renci.SshNet;
 using Renci.SshNet.Async;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using XwMaxLib.Extensions;
 
 namespace XwRemote.Servers.IO
 {
     public class XwRemoteIO : IDisposable
     {
-        //**********************************************************************************************
+        //*************************************************************************************************************
         enum Engine
         {
             FTP = 1,
@@ -59,13 +58,14 @@ namespace XwRemote.Servers.IO
             public DateTime Modified;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private string Hostname = "";
         private int Port = 0;
         private string Username = "";
         private string Password = "";
         private string SshKey = "";
         private int FtpDataType = 2;
+        private bool UseTLS = false;
         private Engine engine;
         private FtpClient ftp = null;
         private SftpClient sftp = null;
@@ -74,7 +74,7 @@ namespace XwRemote.Servers.IO
         private CloudFileClient azure = null;
         private bool ThrowExceptions = false;
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public bool IsConnected
         {
             get
@@ -112,9 +112,10 @@ namespace XwRemote.Servers.IO
                 }
             }
         }
-        
-        //**********************************************************************************************
-        public async Task<XwRemoteIOResult> ConnectToFTP(string Hostname, int Port, string Username, string Password, int DataType)
+
+        //*************************************************************************************************************
+        public async Task<XwRemoteIOResult> ConnectToFTP(string Hostname, 
+            int Port, string Username, string Password, int DataType, bool TLS)
         {
             XwRemoteIOResult result = new XwRemoteIOResult();
             try
@@ -125,19 +126,24 @@ namespace XwRemote.Servers.IO
                 this.Username = Username;
                 this.Password = Password;
                 this.FtpDataType = DataType;
+                this.UseTLS = TLS;
 
                 ftp = new FtpClient(Hostname, Port, Username, Password);
-                
+                if (TLS)
+                {
+                    ftp.EncryptionMode = FtpEncryptionMode.Explicit;
+                    ftp.ValidateAnyCertificate = true;
+                }
                 await ftp.ConnectAsync();
-
-                ftp.Encoding = Encoding.Default;
-                if (ftp.Capabilities.HasFlag(FtpCapability.UTF8))
-                    ftp.Encoding = Encoding.UTF8;
 
                 ftp.DataConnectionType = (FtpDataConnectionType)DataType;
 
                 result.Success = true;
-                result.Message = $"OK   : Connect: {Hostname}:{Port}\n  Capabilities: {ftp.Capabilities}";
+                string capabilities = "";
+                foreach (var cap in ftp.Capabilities)
+                    capabilities += $"{cap} ";
+                
+                result.Message = $"OK   : Connect: {Hostname}:{Port}\n       Server: {ftp.ServerOS}, {ftp.ServerType}\n       Capabilities: {capabilities}";
             }
             catch (Exception ex)
             {
@@ -149,8 +155,9 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
-        public async Task<XwRemoteIOResult> ConnectToSFTP(string Hostname, int Port, string Username, string Password, string SshKey = "")
+        //*************************************************************************************************************
+        public async Task<XwRemoteIOResult> ConnectToSFTP(string Hostname, 
+            int Port, string Username, string Password, string SshKey = "")
         {
             XwRemoteIOResult result = new XwRemoteIOResult();
             try
@@ -168,7 +175,8 @@ namespace XwRemote.Servers.IO
                         sftp = new SftpClient(Hostname, Port, Username, Password);
                     else
                     {
-                        PrivateKeyFile file = new PrivateKeyFile(new MemoryStream(Encoding.ASCII.GetBytes(SshKey)), Password);
+                        PrivateKeyFile file = new PrivateKeyFile
+                        (new MemoryStream(Encoding.ASCII.GetBytes(SshKey)), Password);
                         sftp = new SftpClient(Hostname, Port, Username,  file);
                     }
                     sftp.Connect();
@@ -187,7 +195,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> ConnectToAWSS3(string Bucket, string AccessKey, string SecretKey)
         {
             XwRemoteIOResult result = new XwRemoteIOResult();
@@ -229,7 +237,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> ConnectToAZUREFILE(string AccountName, string AccountKey)
         {
             XwRemoteIOResult result = new XwRemoteIOResult();
@@ -259,7 +267,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> Reconnect()
         {
             XwRemoteIOResult result = new XwRemoteIOResult();
@@ -268,7 +276,7 @@ namespace XwRemote.Servers.IO
                 switch (engine)
                 {
                     case Engine.FTP:
-                        return await ConnectToFTP(Hostname, Port, Username, Password, FtpDataType);
+                        return await ConnectToFTP(Hostname, Port, Username, Password, FtpDataType, UseTLS);
                     case Engine.SFTP:
                         return await ConnectToSFTP(Hostname, Port, Username, Password, SshKey);
                     case Engine.S3:
@@ -288,8 +296,8 @@ namespace XwRemote.Servers.IO
             }
             return result;
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> ListDirectory(string path)
         {
             //do some uniformization
@@ -349,7 +357,7 @@ namespace XwRemote.Servers.IO
                                         sftp.ChangeDirectory(item.FullName);
                                         i.IsDirectory = true;
                                     }
-                                    catch (Exception ex)
+                                    catch
                                     {
                                         i.IsDirectory = false;
                                     }
@@ -492,7 +500,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> CreateDirectory(string path)
         {
             path = path.Replace("\\", "/");
@@ -553,7 +561,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<bool> Exists(string path)
         {
             path = path.Replace("\\", "/");
@@ -614,7 +622,7 @@ namespace XwRemote.Servers.IO
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> Rename(string oldName, string newName)
         {
             oldName = oldName.Replace("\\", "/");
@@ -654,8 +662,8 @@ namespace XwRemote.Servers.IO
             }
             return result;
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> DeleteDirectory(string path)
         {
             path = path.Replace("\\", "/");
@@ -680,7 +688,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private async Task DeleteFolder(string path)
         {
             var items = await ListDirectory(path);
@@ -745,8 +753,8 @@ namespace XwRemote.Servers.IO
                     throw new Exception("DeleteFolder not implemented for this engine");
             }
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> DeleteFile(string path)
         {
             path = path.Replace("\\", "/");
@@ -828,9 +836,10 @@ namespace XwRemote.Servers.IO
             }
             return result;
         }
-        
-        //**********************************************************************************************
-        public async Task<XwRemoteIOResult> UploadFile(string local, string remote, string transferID = "", bool resume = false)
+
+        //*************************************************************************************************************
+        public async Task<XwRemoteIOResult> UploadFile(string local, string remote, 
+            string transferID = "", bool resume = false, CancellationToken cancelToken = default(CancellationToken))
         {
             remote = remote.Replace("\\", "/");
             XwRemoteIOResult result = new XwRemoteIOResult();
@@ -840,19 +849,16 @@ namespace XwRemote.Servers.IO
                 {
                     case Engine.FTP:
                     {
-                        Progress<double> progress = new Progress<double>(x =>
+                        Progress<FtpProgress> progress = new Progress<FtpProgress>(p =>
                         {
-                            // When in ASCII mode or file size is unavailable, size will be 0 or -1, 
-                            // causing progress be Nan, Infinity or minus
-                            if (!double.IsNaN(x) && !double.IsInfinity(x) && x >= 0)
-                            {
-                                XwRemoteIOFileProgressResult prog = new XwRemoteIOFileProgressResult();
-                                prog.Percentage = x;
-                                prog.TreansferID = transferID;
-                                OnFileProgress?.Invoke(prog);
-                            }
+                            XwRemoteIOFileProgressResult prog = new XwRemoteIOFileProgressResult();
+                            prog.Percentage = p.Progress;
+                            prog.TreansferID = transferID;
+                            OnFileProgress?.Invoke(prog);
                         });
-                        await ftp.UploadFileAsync(local, remote, (resume)?FtpExists.Append:FtpExists.Overwrite, true, FtpVerify.None, CancellationToken.None, progress);
+                        await ftp.UploadFileAsync(local, remote, 
+                            (resume)?FtpRemoteExists.Append: FtpRemoteExists.Overwrite, true, 
+                            FtpVerify.None, progress, cancelToken);
                     }
                     break;
                     case Engine.SFTP:
@@ -893,7 +899,7 @@ namespace XwRemote.Servers.IO
                                 OnFileProgress?.Invoke(prog);
                             };
 
-                            await fileTransferUtility.UploadAsync(request);
+                            await fileTransferUtility.UploadAsync(request, cancelToken);
                         }
                         break;
                     case Engine.AZUREFILE:
@@ -921,7 +927,7 @@ namespace XwRemote.Servers.IO
                                     default(FileRequestOptions),
                                     default(OperationContext),
                                     progressHandler,
-                                    default(CancellationToken));
+                                    cancelToken);
                             }
                         }
                         break;
@@ -941,8 +947,9 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
-        public async Task<XwRemoteIOResult> DownloadFile(string local, string remote, string transferID = "", bool overwrite = true)
+        //*************************************************************************************************************
+        public async Task<XwRemoteIOResult> DownloadFile(string local, string remote, 
+            string transferID = "", bool resume = false, CancellationToken cancelToken = default(CancellationToken))
         {
             remote = remote.Replace("\\", "/");
             XwRemoteIOResult result = new XwRemoteIOResult();
@@ -952,19 +959,16 @@ namespace XwRemote.Servers.IO
                 {
                     case Engine.FTP:
                         {
-                            Progress<double> progress = new Progress<double>(x =>
+                            Progress<FtpProgress> progress = new Progress<FtpProgress>(p =>
                             {
-                                // When in ASCII mode or file size is unavailable, size will be 0 or -1, 
-                                // causing progress be Nan, Infinity or minus
-                                if (!double.IsNaN(x) && !double.IsInfinity(x) && x >= 0)
-                                {
-                                    XwRemoteIOFileProgressResult prog = new XwRemoteIOFileProgressResult();
-                                    prog.Percentage = x;
-                                    prog.TreansferID = transferID;
-                                    OnFileProgress?.Invoke(prog);
-                                }
+                                XwRemoteIOFileProgressResult prog = new XwRemoteIOFileProgressResult();
+                                prog.Percentage = p.Progress;
+                                prog.TreansferID = transferID;
+                                OnFileProgress?.Invoke(prog);
                             });
-                            await ftp.DownloadFileAsync(local, remote, true, FtpVerify.None, CancellationToken.None, progress);
+                            await ftp.DownloadFileAsync(local, remote, 
+                                (resume) ? FtpLocalExists.Append : FtpLocalExists.Overwrite, 
+                                FtpVerify.None, progress, cancelToken);
                         }
                         break;
                     case Engine.SFTP:
@@ -1002,7 +1006,7 @@ namespace XwRemote.Servers.IO
                                 OnFileProgress?.Invoke(prog);
                             };
 
-                            await fileTransferUtility.DownloadAsync(request);
+                            await fileTransferUtility.DownloadAsync(request, cancelToken);
                         }
                         break;
                     case Engine.AZUREFILE:
@@ -1030,9 +1034,8 @@ namespace XwRemote.Servers.IO
                                 default(FileRequestOptions),
                                 default(OperationContext),
                                 progressHandler,
-                                default(CancellationToken));
+                                cancelToken);
                         }
-                        break;
                         break;
                     default:
                         throw new Exception("DownloadFile not implemented for this engine");
@@ -1050,7 +1053,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> GetFileSize(string path)
         {
             path = path.Replace("\\", "/");
@@ -1104,7 +1107,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task<XwRemoteIOResult> GetDateModified(string path)
         {
             path = path.Replace("\\", "/");
@@ -1158,7 +1161,7 @@ namespace XwRemote.Servers.IO
             return result;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public event CallBack_OnFileProgress OnFileProgress;
         public delegate void CallBack_OnFileProgress(XwRemoteIOFileProgressResult result);
         public class XwRemoteIOFileProgressResult
@@ -1167,22 +1170,23 @@ namespace XwRemote.Servers.IO
             public double Percentage;
             public string TreansferID;
         }
-        
+
         #region CLEANUP
-        //**********************************************************************************************
+        //*************************************************************************************************************
         ~XwRemoteIO()
         {
             Dispose(false);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
 
         }
-        //**********************************************************************************************
+        
+        //*************************************************************************************************************
         protected virtual void Dispose(bool disposing)
         {
             if (!IsDisposed)
@@ -1194,7 +1198,7 @@ namespace XwRemote.Servers.IO
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public bool IsDisposed { get; protected set; }
         public void Close()
         {
@@ -1236,7 +1240,4 @@ namespace XwRemote.Servers.IO
         }
         #endregion
     }
-
-    
-    
 }

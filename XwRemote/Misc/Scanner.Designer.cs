@@ -41,6 +41,7 @@
             this.textTcpPorts = new System.Windows.Forms.TextBox();
             this.checkTcpPorts = new System.Windows.Forms.CheckBox();
             this.timerUI = new System.Windows.Forms.Timer(this.components);
+            this.checkBoxHideDead = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -112,9 +113,9 @@
             // buttonStart
             // 
             this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStart.Location = new System.Drawing.Point(826, 57);
+            this.buttonStart.Location = new System.Drawing.Point(799, 57);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(75, 23);
+            this.buttonStart.Size = new System.Drawing.Size(102, 23);
             this.buttonStart.TabIndex = 6;
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;
@@ -125,6 +126,7 @@
             this.listViewHosts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewHosts.HideSelection = false;
             this.listViewHosts.Location = new System.Drawing.Point(12, 103);
             this.listViewHosts.Name = "listViewHosts";
             this.listViewHosts.Size = new System.Drawing.Size(889, 582);
@@ -143,9 +145,9 @@
             // 
             // textTcpPorts
             // 
-            this.textTcpPorts.Location = new System.Drawing.Point(399, 59);
+            this.textTcpPorts.Location = new System.Drawing.Point(565, 59);
             this.textTcpPorts.Name = "textTcpPorts";
-            this.textTcpPorts.Size = new System.Drawing.Size(373, 20);
+            this.textTcpPorts.Size = new System.Drawing.Size(215, 20);
             this.textTcpPorts.TabIndex = 10;
             // 
             // checkTcpPorts
@@ -153,11 +155,11 @@
             this.checkTcpPorts.AutoSize = true;
             this.checkTcpPorts.Checked = true;
             this.checkTcpPorts.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkTcpPorts.Location = new System.Drawing.Point(336, 61);
+            this.checkTcpPorts.Location = new System.Drawing.Point(475, 61);
             this.checkTcpPorts.Name = "checkTcpPorts";
-            this.checkTcpPorts.Size = new System.Drawing.Size(65, 17);
+            this.checkTcpPorts.Size = new System.Drawing.Size(84, 17);
             this.checkTcpPorts.TabIndex = 9;
-            this.checkTcpPorts.Text = "tcpPorts";
+            this.checkTcpPorts.Text = "Check Ports";
             this.checkTcpPorts.UseVisualStyleBackColor = true;
             this.checkTcpPorts.CheckedChanged += new System.EventHandler(this.checkTcpPorts_CheckedChanged);
             // 
@@ -165,11 +167,24 @@
             // 
             this.timerUI.Tick += new System.EventHandler(this.timerUI_Tick);
             // 
+            // checkBoxHideDead
+            // 
+            this.checkBoxHideDead.AutoSize = true;
+            this.checkBoxHideDead.Checked = true;
+            this.checkBoxHideDead.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxHideDead.Location = new System.Drawing.Point(295, 61);
+            this.checkBoxHideDead.Name = "checkBoxHideDead";
+            this.checkBoxHideDead.Size = new System.Drawing.Size(93, 17);
+            this.checkBoxHideDead.TabIndex = 11;
+            this.checkBoxHideDead.Text = "Hide dead IPs";
+            this.checkBoxHideDead.UseVisualStyleBackColor = true;
+            // 
             // Scanner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 697);
+            this.Controls.Add(this.checkBoxHideDead);
             this.Controls.Add(this.textTcpPorts);
             this.Controls.Add(this.checkTcpPorts);
             this.Controls.Add(this.progressBar);
@@ -205,5 +220,6 @@
         private System.Windows.Forms.TextBox textTcpPorts;
         private System.Windows.Forms.CheckBox checkTcpPorts;
         private System.Windows.Forms.Timer timerUI;
+        private System.Windows.Forms.CheckBox checkBoxHideDead;
     }
 }

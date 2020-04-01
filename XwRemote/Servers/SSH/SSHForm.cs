@@ -1,14 +1,12 @@
-﻿using System;
+﻿using KRBTabControlNS.CustomTab;
+using Microsoft.Win32;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Security;
 using System.Threading;
 using System.Windows.Forms;
-using KRBTabControlNS.CustomTab;
-using Microsoft.Win32;
-using Poderosa.TerminalControl;
-using SuperPutty;
 using XwMaxLib.Extensions;
 using XwRemote.Settings;
 
@@ -16,12 +14,11 @@ namespace XwRemote.Servers
 {
     public partial class SSHForm : Form
     {
-        private ApplicationPanel puttyPanel;  
+        private PuttyAppPanel puttyPanel;  
         private Server server = null;
         private string ShhKeyFile = "";
-        SshTerminalControl poderosaPanel = null;
         
-        //********************************************************************************************
+        //*************************************************************************************************************
         public SSHForm(Server srv)
         {
             InitializeComponent();
@@ -30,83 +27,56 @@ namespace XwRemote.Servers
             server = srv;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             if (server.Port == 0)
                 server.Port = 22;
 
             SuspendLayout();
-
-            switch (server.SshTerminal)
+            
+            PuttyAppPanel.PuttyAppStartedCallback startedCallback = delegate ()
             {
-                case 1:
-                    {
-                        PuttyClosedCallback closedCallback = delegate (bool closed)
-                        {
-                            BeginInvoke((MethodInvoker)delegate
-                            {
-                                ((KRBTabControl)(Parent.Parent)).TabPages.Remove((TabPageEx)Parent);
-                                DeletePuttySession();
-                            });
-                        };
+                BeginInvoke((MethodInvoker)delegate
+                {
+                    statusLabel.Visible = false;
+                    loadingCircle1.Visible = false;
+                    puttyPanel.Visible = true;
+                });
+            };
 
-                        PuttyStartedCallback startedCallback = delegate ()
-                        {
-                            BeginInvoke((MethodInvoker)delegate
-                            {
-                                statusLabel.Visible = false;
-                                loadingCircle1.Visible = false;
-                                puttyPanel.Visible = true;
-                            });
-                        };
+            PuttyAppPanel.PuttyAppClosedCallback closedCallback = delegate (bool closed)
+            {
+                BeginInvoke((MethodInvoker)delegate
+                {
+                    ((KRBTabControl)(Parent.Parent)).TabPages.Remove((TabPageEx)Parent);
+                    DeletePuttySession();
+                });
+            };
 
-                        puttyPanel = new ApplicationPanel();
-                        puttyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-                        puttyPanel.ApplicationName = @"putty\putty.exe";
-                        puttyPanel.ApplicationParameters = String.Empty;
-                        puttyPanel.Name = "puttyPanel";
-                        puttyPanel.Margin = new Padding(10);
-                        puttyPanel.TabIndex = 0;
-                        puttyPanel.m_CloseCallback = closedCallback;
-                        puttyPanel.m_StartCallback = startedCallback;
-                        puttyPanel.Visible = false;
-                        Controls.Add(puttyPanel);
-                    }
-                    break;
-                case 2:
-                    {
-                        poderosaPanel = new SshTerminalControl();
-                        poderosaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-                        poderosaPanel.Visible = false;
-                        poderosaPanel.SshProtocol = (server.SSH1) ? SshProtocol.SSH1 : SshProtocol.SSH2;
-                        poderosaPanel.TerminalType = TerminalType.XTerm;
-                        poderosaPanel.Font = new Font("Consolas", Main.config.GetValue("DEFAULT_SSH_FONT_SIZE").ToIntOrDefault(10));
-                        poderosaPanel.BackColor = Color.Black;
-                        poderosaPanel.ForeColor = Color.LightGray;
-                        poderosaPanel.HostName = server.Host;
-                        poderosaPanel.Port = server.Port;
-                        //terminalControl.IdentityFile = loginDialog.IdentityFile;
-                        poderosaPanel.Username = server.Username;
-                        poderosaPanel.Password = new SecureString();
-                        foreach (char character in server.Password)
-                            poderosaPanel.Password.AppendChar(character);
-                        Controls.Add(poderosaPanel);
-                    }
-                    break;
-                default:
-                    throw new Exception($"Invalid Terminal Type: {server.SshTerminal}");
-            }
+            puttyPanel = new PuttyAppPanel(Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true));
+            puttyPanel.Parent = this;
+            puttyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            puttyPanel.ApplicationCommand = @"putty\putty.exe";
+            puttyPanel.ApplicationParameters = string.Empty;
+            puttyPanel.Name = "puttyPanel";
+            puttyPanel.Margin = new Padding(10);
+            puttyPanel.TabIndex = 0;
+            puttyPanel.StartedCallback = startedCallback;
+            puttyPanel.ClosedCallback = closedCallback;
+            puttyPanel.Visible = false;
+            Controls.Add(puttyPanel);
+            
             ResumeLayout();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnShown(object sender, EventArgs e)
         {
             Connect();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void Connect()
         {
             loadingCircle1.BringToFront();
@@ -119,89 +89,37 @@ namespace XwRemote.Servers
             loadingCircle1.Visible = true;
             SetStatusText("Connecting...");
 
-            switch (server.SshTerminal)
+            if (File.Exists("putty\\putty.exe"))
             {
-                case 1:
-                    {
-                        if (File.Exists("putty\\putty.exe"))
-                        {
-                            CreatePuttySession();
-                            puttyPanel.ApplicationParameters = String.Format(" -load \"{4}\" {0} -P {5} -l {1} -pw {2} {3}",
-                                server.Host,
-                                server.Username,
-                                server.Password,
-                                (server.SSH1) ? "-1" : "-2",
-                                String.Format("XwRemote{0}", server.ID),
-                                server.Port);
+                CreatePuttySession();
+                puttyPanel.ApplicationParameters = string.Format(" -load \"{4}\" {0} -P {5} -l {1} -pw {2} {3}",
+                    server.Host,
+                    server.Username,
+                    server.Password,
+                    (server.SSH1) ? "-1" : "-2",
+                    string.Format("XwRemote{0}", server.ID),
+                    server.Port);
 
-                            ThreadPool.QueueUserWorkItem(new WaitCallback(ConnectTrd), this);
-                        }
-                        else
-                        {
-                            loadingCircle1.Visible = false;
-                            SetStatusText("Putty not found");
-                        }
-                    }
-                    break;
-                case 2:
-                    {
-                        poderosaPanel.Connected += PoderosaPanel_Connected;
-                        poderosaPanel.Disconnected += PoderosaPanel_Disconnected;
-                        poderosaPanel.LoggedOff += PoderosaPanel_LoggedOff;
-                        poderosaPanel.AsyncConnect();
-                    }
-                    break;
+                ThreadPool.QueueUserWorkItem(new WaitCallback(ConnectTrd), this);
+            }
+            else
+            {
+                loadingCircle1.Visible = false;
+                SetStatusText("Putty not found");
             }
         }
 
-        //********************************************************************************************
-        private void PoderosaPanel_LoggedOff(object sender, EventArgs e)
-        {
-            Invoke((Action)(() =>
-            {
-                SetStatusText("Logged Off");
-                loadingCircle1.Visible = false;
-                poderosaPanel.Visible = false;
-                statusLabel.Visible = true;
-            }));
-        }
-
-        //********************************************************************************************
-        private void PoderosaPanel_Disconnected(object sender, ErrorEventArgs e)
-        {
-            Invoke((Action)(() =>
-            {
-                SetStatusText(e.GetException().Message);
-                loadingCircle1.Visible = false;
-                poderosaPanel.Visible = false;
-                statusLabel.Visible = true;
-            }));
-        }
-
-        //********************************************************************************************
-        private void PoderosaPanel_Connected(object sender, EventArgs e)
-        {
-            Invoke((Action)(() =>
-            {
-                loadingCircle1.Visible = false;
-                statusLabel.Visible = false;
-                poderosaPanel.Visible = true;
-                poderosaPanel.Focus();
-            }));
-        }
-
-        //********************************************************************************************
+        //*************************************************************************************************************
         static void ConnectTrd(object state)
         {
             SSHForm form = (SSHForm)state;
-            
             try
             {
                 Socket stk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
                 stk.Connect(form.server.Host, form.server.Port);
                 form.BeginInvoke((MethodInvoker)delegate
                 {
-                    form.puttyPanel.Execute();
+                    form.puttyPanel.Open();
                 });
             }
             catch (Exception ex)
@@ -222,7 +140,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void SetStatusText(string txt)
         {
             statusLabel.Visible = true;
@@ -231,55 +149,24 @@ namespace XwRemote.Servers
             statusLabel.Left = (this.Width / 2) - (statusLabel.Width / 2);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public bool OnTabClose()
         {
-            switch (server.SshTerminal)
-            {
-                case 1:
-                    {
-                        puttyPanel.Kill();
-                        DeletePuttySession();
-                    }
-                    break;
-                case 2:
-                    {
-                        if (poderosaPanel != null)
-                            poderosaPanel.Dispose();
-                    }
-                    break;
-            }
+            DeletePuttySession();
+            puttyPanel.Close();
             return true;
         }
-
-        //********************************************************************************************
+     
+        //*************************************************************************************************************
         public void OnTabFocus()
         {
-            switch (server.SshTerminal)
-            {
-                case 1:
-                    {
-                        puttyPanel?.ReFocus();
-                    }
-                    break;
-                case 2:
-                    {
-                        poderosaPanel.Focus();
-                    }
-                    break;
-            }
+            puttyPanel?.Focus();
         }
 
-        //********************************************************************************************
-        private void OnEnter(object sender, EventArgs e)
-        {
-            OnTabFocus();
-        }
-        
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void CreatePuttySession()
         {
-            string subkey = String.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);
+            string subkey = string.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);
             RegistryKey key = Registry.CurrentUser.CreateSubKey(subkey, RegistryKeyPermissionCheck.ReadWriteSubTree);
             if (key != null)
             {
@@ -296,7 +183,8 @@ namespace XwRemote.Servers
                 using (Graphics g = this.CreateGraphics())
                 {
                     int currentDPI = (int)g.DpiX;
-                    key.SetValue("FontHeight", Main.config.GetValue("DEFAULT_SSH_FONT_SIZE").ToIntOrDefault(10), RegistryValueKind.DWord);
+                    key.SetValue("FontHeight", Main.config.GetValue("DEFAULT_SSH_FONT_SIZE").ToIntOrDefault(10), 
+                        RegistryValueKind.DWord);
                 }
                 
                 key.SetValue("TerminalType", "xterm", RegistryValueKind.String);
@@ -376,7 +264,7 @@ namespace XwRemote.Servers
                 key.SetValue("SSHLogOmitData", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("PortNumber", 0x00000016, RegistryValueKind.DWord);
                 key.SetValue("CloseOnExit", 0x00000001, RegistryValueKind.DWord);
-                key.SetValue("WarnOnClose", 0x00000001, RegistryValueKind.DWord);
+                key.SetValue("WarnOnClose", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("PingInterval", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("PingIntervalSecs", 0x0000003c, RegistryValueKind.DWord);
                 key.SetValue("TCPNoDelay", 0x00000001, RegistryValueKind.DWord);
@@ -410,7 +298,7 @@ namespace XwRemote.Servers
                 key.SetValue("NoApplicationKeys", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("NoApplicationCursors", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("NoMouseReporting", 0x00000000, RegistryValueKind.DWord);
-                key.SetValue("NoRemoteResize", 0x00000000, RegistryValueKind.DWord);
+                key.SetValue("NoRemoteResize", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("NoAltScreen", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("NoRemoteWinTitle", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("RemoteQTitleAction", 0x00000001, RegistryValueKind.DWord);
@@ -428,13 +316,13 @@ namespace XwRemote.Servers
                 key.SetValue("TelnetRet", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("LocalEcho", 0x00000002, RegistryValueKind.DWord);
                 key.SetValue("LocalEdit", 0x00000002, RegistryValueKind.DWord);
-                key.SetValue("AlwaysOnTop", 0x00000001, RegistryValueKind.DWord);
+                key.SetValue("AlwaysOnTop", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("FullScreenOnAltEnter", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("HideMousePtr", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("SunkenEdge", 0x00000000, RegistryValueKind.DWord);
-                key.SetValue("WindowBorder", 0x00000001, RegistryValueKind.DWord);
+                key.SetValue("WindowBorder", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("CurType", 0x00000000, RegistryValueKind.DWord);
-                key.SetValue("BlinkCur", 0x00000001, RegistryValueKind.DWord);
+                key.SetValue("BlinkCur", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("Beep", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("BeepInd", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("BellOverload", 0x00000001, RegistryValueKind.DWord);
@@ -454,8 +342,6 @@ namespace XwRemote.Servers
                 key.SetValue("FontIsBold", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("FontCharSet", 0x00000000, RegistryValueKind.DWord);
 
-               
-
                 key.SetValue("FontQuality", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("FontVTMode", 0x00000004, RegistryValueKind.DWord);
                 key.SetValue("UseSystemColours", 0x00000000, RegistryValueKind.DWord);
@@ -471,7 +357,7 @@ namespace XwRemote.Servers
                 key.SetValue("CJKAmbigWide", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("UTF8Override", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("CapsLockCyr", 0x00000000, RegistryValueKind.DWord);
-                key.SetValue("ScrollBar", 0x00000001, RegistryValueKind.DWord);
+                key.SetValue("ScrollBar", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("ScrollBarFullScreen", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("ScrollOnKey", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("ScrollOnDisp", 0x00000f001, RegistryValueKind.DWord);
@@ -508,7 +394,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void DeletePuttySession()
         {
             switch (server.SshTerminal)
@@ -518,7 +404,7 @@ namespace XwRemote.Servers
                         if (File.Exists(ShhKeyFile))
                             File.Delete(ShhKeyFile);
 
-                        string subkey = String.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);
+                        string subkey = string.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);
                         RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey);
                         if (key != null)
                         {

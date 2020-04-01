@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using XwMaxLib.Data;
-
-namespace XwRemote.Settings
+﻿namespace XwRemote.Settings
 {
     public class Group
     {

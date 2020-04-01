@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using XwMaxLib.Objects;
 using XwMaxLib.Extensions;
 using XwMaxLib.Extentions;
+using XwMaxLib.Objects;
 using XwRemote.Settings;
 
 namespace XwRemote.Servers
@@ -11,14 +11,15 @@ namespace XwRemote.Servers
     public partial class RDPSettings : Form
     {
         private Server server = null;
-        //**************************************************************************************
+        
+        //*************************************************************************************************************
         public RDPSettings(Server server)
         {
             InitializeComponent();
             this.server = server;
         }
-        
-        //**************************************************************************************
+
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             LoadSize(server.Width, server.Height);
@@ -53,13 +54,13 @@ namespace XwRemote.Servers
             }
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void DefaultPort_CheckedChanged(object sender, EventArgs e)
         {
             if (DefaultPort.Checked)
@@ -73,7 +74,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //**************************************************************************************
+        //*************************************************************************************************************
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (NameBox.Text.Trim() == string.Empty)
@@ -130,9 +131,7 @@ namespace XwRemote.Servers
             Close();
         }
 
-
-
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private void LoadColor(int bit)
         {
             ColorCombo.Items.Clear();
@@ -165,7 +164,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private void LoadSize(int X, int Y)
         {
             SizeCombo.Items.Clear();
@@ -191,14 +190,14 @@ namespace XwRemote.Servers
             }
         }
 
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private void PassBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F12)
                 PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;
         }
 
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private void buttonShowPassword_Click(object sender, EventArgs e)
         {
             PassBox.UseSystemPasswordChar = !PassBox.UseSystemPasswordChar;

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Windows.Forms;
 using XwMaxLib.Extensions;
 using XwRemote.Settings;
 
@@ -12,7 +12,7 @@ namespace XwRemote.Misc
         private bool import = false;
         private Server server = null;
 
-        //********************************************************************************************************
+        //*************************************************************************************************************
         public InOut(bool import, Server server)
         {
             InitializeComponent();
@@ -20,7 +20,7 @@ namespace XwRemote.Misc
             this.server = server;
         }
 
-        //********************************************************************************************************
+        //*************************************************************************************************************
         private void InOut_Load(object sender, EventArgs e)
         {
             if (import)
@@ -40,19 +40,20 @@ namespace XwRemote.Misc
             }
         }
 
-        //********************************************************************************************************
+        //*************************************************************************************************************
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        //********************************************************************************************************
+        //*************************************************************************************************************
         private void buttonOK_Click(object sender, EventArgs e)
         {
             JObject parsed = JObject.Parse(JsonBox.Text);
             if (parsed == null)
             {
-                MessageBox.Show("Unable to read server, some error in the json", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to read server, some error in the json", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

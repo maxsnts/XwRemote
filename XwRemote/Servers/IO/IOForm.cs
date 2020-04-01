@@ -1,9 +1,8 @@
-﻿using System;
+﻿using ShellDll;
+using System;
 using System.Drawing;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ShellDll;
 using XwMaxLib.Data;
 using XwRemote.Properties;
 using XwRemote.Servers.IO;
@@ -22,7 +21,7 @@ namespace XwRemote.Servers
         private XwRemoteIO remoteIO = new XwRemoteIO();
         private bool Closing = false;
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public IOForm(Server srv)
         {
             InitializeComponent();
@@ -31,22 +30,12 @@ namespace XwRemote.Servers
             server = srv;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
             ShellImageList.SetSmallImageList(LocalList);
             ShellImageList.SetSmallImageList(RemoteList);
             
-            /* 
-            Don't remember why i did this
-            try
-            {
-                IPAddress[] addresses = Dns.GetHostAddresses(this.server.Host);
-                server.Host = addresses[0].ToString();
-            }
-            catch { }
-            */
-
             LocalList.Init(this);
             RemoteList.Init(this, remoteIO);
             QueueList.Init(this, remoteIO);
@@ -56,13 +45,13 @@ namespace XwRemote.Servers
             linkTip.SetToolTip(LinkPath, "");
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private async void OnShown(object sender, EventArgs e)
         {
             await Connect();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public async Task Connect()
         {
             loadingCircle1.Active = true;
@@ -86,7 +75,8 @@ namespace XwRemote.Servers
                         server.Port,
                         server.Username,
                         server.Password,
-                        server.FtpDataType);
+                        server.FtpDataType, 
+                        server.Encryption);
                     break;
                 case ServerType.SFTP:
                 result = await remoteIO.ConnectToSFTP(
@@ -122,8 +112,8 @@ namespace XwRemote.Servers
                 SetStatusText(result.Message);
             }
         }
-      
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         public bool OnTabClose()
         {
             Closing = true;
@@ -131,13 +121,13 @@ namespace XwRemote.Servers
             return true;
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void OnTabFocus()
         {
             
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void SetStatusText(string txt)
         {
             statusLabel.Text = txt;
@@ -146,13 +136,13 @@ namespace XwRemote.Servers
             statusLabel.Left = (this.Width / 2) - (statusLabel.Width / 2);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void Log(string text)
         {
             Log(text, Color.Black);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void Log(string text, Color textColor)
         {
             if (Closing)
@@ -185,8 +175,8 @@ namespace XwRemote.Servers
                 }
             }));
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         private void LocalTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             LocalList.RealLoadList(e.Node.Tag.ToString(), false);
@@ -194,7 +184,7 @@ namespace XwRemote.Servers
                 Main.config.SetValue("FTP_LAST_USED_FOLDER", e.Node.Tag.ToString());
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void LocalPin_Click(object sender, EventArgs e)
         {
             if (LocalPath.FindStringExact(LocalList.CurrentDirectory) == -1)
@@ -203,7 +193,7 @@ namespace XwRemote.Servers
                 LocalList.UnpinFolder();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void RemotePin_Click(object sender, EventArgs e)
         {
             if (RemotePath.FindStringExact(RemoteList.CurrentDirectory) == -1)
@@ -212,7 +202,7 @@ namespace XwRemote.Servers
                 RemoteList.UnpinFolder();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void LocalPath_DropDownClosed(object sender, EventArgs e)
         {
             LocalList.CheckLick = true;
@@ -220,14 +210,14 @@ namespace XwRemote.Servers
             LocalList.LoadList(path);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void LocalPath_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Down || e.KeyCode == Keys.Up)
                 LocalList.LoadList(LocalPath.Text);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private async void RemotePath_DropDownClosed(object sender, EventArgs e)
         {
             RemoteList.CheckLick = true;
@@ -235,14 +225,14 @@ namespace XwRemote.Servers
             await RemoteList.LoadList(path);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private async void RemotePath_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Down || e.KeyCode == Keys.Up)
                 await RemoteList.LoadList(RemotePath.Text);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void LinkPath_Click(object sender, EventArgs e)
         {
             if (Convert.ToBoolean(LinkPath.Tag) == false)
@@ -251,7 +241,7 @@ namespace XwRemote.Servers
                 UnlinkFolders();
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void LinkFolders()
         {
             int LocalPinID = LocalList.PinFolder();
@@ -270,7 +260,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void UnlinkFolders()
         {
             //TODO: Move this into the Config
@@ -283,8 +273,8 @@ namespace XwRemote.Servers
                 LinkPath.Tag = false;
             }
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         public async Task CheckLink(string path, bool local)
         {
             if (SkipCheckLink)
@@ -321,8 +311,8 @@ namespace XwRemote.Servers
                 }
             }
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         private void FTPForm_Enter(object sender, EventArgs e)
         {
             

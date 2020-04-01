@@ -49,16 +49,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.NotesBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.radioPutty = new System.Windows.Forms.RadioButton();
-            this.radioPoderosa = new System.Windows.Forms.RadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.buttonOpenSshKey = new System.Windows.Forms.Button();
             this.SshKeyBox = new System.Windows.Forms.TextBox();
             this.buttonShowPassword = new System.Windows.Forms.Button();
             this.dividerPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -265,46 +260,6 @@
             this.NotesBox.Size = new System.Drawing.Size(317, 62);
             this.NotesBox.TabIndex = 26;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 211);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(47, 13);
-            this.label6.TabIndex = 28;
-            this.label6.Text = "Terminal";
-            // 
-            // radioPutty
-            // 
-            this.radioPutty.AutoSize = true;
-            this.radioPutty.Checked = true;
-            this.radioPutty.Location = new System.Drawing.Point(3, 3);
-            this.radioPutty.Name = "radioPutty";
-            this.radioPutty.Size = new System.Drawing.Size(59, 17);
-            this.radioPutty.TabIndex = 29;
-            this.radioPutty.TabStop = true;
-            this.radioPutty.Text = "PuTTY";
-            this.radioPutty.UseVisualStyleBackColor = true;
-            // 
-            // radioPoderosa
-            // 
-            this.radioPoderosa.AutoSize = true;
-            this.radioPoderosa.Location = new System.Drawing.Point(68, 3);
-            this.radioPoderosa.Name = "radioPoderosa";
-            this.radioPoderosa.Size = new System.Drawing.Size(149, 17);
-            this.radioPoderosa.TabIndex = 30;
-            this.radioPoderosa.Text = "Poderosa (Very Very Beta)";
-            this.radioPoderosa.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.radioPutty);
-            this.panel1.Controls.Add(this.radioPoderosa);
-            this.panel1.Location = new System.Drawing.Point(62, 208);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(320, 27);
-            this.panel1.TabIndex = 31;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -357,8 +312,6 @@
             this.Controls.Add(this.SshKeyBox);
             this.Controls.Add(this.buttonOpenSshKey);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.NotesBox);
             this.Controls.Add(this.tabColorBox);
@@ -388,8 +341,6 @@
             this.Load += new System.EventHandler(this.OnLoad);
             this.dividerPanel1.ResumeLayout(false);
             this.dividerPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -418,10 +369,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox NotesBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.RadioButton radioPutty;
-        private System.Windows.Forms.RadioButton radioPoderosa;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button buttonOpenSshKey;
         private System.Windows.Forms.TextBox SshKeyBox;

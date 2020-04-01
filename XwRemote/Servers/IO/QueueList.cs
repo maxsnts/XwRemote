@@ -1,12 +1,13 @@
-﻿using System;
+﻿using ShellDll;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ShellDll;
-using XwMaxLib.UI;
 using XwMaxLib.Extensions;
+using XwMaxLib.UI;
 using XwRemote.Properties;
 using XwRemote.Servers.IO;
 using static XwRemote.Servers.IO.XwRemoteIO;
@@ -15,7 +16,7 @@ namespace XwRemote.Servers
 {
     public class QueueList : XwListView
     {
-        //********************************************************************************************
+        //*************************************************************************************************************
         private IOForm form = null;
         private ContextMenuStrip contextMenu = new ContextMenuStrip();
         private bool QueueRunning = false;
@@ -23,7 +24,7 @@ namespace XwRemote.Servers
         private List<string> SkipExistsValidation = new List<string>();
         private XwRemoteIO remoteIO = null;
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public QueueList()
         {
             InsertColumn("Progress", 120);
@@ -38,7 +39,7 @@ namespace XwRemote.Servers
             MouseUp += new System.Windows.Forms.MouseEventHandler(this_MouseUp);
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         public void Init(IOForm f, XwRemoteIO remote)
         {
             form = f;
@@ -47,7 +48,7 @@ namespace XwRemote.Servers
             remoteIO.OnFileProgress += OnFileProgress;
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public bool Disconnect()
         {
             /*
@@ -63,8 +64,8 @@ namespace XwRemote.Servers
             */
             return true;
         }
-        
-        //********************************************************************************************
+
+        //*************************************************************************************************************
         private void OnFileProgress(XwRemoteIOFileProgressResult result)
         {
             //if (result.Cancel)
@@ -86,8 +87,8 @@ namespace XwRemote.Servers
                 }
             }));
         }
-     
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         public void QueueUploadItem(bool IsDir, string source, string destination, string name, int ImageIndex, long size)
         {
             form.currentItem.Text = $"Queueing {source}";
@@ -101,6 +102,7 @@ namespace XwRemote.Servers
             queue.DestinationPath = Path.Combine(destination, name);
             queue.Status = QueueStatus.Queue;
             queue.Size = size;
+            queue.CancelTokenSource = new CancellationTokenSource();
             InsertOnQueue(queue);
             
             if (IsDir)
@@ -111,7 +113,8 @@ namespace XwRemote.Servers
                     if ((dir.Attributes & FileAttributes.Hidden) != 0)
                         continue;
 
-                    QueueUploadItem(true, dir.FullName, queue.DestinationPath, dir.Name, ShellImageList.GetFileImageIndex("Folder", FileAttributes.Directory), 0);
+                    QueueUploadItem(true, dir.FullName, queue.DestinationPath, dir.Name, 
+                        ShellImageList.GetFileImageIndex("Folder", FileAttributes.Directory), 0);
                 }
 
                 foreach (FileInfo file in DirInfo.GetFiles())
@@ -119,12 +122,13 @@ namespace XwRemote.Servers
                     if ((file.Attributes & FileAttributes.Hidden) != 0)
                         continue;
 
-                    QueueUploadItem(false, file.FullName, queue.DestinationPath, file.Name, ShellImageList.GetFileImageIndex(file.Name, FileAttributes.Archive), file.Length);
+                    QueueUploadItem(false, file.FullName, queue.DestinationPath, file.Name, 
+                        ShellImageList.GetFileImageIndex(file.Name, FileAttributes.Archive), file.Length);
                 }
             }
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         public void QueueDownloadItem(bool IsDir, string source, string destination, string name, int ImageIndex, long size)
         {
             form.currentItem.Text = $"Queueing {source}";
@@ -139,6 +143,7 @@ namespace XwRemote.Servers
             queue.DestinationPath = Path.Combine(destination, name);
             queue.Status = QueueStatus.Queue;
             queue.Size = size;
+            queue.CancelTokenSource = new CancellationTokenSource();
             InsertOnQueue(queue);
 
             if (IsDir)
@@ -149,16 +154,18 @@ namespace XwRemote.Servers
                 {
                     foreach (XwRemoteIOItem item in result.Items)
                     {
-                        int image = ShellImageList.GetFileImageIndex(item.Name, (item.IsDirectory) ? FileAttributes.Directory : FileAttributes.Archive);
-                        QueueDownloadItem(item.IsDirectory, item.FullName, queue.DestinationPath, item.Name, image, item.Size);
+                        int image = ShellImageList.GetFileImageIndex(item.Name, 
+                            (item.IsDirectory) ? FileAttributes.Directory : FileAttributes.Archive);
+                        QueueDownloadItem(item.IsDirectory, item.FullName, 
+                            queue.DestinationPath, item.Name, image, item.Size);
                     }
                 }
                 else
                     form.Log(result.Message, Color.Red);
             }
         }
-        
-        //**********************************************************************************************
+
+        //*************************************************************************************************************
         public void InsertOnQueue(QueueItem queue)
         {
             if (queue.SourcePath == "." ||
@@ -176,10 +183,10 @@ namespace XwRemote.Servers
             SetSubItemText(listitem, 4, XwMaxLib.IO.Drive.GetFileSize(queue.Size));
             listitem.Tag = queue;
             listitem.Name = queue.TransferID;
-            form.TotalQueueText.Text = String.Format("{0} Items in queue", Items.Count);
+            form.TotalQueueText.Text = string.Format("{0} Items in queue", Items.Count);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async void StartQueue(bool force = false)
         {
             form.currentItem.Text = "";
@@ -191,13 +198,13 @@ namespace XwRemote.Servers
             await ProcessQueue();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         public async Task ProcessQueue()
         {
             while (Items.Count > 0)
             {
                 Update();
-                form.TotalQueueText.Text = String.Format("{0} Items in queue", Items.Count);
+                form.TotalQueueText.Text = string.Format("{0} Items in queue", Items.Count);
                 QueueItem item = new QueueItem();
                 bool refreshLists = true;
                 bool alldone = true;
@@ -252,11 +259,9 @@ namespace XwRemote.Servers
                                         exists.SourceIcon.Image = ShellImageList.GetIcon(item.ImageIndex, false).ToBitmap();
                                         exists.DestinationIcon.Image = ShellImageList.GetIcon(item.ImageIndex, false).ToBitmap();
 
-                                        exists.SourceFileSize.Text = String.Format("{0:#,#}", item.Size);
+                                        exists.SourceFileSize.Text = string.Format("{0:#,#}", item.Size);
                                         FileInfo fi = new FileInfo(item.DestinationPath);
-                                        exists.DestinationFileSize.Text = String.Format("{0:#,#}", fi.Length);
-
-                                        //                                            exists.SourceFileDate.Text = XwMaxLib.Helper.Misc.GetDateTime(ftp.GetDateTimestamp(item.SourcePath));
+                                        exists.DestinationFileSize.Text = string.Format("{0:#,#}", fi.Length);
                                         exists.DestinationFileDate.Text = File.GetLastWriteTime(item.DestinationPath).ToStringUI();
 
                                         if (exists.ShowDialog(this) == DialogResult.Cancel)
@@ -293,11 +298,12 @@ namespace XwRemote.Servers
                                         Items.IndexOfKey(item.TransferID);
                                         Items[index].Tag = item;
                                     }
-                                    var result = await remoteIO.DownloadFile(item.DestinationPath, item.SourcePath, item.TransferID, true);
+                                    var result = await remoteIO.DownloadFile(item.DestinationPath, item.SourcePath, 
+                                        item.TransferID, action == XwFileAction.Resume, item.CancelTokenSource.Token);
                                     if (result.Success)
                                     {
                                         DeleteByKey(item.TransferID);
-                                        form.TotalQueueText.Text = String.Format("{0} Items in queue", Items.Count);
+                                        form.TotalQueueText.Text = string.Format("{0} Items in queue", Items.Count);
                                     }
                                     else
                                     {
@@ -351,11 +357,11 @@ namespace XwRemote.Servers
                                         exists.SourceIcon.Image = ShellImageList.GetIcon(item.ImageIndex, false).ToBitmap();
                                         exists.DestinationIcon.Image = ShellImageList.GetIcon(item.ImageIndex, false).ToBitmap();
 
-                                        exists.SourceFileSize.Text = String.Format("{0:#,#}", item.Size);
+                                        exists.SourceFileSize.Text = string.Format("{0:#,#}", item.Size);
                                         var result = await remoteIO.GetFileSize(item.DestinationPath);
                                         if (!result.Success)
                                             form.Log(result.Message, Color.Red);
-                                        exists.DestinationFileSize.Text = String.Format("{0:#,#}", result.Size);
+                                        exists.DestinationFileSize.Text = string.Format("{0:#,#}", result.Size);
 
                                         exists.SourceFileDate.Text = File.GetLastWriteTime(item.SourcePath).ToStringUI();
                                         result = await remoteIO.GetDateModified(item.DestinationPath);
@@ -401,11 +407,12 @@ namespace XwRemote.Servers
                                         Items[index].Tag = item;
                                     }
 
-                                    var result = await remoteIO.UploadFile(item.SourcePath, item.DestinationPath, item.TransferID, action == XwFileAction.Resume);
+                                    var result = await remoteIO.UploadFile(item.SourcePath, item.DestinationPath, 
+                                        item.TransferID, action == XwFileAction.Resume, item.CancelTokenSource.Token);
                                     if (result.Success)
                                     {
                                         DeleteByKey(item.TransferID);
-                                        form.TotalQueueText.Text = String.Format("{0} Items in queue", Items.Count);
+                                        form.TotalQueueText.Text = string.Format("{0} Items in queue", Items.Count);
                                     }
                                     else
                                     {
@@ -450,14 +457,14 @@ namespace XwRemote.Servers
             RefreshLists();
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private async void RefreshLists()
         {
             await form.RemoteList.LoadList(form.RemoteList.CurrentDirectory);
             form.LocalList.RealLoadList(form.LocalList.CurrentDirectory, true);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void this_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -474,16 +481,19 @@ namespace XwRemote.Servers
 
                         if (status == QueueStatus.Error)
                         {
-                            ToolStripMenuItem menuitemError = new ToolStripMenuItem("Error information", Resources.error, Menu_Error_Click, "Error");
+                            ToolStripMenuItem menuitemError = new ToolStripMenuItem("Error information", 
+                                Resources.error, Menu_Error_Click, "Error");
                             contextMenu.Items.Add(menuitemError);
                         
-                            ToolStripMenuItem menuitemRetry = new ToolStripMenuItem("Retry", Resources.retry, Menu_Start_Click, "Retry");
+                            ToolStripMenuItem menuitemRetry = new ToolStripMenuItem("Retry", 
+                                Resources.retry, Menu_Start_Click, "Retry");
                             contextMenu.Items.Add(menuitemRetry);
                         }
 
                         if (status == QueueStatus.Stopped || status == QueueStatus.Queue)
                         {
-                            ToolStripMenuItem menuitemRetry = new ToolStripMenuItem("Start", Resources.play, Menu_Start_Click, "Start");
+                            ToolStripMenuItem menuitemRetry = new ToolStripMenuItem("Start", 
+                                Resources.play, Menu_Start_Click, "Start");
                             contextMenu.Items.Add(menuitemRetry);
                         }
 
@@ -498,14 +508,15 @@ namespace XwRemote.Servers
 
                     if (SelectedItems.Count > 0)
                     {
-                        ToolStripMenuItem menuitemRemove = new ToolStripMenuItem("Remove", Resources.delete, Menu_Remove_Click, "Remove");
+                        ToolStripMenuItem menuitemRemove = new ToolStripMenuItem("Remove", 
+                            Resources.delete, Menu_Remove_Click, "Remove");
                         contextMenu.Items.Add(menuitemRemove);
                     }
                 }
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Menu_Error_Click(object sender, EventArgs e)
         {
             ListViewItem item = SelectedItems[0];
@@ -514,7 +525,7 @@ namespace XwRemote.Servers
                 MessageBox.Show(item.ToolTipText, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Menu_Start_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem i in SelectedItems)
@@ -528,15 +539,16 @@ namespace XwRemote.Servers
         StartQueue(true);
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Menu_Remove_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Delete the selected items?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+            if (MessageBox.Show("Delete the selected items?", "", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
                 foreach (ListViewItem item in SelectedItems)
                 {
                     QueueItem qi = (QueueItem)item.Tag;
-                    //ftp.Cancel(qi.TransferID);
+                    qi.CancelTokenSource.Cancel();
                     DeleteByKey(item.Name);
 
                     foreach (ListViewItem i in Items)
@@ -548,11 +560,11 @@ namespace XwRemote.Servers
                         }
                     }
                 }
-                form.TotalQueueText.Text = String.Format("{0} Items in queue", Items.Count);
+                form.TotalQueueText.Text = string.Format("{0} Items in queue", Items.Count);
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void Menu_Stop_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in SelectedItems)
@@ -563,7 +575,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //********************************************************************************************
+        //*************************************************************************************************************
         private void this_DoubleClick(object sender, EventArgs e)
         {
             if (SelectedItems.Count == 1)
@@ -574,7 +586,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //**********************************************************************************************
+        //*************************************************************************************************************
         private void this_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)

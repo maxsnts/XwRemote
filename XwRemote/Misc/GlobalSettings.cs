@@ -8,7 +8,7 @@ namespace XwRemote.Settings
 {
     public partial class GlobalSettings : Form
     {
-        //************************************************************************************
+        //*************************************************************************************************************
         public GlobalSettings()
         {
             InitializeComponent();
@@ -27,16 +27,13 @@ namespace XwRemote.Settings
                 textFixedFolder.Text = folder;
             }
 
-            int size = 0;
-            if (Int32.TryParse(Main.config.GetValue("DEFAULT_SSH_FONT_SIZE"), out size))
-                sshFontSize.Value = size;
-            else
-                sshFontSize.Value = 10;
+            sshFontSize.Value = Main.config.GetValue("DEFAULT_SSH_FONT_SIZE").ToIntOrDefault(10);
+            checkBoxCorrectFocus.Checked = Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true);
 
             radioFixed_CheckedChanged(null, null);
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void btnBrowseFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -45,7 +42,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void radioFixed_CheckedChanged(object sender, EventArgs e)
         {
             if (radioFixed.Checked)
@@ -60,7 +57,7 @@ namespace XwRemote.Settings
             }
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void butOK_Click(object sender, EventArgs e)
         {
             if (radioMyComputer.Checked)
@@ -73,18 +70,20 @@ namespace XwRemote.Settings
             {
                 if (!Directory.Exists(textFixedFolder.Text))
                 {
-                    MessageBox.Show("Selected folder does not exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Selected folder does not exists", "Error", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 Main.config.SetValue("DEFAULT_FTP_LOCAL_FOLDER", textFixedFolder.Text);
             }
 
             Main.config.SetValue("DEFAULT_SSH_FONT_SIZE", sshFontSize.Value.ToString());
-            
+            Main.config.SetValue("SSH_CORRECT_FOCUS", checkBoxCorrectFocus.Checked.ToString());
+
             Close();
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void butSetPassword_Click(object sender, EventArgs e)
         {
             if (textMasterPassword.Text == "")
@@ -106,10 +105,9 @@ namespace XwRemote.Settings
             }
 
             MessageBox.Show("Password added", "XwRemote", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Close();
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void butRemovePass_Click(object sender, EventArgs e)
         {
             using (XwDbCommand sql = new XwDbCommand(Config.GetConnectionString(), "Data.SQLite"))
@@ -119,14 +117,16 @@ namespace XwRemote.Settings
             }
 
             MessageBox.Show("Password removed", "XwRemote", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            Close();
         }
 
-        //************************************************************************************
+        //*************************************************************************************************************
         private void butOK_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F12)
-                Main.config.SetValue("EXPERIMENTAL-STUFF", (!Main.config.GetValue("EXPERIMENTAL-STUFF", false.ToString()).ToBoolOrDefault(false)).ToString());
+                Main.config.SetValue("EXPERIMENTAL-STUFF",
+                    (!Main.config.GetValue("EXPERIMENTAL-STUFF",
+                    false.ToString()).ToBoolOrDefault(false)).ToString());
         }
+        
     }
 }

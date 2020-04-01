@@ -36,26 +36,26 @@ namespace XwRemote.Servers
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.LocalTree = new XwMaxLib.UI.Shell.XwShellTree();
             this.statusLocal = new System.Windows.Forms.StatusStrip();
+            this.LocalList = new XwRemote.Servers.LocalList();
             this.LocalPath = new System.Windows.Forms.ComboBox();
             this.statusRemote = new System.Windows.Forms.StatusStrip();
             this.RemotePin = new System.Windows.Forms.Button();
+            this.RemoteList = new XwRemote.Servers.RemoteList();
             this.RemotePath = new System.Windows.Forms.ComboBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.QueueList = new XwRemote.Servers.QueueList();
             this.StatusBox = new System.Windows.Forms.RichTextBox();
             this.statusLocalCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusRemoteCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.loadingCircle1 = new MRG.Controls.UI.LoadingCircle();
             this.faTabStats = new FarsiLibrary.Win.FATabStripItem();
             this.statusMain = new System.Windows.Forms.StatusStrip();
+            this.currentItem = new System.Windows.Forms.ToolStripStatusLabel();
             this.TotalQueueText = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusTransferRate = new System.Windows.Forms.ToolStripStatusLabel();
             this.faTabStripItem4 = new FarsiLibrary.Win.FATabStripItem();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.currentItem = new System.Windows.Forms.ToolStripStatusLabel();
-            this.LocalList = new XwRemote.Servers.LocalList();
-            this.RemoteList = new XwRemote.Servers.RemoteList();
-            this.QueueList = new XwRemote.Servers.QueueList();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerStatus)).BeginInit();
             this.splitContainerStatus.Panel1.SuspendLayout();
             this.splitContainerStatus.Panel2.SuspendLayout();
@@ -128,7 +128,7 @@ namespace XwRemote.Servers
             this.LinkPath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LinkPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkPath.Image = global::XwRemote.Properties.Resources.link_break;
-            this.LinkPath.Location = new System.Drawing.Point(540, 2);
+            this.LinkPath.Location = new System.Drawing.Point(540, 3);
             this.LinkPath.Name = "LinkPath";
             this.LinkPath.Size = new System.Drawing.Size(19, 16);
             this.LinkPath.TabIndex = 4;
@@ -139,12 +139,13 @@ namespace XwRemote.Servers
             // 
             // LocalPin
             // 
+            this.LocalPin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LocalPin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LocalPin.FlatAppearance.BorderSize = 0;
             this.LocalPin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LocalPin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LocalPin.Image = global::XwRemote.Properties.Resources.PinUp;
-            this.LocalPin.Location = new System.Drawing.Point(3, 2);
+            this.LocalPin.Location = new System.Drawing.Point(507, 2);
             this.LocalPin.Name = "LocalPin";
             this.LocalPin.Size = new System.Drawing.Size(19, 16);
             this.LocalPin.TabIndex = 3;
@@ -191,14 +192,31 @@ namespace XwRemote.Servers
             this.statusLocal.TabIndex = 1;
             this.statusLocal.Text = "statusLocal";
             // 
+            // LocalList
+            // 
+            this.LocalList.AllowDrop = true;
+            this.LocalList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LocalList.AutoArrange = false;
+            this.LocalList.Cursor = System.Windows.Forms.Cursors.Default;
+            this.LocalList.FullRowSelect = true;
+            this.LocalList.HideSelection = false;
+            this.LocalList.Location = new System.Drawing.Point(0, 0);
+            this.LocalList.Name = "LocalList";
+            this.LocalList.Size = new System.Drawing.Size(318, 481);
+            this.LocalList.TabIndex = 0;
+            this.LocalList.UseCompatibleStateImageBehavior = false;
+            this.LocalList.View = System.Windows.Forms.View.Details;
+            // 
             // LocalPath
             // 
             this.LocalPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LocalPath.FormattingEnabled = true;
-            this.LocalPath.Location = new System.Drawing.Point(25, 0);
+            this.LocalPath.Location = new System.Drawing.Point(0, 0);
             this.LocalPath.Name = "LocalPath";
-            this.LocalPath.Size = new System.Drawing.Size(511, 21);
+            this.LocalPath.Size = new System.Drawing.Size(504, 21);
             this.LocalPath.TabIndex = 1;
             this.LocalPath.DropDownClosed += new System.EventHandler(this.LocalPath_DropDownClosed);
             this.LocalPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LocalPath_KeyDown);
@@ -225,6 +243,22 @@ namespace XwRemote.Servers
             this.RemotePin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.RemotePin.UseVisualStyleBackColor = true;
             this.RemotePin.Click += new System.EventHandler(this.RemotePin_Click);
+            // 
+            // RemoteList
+            // 
+            this.RemoteList.AllowDrop = true;
+            this.RemoteList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RemoteList.AutoArrange = false;
+            this.RemoteList.FullRowSelect = true;
+            this.RemoteList.HideSelection = false;
+            this.RemoteList.Location = new System.Drawing.Point(0, 21);
+            this.RemoteList.Name = "RemoteList";
+            this.RemoteList.Size = new System.Drawing.Size(330, 481);
+            this.RemoteList.TabIndex = 1;
+            this.RemoteList.UseCompatibleStateImageBehavior = false;
+            this.RemoteList.View = System.Windows.Forms.View.Details;
             // 
             // RemotePath
             // 
@@ -255,6 +289,21 @@ namespace XwRemote.Servers
             this.splitContainer2.SplitterDistance = 561;
             this.splitContainer2.TabIndex = 4;
             // 
+            // QueueList
+            // 
+            this.QueueList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.QueueList.FullRowSelect = true;
+            this.QueueList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.QueueList.HideSelection = false;
+            this.QueueList.Location = new System.Drawing.Point(0, 0);
+            this.QueueList.Name = "QueueList";
+            this.QueueList.OwnerDraw = true;
+            this.QueueList.ShowItemToolTips = true;
+            this.QueueList.Size = new System.Drawing.Size(561, 138);
+            this.QueueList.TabIndex = 1;
+            this.QueueList.UseCompatibleStateImageBehavior = false;
+            this.QueueList.View = System.Windows.Forms.View.Details;
+            // 
             // StatusBox
             // 
             this.StatusBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -284,6 +333,7 @@ namespace XwRemote.Servers
             // loadingCircle1
             // 
             this.loadingCircle1.Active = false;
+            this.loadingCircle1.BackColor = System.Drawing.Color.Transparent;
             this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
             this.loadingCircle1.InnerCircleRadius = 5;
             this.loadingCircle1.Location = new System.Drawing.Point(109, 197);
@@ -316,6 +366,12 @@ namespace XwRemote.Servers
             this.statusMain.Size = new System.Drawing.Size(896, 22);
             this.statusMain.TabIndex = 1;
             this.statusMain.Text = "statusMain";
+            // 
+            // currentItem
+            // 
+            this.currentItem.AutoSize = false;
+            this.currentItem.Name = "currentItem";
+            this.currentItem.Size = new System.Drawing.Size(600, 17);
             // 
             // TotalQueueText
             // 
@@ -355,59 +411,6 @@ namespace XwRemote.Servers
             this.statusLabel.Size = new System.Drawing.Size(70, 13);
             this.statusLabel.TabIndex = 4;
             this.statusLabel.Text = "Connecting...";
-            // 
-            // currentItem
-            // 
-            this.currentItem.AutoSize = false;
-            this.currentItem.Name = "currentItem";
-            this.currentItem.Size = new System.Drawing.Size(600, 17);
-            // 
-            // LocalList
-            // 
-            this.LocalList.AllowDrop = true;
-            this.LocalList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LocalList.AutoArrange = false;
-            this.LocalList.Cursor = System.Windows.Forms.Cursors.Default;
-            this.LocalList.FullRowSelect = true;
-            this.LocalList.HideSelection = false;
-            this.LocalList.Location = new System.Drawing.Point(0, 0);
-            this.LocalList.Name = "LocalList";
-            this.LocalList.Size = new System.Drawing.Size(318, 481);
-            this.LocalList.TabIndex = 0;
-            this.LocalList.UseCompatibleStateImageBehavior = false;
-            this.LocalList.View = System.Windows.Forms.View.Details;
-            // 
-            // RemoteList
-            // 
-            this.RemoteList.AllowDrop = true;
-            this.RemoteList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RemoteList.AutoArrange = false;
-            this.RemoteList.FullRowSelect = true;
-            this.RemoteList.HideSelection = false;
-            this.RemoteList.Location = new System.Drawing.Point(0, 21);
-            this.RemoteList.Name = "RemoteList";
-            this.RemoteList.Size = new System.Drawing.Size(330, 481);
-            this.RemoteList.TabIndex = 1;
-            this.RemoteList.UseCompatibleStateImageBehavior = false;
-            this.RemoteList.View = System.Windows.Forms.View.Details;
-            // 
-            // QueueList
-            // 
-            this.QueueList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.QueueList.FullRowSelect = true;
-            this.QueueList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.QueueList.Location = new System.Drawing.Point(0, 0);
-            this.QueueList.Name = "QueueList";
-            this.QueueList.OwnerDraw = true;
-            this.QueueList.ShowItemToolTips = true;
-            this.QueueList.Size = new System.Drawing.Size(561, 138);
-            this.QueueList.TabIndex = 1;
-            this.QueueList.UseCompatibleStateImageBehavior = false;
-            this.QueueList.View = System.Windows.Forms.View.Details;
             // 
             // IOForm
             // 

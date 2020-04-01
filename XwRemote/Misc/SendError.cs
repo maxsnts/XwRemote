@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using SharpRaven;
+﻿using SharpRaven;
 using SharpRaven.Data;
+using System;
+using System.Windows.Forms;
 using XwMaxLib.Data;
 
 namespace XwRemote.Misc
@@ -13,7 +13,7 @@ namespace XwRemote.Misc
         private string Comment = string.Empty;
         private bool Shutdown = true;
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         public SendError(Exception exception, bool shutdown)
         {
             InitializeComponent();
@@ -21,7 +21,7 @@ namespace XwRemote.Misc
             Shutdown = shutdown;
         }
 
-        //**************************************************************************************************
+        //*************************************************************************************************************
         private void SendError_Load(object sender, EventArgs e)
         {
             BuildReport();
@@ -29,8 +29,7 @@ namespace XwRemote.Misc
             ReportBox.Select(0, 0);
         }
 
-
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private void BuildReport()
         {
             Report += AddSeparator("Exception", '=', false, true);
@@ -40,8 +39,7 @@ namespace XwRemote.Misc
                 Report += GetExceptionData(Ex);
         }
 
-
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private string AddSeparator(string title, char c, bool startWithLineBreak, bool endWithLineBreak)
         {
             int total = 80;
@@ -50,7 +48,8 @@ namespace XwRemote.Misc
             if (startWithLineBreak)
                 s += "\r\n";
 
-            s += String.Format("{0} {1} {0}", (c.ToString()).PadLeft(((total - title.Length) / 2) - 1, c), title).PadRight(total, c);
+            s += string.Format("{0} {1} {0}", 
+                (c.ToString()).PadLeft(((total - title.Length) / 2) - 1, c), title).PadRight(total, c);
 
             if (endWithLineBreak)
                 s += "\r\n";
@@ -58,7 +57,7 @@ namespace XwRemote.Misc
             return s;
         }
 
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private string GetExceptionData(Exception ex)
         {
             string tmp = string.Empty;
@@ -83,7 +82,7 @@ namespace XwRemote.Misc
             return tmp;
         }
 
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private void SendError_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -94,7 +93,7 @@ namespace XwRemote.Misc
                 Close();
         }
 
-        //*****************************************************************************************
+        //*************************************************************************************************************
         private void buttonOK_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
