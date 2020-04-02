@@ -6,7 +6,6 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XwMaxLib.Extensions;
@@ -15,22 +14,32 @@ namespace XwRemote.Misc
 {
     public partial class Scanner : Form
     {
+        enum State
+        { 
+            Stopped,
+            Running,
+            Canceling
+        }
+
         private ImageList imageList = new ImageList();
-        bool cancel = false;
-        bool close = false;
-        bool running = false;
-        int tasksToRun = 0;
-        
+        State state = State.Stopped;
+        bool closing = false;
+        int maxRunningTasks = 10;
+        int maxConnTimetout = 100;
+        int curRunningTasks = 0;
+        bool useARP = false;
 
         //*************************************************************************************************************
         public Scanner()
         {
-            imageList.Images.Add(global::XwRemote.Properties.Resources.play);
-            imageList.Images.Add(global::XwRemote.Properties.Resources.rdp);
-            imageList.Images.Add(global::XwRemote.Properties.Resources.ssh);
-            imageList.Images.Add(global::XwRemote.Properties.Resources.vnc);
-            imageList.Images.Add(global::XwRemote.Properties.Resources.IE);
-            imageList.Images.Add(global::XwRemote.Properties.Resources.ftp);
+            imageList.Images.Add(global::XwRemote.Properties.Resources.play);   //0
+            imageList.Images.Add(global::XwRemote.Properties.Resources.rdp);    //1
+            imageList.Images.Add(global::XwRemote.Properties.Resources.ssh);    //2
+            imageList.Images.Add(global::XwRemote.Properties.Resources.vnc);    //3
+            imageList.Images.Add(global::XwRemote.Properties.Resources.IE);     //4
+            imageList.Images.Add(global::XwRemote.Properties.Resources.ftp);    //5
+            imageList.Images.Add(global::XwRemote.Properties.Resources.help);   //6
+            imageList.Images.Add(global::XwRemote.Properties.Resources.error);  //7
             InitializeComponent();
         }
 
@@ -39,7 +48,15 @@ namespace XwRemote.Misc
         {
             ipAddressControlFrom.Text = Main.config.GetValue("LASTSCANFROMADDRESS");
             ipAddressControlTo.Text = Main.config.GetValue("LASTSCANTOADDRESS");
-            textTcpPorts.Text = Main.config.GetValue("LASTSCANPORTS", "80,443,21,22,3389");
+            checkBoxHideDead.Checked = Main.config.GetValue("LASTSCANHIDEDEAT", "true").ToBoolOrDefault(true);
+            checkTcpPorts.Checked = Main.config.GetValue("LASTSCANTESTPORTS", "true").ToBoolOrDefault(false);
+            checkDNS.Checked = Main.config.GetValue("LASTSCANCHECKDNS", "true").ToBoolOrDefault(true);
+            checkNetBios.Checked = Main.config.GetValue("LASTSCANCHECKNETBIOS", "true").ToBoolOrDefault(true);
+            textTcpPorts.Text = Main.config.GetValue("LASTSCANPORTS", "");
+            if (textTcpPorts.Text == "")
+                textTcpPorts.Text = "80,443,21,22,3389,5900";
+            numericMaxThreads.Value = Main.config.GetValue("LASTSCANMAXTRH", "10").ToIntOrDefault(10);
+            numericTestTimeout.Value = Main.config.GetValue("LASTSCANCONNTIMEOUT", "100").ToIntOrDefault(100);
 
             progressBar.Step = 1;
             progressBar.Minimum = 0;
@@ -57,7 +74,7 @@ namespace XwRemote.Misc
             listViewHosts.Columns.Add("Vendor");
             Scanner_Resize(sender, e);
 
-            timerUI.Start();
+            Pump.Start();
         }
 
         //*************************************************************************************************************
@@ -73,21 +90,67 @@ namespace XwRemote.Misc
         private void Client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             File.WriteAllText("oui.txt", e.Result);
-            Run();
+            Start();
         }
 
         //*************************************************************************************************************
-        private void buttonStart_Click(object sender, EventArgs e)
+        private void Pump_Tick(object sender, EventArgs e)
         {
-            if (running)
+            if (state == State.Canceling && curRunningTasks == 0)
             {
-                cancel = true;
-                return;
+                state = State.Stopped;
+                if (closing)
+                    Close();
             }
-            else
+
+            if (state == State.Running)
+                Scan();
+
+            ipAddressControlFrom.Enabled = (state == State.Stopped);
+            ipAddressControlTo.Enabled = (state == State.Stopped);
+            checkTcpPorts.Enabled = (state == State.Stopped);
+            checkBoxHideDead.Enabled = (state == State.Stopped);
+            checkDNS.Enabled = (state == State.Stopped);
+            checkNetBios.Enabled = (state == State.Stopped);
+            numericMaxThreads.Enabled = (state == State.Stopped);
+            textTcpPorts.Enabled = checkTcpPorts.Checked && (state == State.Stopped);
+            numericTestTimeout.Enabled = checkTcpPorts.Checked && (state == State.Stopped);
+            buttonStartARP.Enabled = (state == State.Running || state == State.Stopped);
+            buttonStartNoARP.Enabled = (state == State.Running || state == State.Stopped);
+
+#if DEBUG
+            buttonStartARP.Text = $"{state.ToString()} ({curRunningTasks})";
+            buttonStartNoARP.Text = $"{state.ToString()} ({curRunningTasks})";
+#else
+            buttonStartARP.Text = (state == State.Stopped) ? "Start for LAN (use ARP, faster)" : $"Cancel ({curRunningTasks})";
+            buttonStartNoARP.Text = (state == State.Stopped) ? "Start for WAN (no ARP, slower)" : $"Cancel ({curRunningTasks})";
+#endif
+        }
+
+        //*************************************************************************************************************
+        private void buttonStart_ARP_Click(object sender, EventArgs e)
+        {
+            useARP = true;
+            Init();
+        }
+
+        //*************************************************************************************************************
+        private void buttonStart_NoARP_Click(object sender, EventArgs e)
+        {
+            useARP = false;
+            Init();
+        }
+
+        //*************************************************************************************************************
+        private void Init()
+        {
+            if (state == State.Canceling)
+                return;
+
+            if (state == State.Running)
             {
-                cancel = false;
-                close = false;
+                state = State.Canceling;
+                return;
             }
 
             try
@@ -105,7 +168,7 @@ namespace XwRemote.Misc
                 }
                 else
                 {
-                    Run();
+                    Start();
                 }
             }
             catch (Exception ex)
@@ -115,10 +178,12 @@ namespace XwRemote.Misc
         }
 
         //*************************************************************************************************************
-        private void Run()
+        private void Start()
         {
             listViewHosts.Items.Clear();
             progressBar.Value = 0;
+            maxRunningTasks = numericMaxThreads.Value.ToIntOrDefault(10);
+            maxConnTimetout = numericTestTimeout.Value.ToIntOrDefault(100);
 
             try
             {
@@ -131,10 +196,18 @@ namespace XwRemote.Misc
                     return;
                 }
 
+                state = State.Running;
+
                 Main.config.SetValue("LASTSCANFROMADDRESS", ipAddressControlFrom.Text);
                 Main.config.SetValue("LASTSCANTOADDRESS", ipAddressControlTo.Text);
-                Main.config.GetValue("LASTSCANPORTS", textTcpPorts.Text);
-                running = true;
+                Main.config.SetValue("LASTSCANPORTS", textTcpPorts.Text);
+                Main.config.SetValue("LASTSCANHIDEDEAT", checkBoxHideDead.Enabled.ToString());
+                Main.config.SetValue("LASTSCANTESTPORTS", checkTcpPorts.Enabled.ToString());
+                Main.config.SetValue("LASTSCANMAXTRH", numericMaxThreads.Value.ToString());
+                Main.config.SetValue("LASTSCANCONNTIMEOUT", numericTestTimeout.Value.ToString());
+                Main.config.SetValue("LASTSCANCHECKDNS", checkDNS.Checked.ToString());
+                Main.config.SetValue("LASTSCANCHECKNETBIOS", checkNetBios.Checked.ToString());
+
 
                 byte[] fromOctets = fromIP.GetAddressBytes();
                 byte[] toOctets = toIP.GetAddressBytes();
@@ -158,12 +231,9 @@ namespace XwRemote.Misc
                         {
                             for (int O4 = fromOctets[3]; O4 <= toOctets[3]; O4++)
                             {
-                                if (cancel)
-                                {
-                                    cancel = false;
+                                if (state == State.Canceling)
                                     return;
-                                }
-
+                                
                                 string ip = $"{O1}.{O2}.{O3}.{O4}";
 
                                 ListViewItem item = new ListViewItem();
@@ -176,8 +246,6 @@ namespace XwRemote.Misc
                                 item.SubItems.Add("");
                                 item.SubItems.Add("");
                                 listViewHosts.Items.Add(item);
-
-                                
                             }
                         }
                     }
@@ -187,7 +255,7 @@ namespace XwRemote.Misc
             }
             catch (Exception ex)
             {
-                running = false;
+                state = State.Canceling;
                 MessageBox.Show(ex.Message);
             }
         }
@@ -195,79 +263,112 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void Scan()
         {
+            bool alldone = true;
             foreach (ListViewItem item in listViewHosts.Items)
             {
-                if (cancel)
+                if (curRunningTasks >= maxRunningTasks)
                     return;
 
-                tasksToRun++;
+                if (item.Tag.ToBoolOrDefault(false) == true)
+                    continue;
+
+                item.Tag = true;
+                curRunningTasks++;
                 Task.Run(() => ScanIp(item));
+                alldone = false;
             }
+
+            if (alldone)
+                state = State.Stopped;
         }
 
         //*************************************************************************************************************
         private async void ScanIp(ListViewItem item)
         {
-            tasksToRun--;
-
-            if (cancel)
-                return;
-
-            Invoke((Action)(() =>
+            try
             {
-                item.ImageIndex = 0;
-            }));
-
-            string ip = item.Text;
-            string foundports = " ";
-
-            if (checkTcpPorts.Checked)
-            {
-                await Task.Run(() =>
+                Invoke((Action)(() =>
                 {
-                    string[] ports = textTcpPorts.Text.Split(",");
-                    foreach (string port in ports)
+                    item.ImageIndex = (state == State.Canceling) ? -1: 0;
+                }));
+
+                if (state == State.Canceling)
+                    return;
+
+                string ip = item.Text;
+                string foundports = " ";
+                string mac = "";
+                bool ping = false;
+                string dns = "";
+                string netbios = "";
+                string vendor = "";
+
+                if (useARP)
+                {
+                    //this is just to force a apr cache refresh
+                    //its way faster than using ping
+                    TestTcpPort(ip, 1);
+                }
+
+                mac = GetMacAddress(ip);
+                if (mac != "" || !useARP)
+                {
+                    ping = PingHost(ip);
+
+                    if (checkTcpPorts.Checked)
                     {
-                        if (cancel)
-                            return;
-
-                        if (TestTcpPort(ip, port.ToIntOrDefault(0)))
-                            foundports += port + " ";
+                        await Task.Run(() =>
+                        {
+                            string[] ports = textTcpPorts.Text.Split(",");
+                            foreach (string port in ports)
+                            {
+                                if (TestTcpPort(ip, port.ToIntOrDefault(0)))
+                                    foundports += port + " ";
+                            }
+                        });
                     }
-                });
+
+                    if (checkDNS.Checked)
+                        dns = GetReverseDNS(ip);
+
+                    if (checkNetBios.Checked)
+                        netbios = GetNetbiosName(ip);
+
+                    vendor = GetMACVendor(mac);
+                }
+
+
+                bool dead = ping == false && foundports.Trim() == "" && mac == "" && dns == "" && netbios == "";
+                int image = GetIcon(foundports);
+
+                Invoke((Action)(() =>
+                {
+                    if (dead)
+                    {
+                        if (checkBoxHideDead.Checked)
+                            item.Remove();
+                        else
+                            item.ImageIndex = 7;
+                    }
+                    else
+                    {
+                        item.ImageIndex = image;
+                        item.SubItems[1].Text = dns;
+                        item.SubItems[2].Text = netbios;
+                        item.SubItems[3].Text = ping ? "YES" : "no";
+                        item.SubItems[4].Text = foundports;
+                        item.SubItems[5].Text = mac;
+                        item.SubItems[6].Text = vendor;
+                        item.EnsureVisible();
+                        Update();
+                    }
+                    progressBar.Increment(1);
+                }));
             }
-
-            int image = GetIcon(foundports);
-            bool ping = await PingHost(ip);
-            string mac = GetMacAddress(ip);
-            string dns = "";//GetReverseDNS(ip);
-            string netbios = "";//GetNetbiosName(ip);
-            string vendor = GetMACVendor(mac);
-            bool dead = ping == false && foundports.Trim() == "" && mac == "";
-
-            if (cancel)
-                return;
-
-            Invoke((Action)(() =>
+            finally
             {
-                if (dead)
-                {
-                    item.Remove();
-                }
-                else
-                {
-                    item.ImageIndex = image;
-                    item.SubItems[1].Text = dns;
-                    item.SubItems[2].Text = netbios;
-                    item.SubItems[3].Text = ping ? "yes" : "no";
-                    item.SubItems[4].Text = foundports;
-                    item.SubItems[5].Text = mac;
-                    item.SubItems[6].Text = vendor;
-                    item.EnsureVisible();
-                }
-
-                progressBar.Increment(1);
-            }));
+                curRunningTasks--;
+            }
         }
 
         //*************************************************************************************************************
@@ -275,13 +376,15 @@ namespace XwRemote.Misc
         {
             if (ports.Contains(" 3389 "))
                 return 1;
+            if (ports.Contains(" 5900 "))
+                return 3;
             if (ports.Contains(" 22 "))
                 return 2;
             if (ports.Contains(" 80 ") || ports.Contains(" 443 "))
                 return 4;
             if (ports.Contains(" 21 "))
                 return 5;
-            return 1;
+            return 6;
         }
 
         //*************************************************************************************************************
@@ -298,19 +401,18 @@ namespace XwRemote.Misc
         }
 
         //*************************************************************************************************************
-        public async Task<bool> PingHost(string nameOrAddress)
+        public bool PingHost(string nameOrAddress)
         {
             //Jeeasssusss... 
             //https://stackoverflow.com/questions/17756824/blue-screen-when-using-ping
 #if DEBUG
             return false;
 #endif
-
             try
             {
                 using (Ping pinger = new Ping())
                 {
-                    PingReply reply = await pinger.SendPingAsync(nameOrAddress);
+                    PingReply reply = pinger.Send(nameOrAddress);
                     return (reply.Status == IPStatus.Success);
                 }
             }
@@ -325,7 +427,7 @@ namespace XwRemote.Misc
                 try
                 {
                     IAsyncResult result = socket.BeginConnect(host, port, null, null);
-                    result.AsyncWaitHandle.WaitOne(100, true);
+                    result.AsyncWaitHandle.WaitOne(maxConnTimetout, true);
                     return socket.Connected;
                 }
                 catch (Exception)
@@ -376,29 +478,12 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void Scanner_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!close)
+            if (state == State.Running)
             {
-                cancel = true;
-                close = true;
+                state = State.Canceling;
+                closing = true;
                 e.Cancel = true;
             }
-        }
-
-        //*************************************************************************************************************
-        private void timerUI_Tick(object sender, EventArgs e)
-        {
-            if (progressBar.Value == 100 || tasksToRun == 0)
-                running = false;
-
-            if (tasksToRun == 0 && close)
-                Close();
-
-            ipAddressControlFrom.Enabled = !running;
-            ipAddressControlTo.Enabled = !running;
-            checkTcpPorts.Enabled = !running;
-            checkBoxHideDead.Enabled = !running;
-            textTcpPorts.Enabled = checkTcpPorts.Checked && !running;
-            buttonStart.Text = running ? "Cancel" : "Start"; 
         }
 
         //*************************************************************************************************************
@@ -525,6 +610,6 @@ namespace XwRemote.Misc
             return "";
         }
 
-
+     
     }
 }
