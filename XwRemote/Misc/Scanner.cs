@@ -28,6 +28,7 @@ namespace XwRemote.Misc
         int maxConnTimetout = 100;
         int curRunningTasks = 0;
         bool useARP = false;
+        string localIps = "";
 
         //*************************************************************************************************************
         public Scanner()
@@ -40,6 +41,7 @@ namespace XwRemote.Misc
             imageList.Images.Add(global::XwRemote.Properties.Resources.ftp);    //5
             imageList.Images.Add(global::XwRemote.Properties.Resources.help);   //6
             imageList.Images.Add(global::XwRemote.Properties.Resources.error);  //7
+            imageList.Images.Add(global::XwRemote.Properties.Resources.favs);   //8
             InitializeComponent();
         }
 
@@ -73,6 +75,7 @@ namespace XwRemote.Misc
             listViewHosts.Columns.Add("MAC");
             listViewHosts.Columns.Add("Vendor");
             Scanner_Resize(sender, e);
+            localIps = GetAllLocalIPAddress();
 
             Pump.Start();
         }
@@ -296,6 +299,26 @@ namespace XwRemote.Misc
                     return;
 
                 string ip = item.Text;
+
+                //local IP?
+                if (localIps.Contains($" {ip} "))
+                {
+                    Invoke((Action)(() =>
+                    {
+                        item.ImageIndex = 8;
+                        item.SubItems[1].Text = GetReverseDNS(ip);
+                        item.SubItems[2].Text = GetNetbiosName(ip);
+                        item.SubItems[3].Text = "This Machine";
+                        item.SubItems[4].Text = "Not Tested";
+                        item.SubItems[5].Text = "";
+                        item.SubItems[6].Text = "";
+                        item.EnsureVisible();
+                        Update();
+                    }));
+                    return;
+                }
+
+
                 string foundports = " ";
                 string mac = "";
                 bool ping = false;
@@ -610,6 +633,19 @@ namespace XwRemote.Misc
             return "";
         }
 
-     
+        //*************************************************************************************************************
+        public string GetAllLocalIPAddress()
+        {
+            string ips = " ";
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    ips += ip.ToString() + " ";
+                }
+            }
+            return ips;
+        }
     }
 }
