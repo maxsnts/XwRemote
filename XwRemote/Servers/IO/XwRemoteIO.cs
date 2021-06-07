@@ -310,7 +310,7 @@ namespace XwRemote.Servers.IO
                 {
                     case Engine.FTP:
                         {
-                            var items = await ftp.GetListingAsync(path, FtpListOption.AllFiles | FtpListOption.Auto);
+                            var items = await ftp.GetListingAsync(path, FtpListOption.Auto);
                             result.Items = new List<XwRemoteIOItem>(items.Length);
                             foreach (var item in items)
                             {
