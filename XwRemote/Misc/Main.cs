@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
+using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
@@ -45,6 +46,10 @@ namespace XwRemote
             foreach (string arg in args)
                 if (arg == "-crash")
                     throw new Exception("Exception Test");
+
+            if (config.GetValue("UI_CLOSE_TO_TRAY").ToBoolOrDefault(false) ||
+                config.GetValue("UI_MINIMIZE_TO_TRAY").ToBoolOrDefault(false))
+                appTrayIcon.Visible = true;
 
             Toolbar_Updates.Image = null;
 
@@ -95,6 +100,16 @@ namespace XwRemote
         //*************************************************************************************************************
         private void OnClosing(object sender, FormClosingEventArgs e)
         {
+            if (config.GetValue("UI_CLOSE_TO_TRAY").ToBoolOrDefault(false))
+            {
+                if (appTrayIcon.Visible)
+                {
+                    Hide();
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
             if (!retryClose) //first try
             {
                 if (ServerTabs.TabPages.Count > 0)
@@ -363,6 +378,70 @@ namespace XwRemote
         {
             Scanner scanner = new Scanner();
             scanner.Show(this);
+        }
+
+        //*************************************************************************************************************
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            appTrayIcon.Visible = false;
+            Application.Exit();
+        }
+
+        //*************************************************************************************************************
+        private void showMainApplicationWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+        }
+
+        //*************************************************************************************************************
+        private void appTrayIcon_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+        }
+
+        //*************************************************************************************************************
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int SC_MINIMIZE = 0xF020;
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case WM_SYSCOMMAND:
+                {
+                    if (config.GetValue("UI_CLOSE_TO_TRAY").ToBoolOrDefault(false))
+                    {
+                        int command = m.WParam.ToInt32() & 0xfff0;
+                        if (command == SC_MINIMIZE)
+                        {
+                            Hide();
+                            return;
+                        }
+                    }
+                }
+                break;
+            }
+            base.WndProc(ref m);
+        }
+
+        //*************************************************************************************************************
+        private void resetPositionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WindowState = (FormWindowState)FormWindowState.Parse(WindowState.GetType(),
+               config.GetValue("MainFormState", "Normal"));
+            int X = config.GetValue("MainFormLocationX").ToIntOrDefault(50);
+            int Y = config.GetValue("MainFormLocationY").ToIntOrDefault(50);
+            int W = config.GetValue("MainFormLocationW").ToIntOrDefault(700);
+            int H = config.GetValue("MainFormLocationH").ToIntOrDefault(600);
+            Rectangle position = new Rectangle(X, Y, W, H);
+            Rectangle screen = SystemInformation.VirtualScreen;
+            screen.Inflate(20, 20);
+            if (screen.Contains(position))
+            {
+                Location = position.Location;
+                Size = position.Size;
+            }
+            Show();
         }
     }
 }

@@ -57,6 +57,9 @@
             this.sshFontSize = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.tabInterface = new FarsiLibrary.Win.FATabStripItem();
+            this.checkMinimizeToTray = new System.Windows.Forms.CheckBox();
+            this.checkCloseToTray = new System.Windows.Forms.CheckBox();
             this.dividerPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).BeginInit();
             this.faTabStrip1.SuspendLayout();
@@ -65,6 +68,7 @@
             this.groupBox1.SuspendLayout();
             this.tabSSH.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sshFontSize)).BeginInit();
+            this.tabInterface.SuspendLayout();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -125,7 +129,8 @@
             this.faTabStrip1.Items.AddRange(new FarsiLibrary.Win.FATabStripItem[] {
             this.tabSecurity,
             this.tabFTP,
-            this.tabSSH});
+            this.tabSSH,
+            this.tabInterface});
             this.faTabStrip1.Location = new System.Drawing.Point(0, 50);
             this.faTabStrip1.Name = "faTabStrip1";
             this.faTabStrip1.SelectedItem = this.tabSecurity;
@@ -376,6 +381,40 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Font Size";
             // 
+            // tabInterface
+            // 
+            this.tabInterface.Controls.Add(this.checkCloseToTray);
+            this.tabInterface.Controls.Add(this.checkMinimizeToTray);
+            this.tabInterface.IsDrawn = true;
+            this.tabInterface.Name = "tabInterface";
+            this.tabInterface.Size = new System.Drawing.Size(422, 220);
+            this.tabInterface.TabIndex = 3;
+            this.tabInterface.Title = "Interface";
+            // 
+            // checkMinimizeToTray
+            // 
+            this.checkMinimizeToTray.AutoSize = true;
+            this.checkMinimizeToTray.Checked = true;
+            this.checkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkMinimizeToTray.Location = new System.Drawing.Point(23, 15);
+            this.checkMinimizeToTray.Name = "checkMinimizeToTray";
+            this.checkMinimizeToTray.Size = new System.Drawing.Size(138, 17);
+            this.checkMinimizeToTray.TabIndex = 3;
+            this.checkMinimizeToTray.Text = "Minimize to system tray";
+            this.checkMinimizeToTray.UseVisualStyleBackColor = true;
+            // 
+            // checkCloseToTray
+            // 
+            this.checkCloseToTray.AutoSize = true;
+            this.checkCloseToTray.Checked = true;
+            this.checkCloseToTray.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkCloseToTray.Location = new System.Drawing.Point(206, 15);
+            this.checkCloseToTray.Name = "checkCloseToTray";
+            this.checkCloseToTray.Size = new System.Drawing.Size(125, 17);
+            this.checkCloseToTray.TabIndex = 4;
+            this.checkCloseToTray.Text = "Close to system tray";
+            this.checkCloseToTray.UseVisualStyleBackColor = true;
+            // 
             // GlobalSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -393,7 +432,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "GlobalSettings";
+            this.Text = "Global Settings";
             this.dividerPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).EndInit();
             this.faTabStrip1.ResumeLayout(false);
@@ -406,6 +445,8 @@
             this.tabSSH.ResumeLayout(false);
             this.tabSSH.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sshFontSize)).EndInit();
+            this.tabInterface.ResumeLayout(false);
+            this.tabInterface.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -441,5 +482,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox checkBoxCorrectFocus;
+        private FarsiLibrary.Win.FATabStripItem tabInterface;
+        private System.Windows.Forms.CheckBox checkCloseToTray;
+        private System.Windows.Forms.CheckBox checkMinimizeToTray;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.ServerTabs = new KRBTabControlNS.CustomTab.KRBTabControl();
@@ -43,9 +44,15 @@
             this.toolSettings = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_CanYouHelp = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_Stuff = new System.Windows.Forms.ToolStripButton();
+            this.appTrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showMainApplicationWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.appTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.resetPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.MainToolbar.SuspendLayout();
+            this.appTrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer1
@@ -199,6 +206,44 @@
             this.Toolbar_Stuff.Text = "Stuff";
             this.Toolbar_Stuff.Click += new System.EventHandler(this.Toolbar_Stuff_Click);
             // 
+            // appTrayMenu
+            // 
+            this.appTrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showMainApplicationWindowToolStripMenuItem,
+            this.resetPositionToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.appTrayMenu.Name = "appTrayMenu";
+            this.appTrayMenu.Size = new System.Drawing.Size(181, 92);
+            // 
+            // showMainApplicationWindowToolStripMenuItem
+            // 
+            this.showMainApplicationWindowToolStripMenuItem.Name = "showMainApplicationWindowToolStripMenuItem";
+            this.showMainApplicationWindowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showMainApplicationWindowToolStripMenuItem.Text = "Show window";
+            this.showMainApplicationWindowToolStripMenuItem.Click += new System.EventHandler(this.showMainApplicationWindowToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // appTrayIcon
+            // 
+            this.appTrayIcon.BalloonTipTitle = "XwComPortDetector";
+            this.appTrayIcon.ContextMenuStrip = this.appTrayMenu;
+            this.appTrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("appTrayIcon.Icon")));
+            this.appTrayIcon.Text = "AppTrayIcon";
+            this.appTrayIcon.DoubleClick += new System.EventHandler(this.appTrayIcon_DoubleClick);
+            // 
+            // resetPositionToolStripMenuItem
+            // 
+            this.resetPositionToolStripMenuItem.Name = "resetPositionToolStripMenuItem";
+            this.resetPositionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resetPositionToolStripMenuItem.Text = "Reset position";
+            this.resetPositionToolStripMenuItem.Click += new System.EventHandler(this.resetPositionToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,6 +264,7 @@
             this.toolStripContainer1.PerformLayout();
             this.MainToolbar.ResumeLayout(false);
             this.MainToolbar.PerformLayout();
+            this.appTrayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,6 +286,11 @@
         private System.Windows.Forms.ToolStripButton Toolbar_CanYouHelp;
         private System.Windows.Forms.ToolStripButton Toolbar_Stuff;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ContextMenuStrip appTrayMenu;
+        private System.Windows.Forms.ToolStripMenuItem showMainApplicationWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon appTrayIcon;
+        private System.Windows.Forms.ToolStripMenuItem resetPositionToolStripMenuItem;
     }
 }
 
