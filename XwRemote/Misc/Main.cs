@@ -350,6 +350,12 @@ namespace XwRemote
         {
             GlobalSettings settings = new GlobalSettings();
             settings.ShowDialog();
+
+            if (config.GetValue("UI_CLOSE_TO_TRAY").ToBoolOrDefault(false) ||
+               config.GetValue("UI_MINIMIZE_TO_TRAY").ToBoolOrDefault(false))
+                appTrayIcon.Visible = true;
+            else
+                appTrayIcon.Visible = false;
         }
 
         //*************************************************************************************************************
@@ -409,7 +415,7 @@ namespace XwRemote
             {
                 case WM_SYSCOMMAND:
                 {
-                    if (config.GetValue("UI_CLOSE_TO_TRAY").ToBoolOrDefault(false))
+                    if (config.GetValue("UI_MINIMIZE_TO_TRAY").ToBoolOrDefault(false))
                     {
                         int command = m.WParam.ToInt32() & 0xfff0;
                         if (command == SC_MINIMIZE)
@@ -429,18 +435,16 @@ namespace XwRemote
         {
             WindowState = (FormWindowState)FormWindowState.Parse(WindowState.GetType(),
                config.GetValue("MainFormState", "Normal"));
-            int X = config.GetValue("MainFormLocationX").ToIntOrDefault(50);
-            int Y = config.GetValue("MainFormLocationY").ToIntOrDefault(50);
-            int W = config.GetValue("MainFormLocationW").ToIntOrDefault(700);
-            int H = config.GetValue("MainFormLocationH").ToIntOrDefault(600);
-            Rectangle position = new Rectangle(X, Y, W, H);
             Rectangle screen = SystemInformation.VirtualScreen;
-            screen.Inflate(20, 20);
-            if (screen.Contains(position))
-            {
-                Location = position.Location;
-                Size = position.Size;
-            }
+            screen.Inflate(-200,-100);
+            Location = screen.Location;
+            Size = screen.Size;
+            Show();
+        }
+
+        //*************************************************************************************************************
+        private void appTrayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
             Show();
         }
     }

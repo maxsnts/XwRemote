@@ -46,9 +46,9 @@
             this.Toolbar_Stuff = new System.Windows.Forms.ToolStripButton();
             this.appTrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showMainApplicationWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.resetPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.MainToolbar.SuspendLayout();
@@ -213,19 +213,26 @@
             this.resetPositionToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.appTrayMenu.Name = "appTrayMenu";
-            this.appTrayMenu.Size = new System.Drawing.Size(181, 92);
+            this.appTrayMenu.Size = new System.Drawing.Size(149, 70);
             // 
             // showMainApplicationWindowToolStripMenuItem
             // 
             this.showMainApplicationWindowToolStripMenuItem.Name = "showMainApplicationWindowToolStripMenuItem";
-            this.showMainApplicationWindowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showMainApplicationWindowToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.showMainApplicationWindowToolStripMenuItem.Text = "Show window";
             this.showMainApplicationWindowToolStripMenuItem.Click += new System.EventHandler(this.showMainApplicationWindowToolStripMenuItem_Click);
+            // 
+            // resetPositionToolStripMenuItem
+            // 
+            this.resetPositionToolStripMenuItem.Name = "resetPositionToolStripMenuItem";
+            this.resetPositionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.resetPositionToolStripMenuItem.Text = "Reset position";
+            this.resetPositionToolStripMenuItem.Click += new System.EventHandler(this.resetPositionToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -236,13 +243,7 @@
             this.appTrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("appTrayIcon.Icon")));
             this.appTrayIcon.Text = "AppTrayIcon";
             this.appTrayIcon.DoubleClick += new System.EventHandler(this.appTrayIcon_DoubleClick);
-            // 
-            // resetPositionToolStripMenuItem
-            // 
-            this.resetPositionToolStripMenuItem.Name = "resetPositionToolStripMenuItem";
-            this.resetPositionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.resetPositionToolStripMenuItem.Text = "Reset position";
-            this.resetPositionToolStripMenuItem.Click += new System.EventHandler(this.resetPositionToolStripMenuItem_Click);
+            this.appTrayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.appTrayIcon_MouseDoubleClick);
             // 
             // Main
             // 
@@ -289,8 +290,8 @@
         private System.Windows.Forms.ContextMenuStrip appTrayMenu;
         private System.Windows.Forms.ToolStripMenuItem showMainApplicationWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.NotifyIcon appTrayIcon;
         private System.Windows.Forms.ToolStripMenuItem resetPositionToolStripMenuItem;
+        public System.Windows.Forms.NotifyIcon appTrayIcon;
     }
 }
 
