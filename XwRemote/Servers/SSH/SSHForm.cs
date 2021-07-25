@@ -34,7 +34,30 @@ namespace XwRemote.Servers
                 server.Port = 22;
 
             SuspendLayout();
+           
+            puttyPanel = new PuttyAppPanel(Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true));
+            puttyPanel.Parent = this;
+            puttyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            puttyPanel.ApplicationCommand = @"putty\putty.exe";
+            puttyPanel.ApplicationParameters = string.Empty;
+            puttyPanel.Name = "puttyPanel";
+            puttyPanel.Margin = new Padding(10);
+            puttyPanel.TabIndex = 0;
+            puttyPanel.Visible = false;
+            Controls.Add(puttyPanel);
             
+            ResumeLayout();
+        }
+
+        //*************************************************************************************************************
+        private void OnShown(object sender, EventArgs e)
+        {
+            Connect();
+        }
+
+        //*************************************************************************************************************
+        public void Connect()
+        {
             PuttyAppPanel.PuttyAppStartedCallback startedCallback = delegate ()
             {
                 BeginInvoke((MethodInvoker)delegate
@@ -54,31 +77,9 @@ namespace XwRemote.Servers
                 });
             };
 
-            puttyPanel = new PuttyAppPanel(Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true));
-            puttyPanel.Parent = this;
-            puttyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            puttyPanel.ApplicationCommand = @"putty\putty.exe";
-            puttyPanel.ApplicationParameters = string.Empty;
-            puttyPanel.Name = "puttyPanel";
-            puttyPanel.Margin = new Padding(10);
-            puttyPanel.TabIndex = 0;
             puttyPanel.StartedCallback = startedCallback;
             puttyPanel.ClosedCallback = closedCallback;
-            puttyPanel.Visible = false;
-            Controls.Add(puttyPanel);
-            
-            ResumeLayout();
-        }
 
-        //*************************************************************************************************************
-        private void OnShown(object sender, EventArgs e)
-        {
-            Connect();
-        }
-
-        //*************************************************************************************************************
-        public void Connect()
-        {
             loadingCircle1.BringToFront();
             loadingCircle1.Active = true;
             loadingCircle1.InnerCircleRadius = 15;
