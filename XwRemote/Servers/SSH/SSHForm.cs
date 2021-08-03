@@ -70,11 +70,15 @@ namespace XwRemote.Servers
 
             PuttyAppPanel.PuttyAppClosedCallback closedCallback = delegate (bool closed)
             {
-                BeginInvoke((MethodInvoker)delegate
+                try
                 {
-                    ((KRBTabControl)(Parent.Parent)).TabPages.Remove((TabPageEx)Parent);
-                    DeletePuttySession();
-                });
+                    BeginInvoke((MethodInvoker)delegate
+                    {
+                        ((KRBTabControl)(Parent.Parent)).TabPages.Remove((TabPageEx)Parent);
+                        DeletePuttySession();
+                    });
+                }
+                catch { /* yeah yeah! it will have to do */ }
             };
 
             puttyPanel.StartedCallback = startedCallback;
