@@ -218,6 +218,20 @@ namespace XwRemote.Misc
                         process.Kill();
                 }
 
+                //kill puttygen otherwise update may fail
+                foreach (var process in Process.GetProcessesByName("puttygen"))
+                {
+                    if (process.MainModule.FileName.Contains(Environment.CurrentDirectory))
+                        process.Kill();
+                }
+
+                //kill plink otherwise update may fail
+                foreach (var process in Process.GetProcessesByName("plink"))
+                {
+                    if (process.MainModule.FileName.Contains(Environment.CurrentDirectory))
+                        process.Kill();
+                }
+
                 File.WriteAllBytes(Path.Combine(path, "XwUpdater.exe"), Resources.XwUpdater);
                 using (Process process = new Process())
                 {
