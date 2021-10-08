@@ -49,7 +49,7 @@ namespace XwRemote.Settings
         public string Notes;
         public int SshTerminal = 1;
         public string SshKey = "";
-        public int FtpDataType = 2;
+        public int FtpDataType = 0;
 
         //*************************************************************************************************************
         public Server Copy(ServerType newType)

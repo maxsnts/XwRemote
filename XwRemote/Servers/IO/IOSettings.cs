@@ -23,8 +23,6 @@ namespace XwRemote.Settings
         //*************************************************************************************************************
         private void OnLoad(object sender, EventArgs e)
         {
-            LoadFtpDataType(server.FtpDataType);
-
             NameBox.Text = server.Name;
             HostBox.Text = server.Host;
             PortBox.Text = server.Port.ToString();
@@ -53,6 +51,7 @@ namespace XwRemote.Settings
                         DefaultPort.Checked = false;
                         PortBox.Enabled = true;
                     }
+                    LoadFtpDataType(server.FtpDataType);
                 }
                 break;
                 case ServerType.SFTP:
@@ -126,7 +125,7 @@ namespace XwRemote.Settings
         private void LoadFtpDataType(int type)
         {
             FtpDataType.Items.Clear();
-            FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.PASV, "Passive - Use routing info - Recommended"));
+            FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.AutoPassive, "Passive - Use routing info - Recommended"));
             FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.PASVEX, "Passive - Ignore routing info"));
             FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.AutoActive, "Active"));
 
@@ -135,6 +134,7 @@ namespace XwRemote.Settings
 
             switch ((FtpDataConnectionType)type)
             {
+                case FtpDataConnectionType.AutoPassive:
                 case FtpDataConnectionType.PASV:
                     FtpDataType.SelectedIndex = 0;
                     break;
