@@ -53,13 +53,15 @@
             this.radioDesktop = new System.Windows.Forms.RadioButton();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabSSH = new FarsiLibrary.Win.FATabStripItem();
+            this.label7 = new System.Windows.Forms.Label();
+            this.checkBoxAutoAcceptKeys = new System.Windows.Forms.CheckBox();
             this.checkBoxCorrectFocus = new System.Windows.Forms.CheckBox();
             this.sshFontSize = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabInterface = new FarsiLibrary.Win.FATabStripItem();
-            this.checkMinimizeToTray = new System.Windows.Forms.CheckBox();
             this.checkCloseToTray = new System.Windows.Forms.CheckBox();
+            this.checkMinimizeToTray = new System.Windows.Forms.CheckBox();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.dividerPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).BeginInit();
             this.faTabStrip1.SuspendLayout();
@@ -133,7 +135,7 @@
             this.tabInterface});
             this.faTabStrip1.Location = new System.Drawing.Point(0, 50);
             this.faTabStrip1.Name = "faTabStrip1";
-            this.faTabStrip1.SelectedItem = this.tabSecurity;
+            this.faTabStrip1.SelectedItem = this.tabSSH;
             this.faTabStrip1.Size = new System.Drawing.Size(424, 241);
             this.faTabStrip1.TabIndex = 15;
             this.faTabStrip1.Text = "faTabStrip1";
@@ -152,7 +154,6 @@
             this.tabSecurity.Controls.Add(this.label2);
             this.tabSecurity.IsDrawn = true;
             this.tabSecurity.Name = "tabSecurity";
-            this.tabSecurity.Selected = true;
             this.tabSecurity.Size = new System.Drawing.Size(422, 220);
             this.tabSecurity.TabIndex = 0;
             this.tabSecurity.Title = "Security";
@@ -337,20 +338,43 @@
             // tabSSH
             // 
             this.tabSSH.CanClose = false;
+            this.tabSSH.Controls.Add(this.label7);
+            this.tabSSH.Controls.Add(this.checkBoxAutoAcceptKeys);
             this.tabSSH.Controls.Add(this.checkBoxCorrectFocus);
             this.tabSSH.Controls.Add(this.sshFontSize);
             this.tabSSH.Controls.Add(this.label1);
             this.tabSSH.IsDrawn = true;
             this.tabSSH.Name = "tabSSH";
+            this.tabSSH.Selected = true;
             this.tabSSH.Size = new System.Drawing.Size(422, 220);
             this.tabSSH.TabIndex = 2;
             this.tabSSH.Title = "SSH";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(110, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(294, 13);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "You may need to change this depending on you monitor DPI";
+            // 
+            // checkBoxAutoAcceptKeys
+            // 
+            this.checkBoxAutoAcceptKeys.Checked = true;
+            this.checkBoxAutoAcceptKeys.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxAutoAcceptKeys.Location = new System.Drawing.Point(59, 52);
+            this.checkBoxAutoAcceptKeys.Name = "checkBoxAutoAcceptKeys";
+            this.checkBoxAutoAcceptKeys.Size = new System.Drawing.Size(272, 34);
+            this.checkBoxAutoAcceptKeys.TabIndex = 3;
+            this.checkBoxAutoAcceptKeys.Text = "Try to accept automatically the host keys";
+            this.checkBoxAutoAcceptKeys.UseVisualStyleBackColor = true;
             // 
             // checkBoxCorrectFocus
             // 
             this.checkBoxCorrectFocus.Checked = true;
             this.checkBoxCorrectFocus.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCorrectFocus.Location = new System.Drawing.Point(59, 40);
+            this.checkBoxCorrectFocus.Location = new System.Drawing.Point(59, 92);
             this.checkBoxCorrectFocus.Name = "checkBoxCorrectFocus";
             this.checkBoxCorrectFocus.Size = new System.Drawing.Size(272, 34);
             this.checkBoxCorrectFocus.TabIndex = 2;
@@ -360,13 +384,13 @@
             // 
             // sshFontSize
             // 
-            this.sshFontSize.Location = new System.Drawing.Point(59, 14);
+            this.sshFontSize.Location = new System.Drawing.Point(59, 12);
             this.sshFontSize.Margin = new System.Windows.Forms.Padding(2);
             this.sshFontSize.Name = "sshFontSize";
-            this.sshFontSize.Size = new System.Drawing.Size(60, 21);
+            this.sshFontSize.Size = new System.Drawing.Size(46, 21);
             this.sshFontSize.TabIndex = 1;
             this.sshFontSize.Value = new decimal(new int[] {
-            9,
+            10,
             0,
             0,
             0});
@@ -374,7 +398,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 14);
+            this.label1.Location = new System.Drawing.Point(6, 15);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 13);
@@ -391,18 +415,6 @@
             this.tabInterface.TabIndex = 3;
             this.tabInterface.Title = "Interface";
             // 
-            // checkMinimizeToTray
-            // 
-            this.checkMinimizeToTray.AutoSize = true;
-            this.checkMinimizeToTray.Checked = true;
-            this.checkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkMinimizeToTray.Location = new System.Drawing.Point(23, 15);
-            this.checkMinimizeToTray.Name = "checkMinimizeToTray";
-            this.checkMinimizeToTray.Size = new System.Drawing.Size(138, 17);
-            this.checkMinimizeToTray.TabIndex = 3;
-            this.checkMinimizeToTray.Text = "Minimize to system tray";
-            this.checkMinimizeToTray.UseVisualStyleBackColor = true;
-            // 
             // checkCloseToTray
             // 
             this.checkCloseToTray.AutoSize = true;
@@ -414,6 +426,18 @@
             this.checkCloseToTray.TabIndex = 4;
             this.checkCloseToTray.Text = "Close to system tray";
             this.checkCloseToTray.UseVisualStyleBackColor = true;
+            // 
+            // checkMinimizeToTray
+            // 
+            this.checkMinimizeToTray.AutoSize = true;
+            this.checkMinimizeToTray.Checked = true;
+            this.checkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkMinimizeToTray.Location = new System.Drawing.Point(23, 15);
+            this.checkMinimizeToTray.Name = "checkMinimizeToTray";
+            this.checkMinimizeToTray.Size = new System.Drawing.Size(138, 17);
+            this.checkMinimizeToTray.TabIndex = 3;
+            this.checkMinimizeToTray.Text = "Minimize to system tray";
+            this.checkMinimizeToTray.UseVisualStyleBackColor = true;
             // 
             // GlobalSettings
             // 
@@ -485,5 +509,7 @@
         private FarsiLibrary.Win.FATabStripItem tabInterface;
         private System.Windows.Forms.CheckBox checkCloseToTray;
         private System.Windows.Forms.CheckBox checkMinimizeToTray;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox checkBoxAutoAcceptKeys;
     }
 }

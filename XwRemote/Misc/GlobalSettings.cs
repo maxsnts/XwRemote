@@ -29,6 +29,7 @@ namespace XwRemote.Settings
 
             sshFontSize.Value = Main.config.GetValue("DEFAULT_SSH_FONT_SIZE").ToIntOrDefault(10);
             checkBoxCorrectFocus.Checked = Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true);
+            checkBoxAutoAcceptKeys.Checked = Main.config.GetValue("SSH_ACCEPT_KEYS").ToBoolOrDefault(true);
 
             checkMinimizeToTray.Checked = Main.config.GetValue("UI_MINIMIZE_TO_TRAY").ToBoolOrDefault(false);
             checkCloseToTray.Checked = Main.config.GetValue("UI_CLOSE_TO_TRAY").ToBoolOrDefault(false);
@@ -82,6 +83,7 @@ namespace XwRemote.Settings
 
             Main.config.SetValue("DEFAULT_SSH_FONT_SIZE", sshFontSize.Value.ToString());
             Main.config.SetValue("SSH_CORRECT_FOCUS", checkBoxCorrectFocus.Checked.ToString());
+            Main.config.SetValue("SSH_ACCEPT_KEYS", checkBoxAutoAcceptKeys.Checked.ToString());
 
             Main.config.SetValue("UI_MINIMIZE_TO_TRAY", checkMinimizeToTray.Checked.ToString());
             Main.config.SetValue("UI_CLOSE_TO_TRAY", checkCloseToTray.Checked.ToString());

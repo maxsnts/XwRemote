@@ -62,7 +62,7 @@ namespace XwRemote.Servers
             // using putty is starting to be complicated
             // but there is no real alternative
             // if we try to avoid some focus problems, we need to auto accept host keys
-            if (Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true))
+            if (Main.config.GetValue("SSH_ACCEPT_KEYS").ToBoolOrDefault(true))
             {
                 try
                 {
