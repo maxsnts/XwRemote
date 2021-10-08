@@ -67,7 +67,7 @@ namespace XwRemote.Servers
                 try
                 {
                     System.Diagnostics.ProcessStartInfo procStartInfo =
-                        new System.Diagnostics.ProcessStartInfo("cmd", $"/c echo y | putty\\plink -ssh {server.Username}@{server.Host}:{server.Port} \"exit\"");
+                        new System.Diagnostics.ProcessStartInfo("cmd", $"/c echo y | putty\\plink -ssh {server.Username}@{server.Host} -P {server.Port} \"exit\"");
 
                     procStartInfo.RedirectStandardOutput = true;
                     procStartInfo.UseShellExecute = false;
@@ -75,7 +75,7 @@ namespace XwRemote.Servers
                     System.Diagnostics.Process proc = new System.Diagnostics.Process();
                     proc.StartInfo = procStartInfo;
                     proc.Start();
-                    string result = proc.StandardOutput.ReadToEnd();
+                    //string result = proc.StandardOutput.ReadToEnd();
                 }
                 catch
                 {
