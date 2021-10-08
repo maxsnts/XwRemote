@@ -58,6 +58,32 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public void Connect()
         {
+            // Auto accept the host key 
+            // using putty is starting to be complicated
+            // but there is no real alternative
+            // if we try to avoid some focus problems, we need to auto accept host keys
+            if (Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true))
+            {
+                try
+                {
+                    System.Diagnostics.ProcessStartInfo procStartInfo =
+                        new System.Diagnostics.ProcessStartInfo("cmd", $"/c echo y | putty\\plink -ssh {server.Username}@{server.Host}:{server.Port} \"exit\"");
+
+                    procStartInfo.RedirectStandardOutput = true;
+                    procStartInfo.UseShellExecute = false;
+                    procStartInfo.CreateNoWindow = true;
+                    System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                    proc.StartInfo = procStartInfo;
+                    proc.Start();
+                    string result = proc.StandardOutput.ReadToEnd();
+                }
+                catch
+                {
+                    // do nothing, yes do nothing
+                    // putty will ask for the key acceptance
+                }
+            }
+
             PuttyAppPanel.PuttyAppStartedCallback startedCallback = delegate ()
             {
                 BeginInvoke((MethodInvoker)delegate

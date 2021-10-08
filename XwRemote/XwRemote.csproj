@@ -428,7 +428,12 @@
     <Content Include="Lib\Other\zlib.net.dll" />
     <Content Include="Lib\XwMaxLib\MySql.Data.dll" />
     <Content Include="Lib\XwMaxLib\System.Data.SQLite.dll" />
-    <Content Include="putty\puttygen.exe" />
+    <Content Include="putty\plink.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="putty\puttygen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\eye.png" />
     <Content Include="Resources\inout.png" />
     <None Include="Resources\magnifier.png" />
