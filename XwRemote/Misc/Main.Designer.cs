@@ -199,11 +199,11 @@
             // Toolbar_Stuff
             // 
             this.Toolbar_Stuff.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Toolbar_Stuff.Image = global::XwRemote.Properties.Resources.xwremote1;
+            this.Toolbar_Stuff.Image = global::XwRemote.Properties.Resources.help;
             this.Toolbar_Stuff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Toolbar_Stuff.Name = "Toolbar_Stuff";
-            this.Toolbar_Stuff.Size = new System.Drawing.Size(52, 22);
-            this.Toolbar_Stuff.Text = "Stuff";
+            this.Toolbar_Stuff.Size = new System.Drawing.Size(48, 22);
+            this.Toolbar_Stuff.Text = "Info";
             this.Toolbar_Stuff.Click += new System.EventHandler(this.Toolbar_Stuff_Click);
             // 
             // appTrayMenu
