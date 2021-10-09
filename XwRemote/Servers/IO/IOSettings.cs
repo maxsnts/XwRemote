@@ -125,7 +125,7 @@ namespace XwRemote.Settings
         private void LoadFtpDataType(int type)
         {
             FtpDataType.Items.Clear();
-            FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.AutoPassive, "Passive - Use routing info - Recommended"));
+            FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.AutoPassive, "Passive - Auto - Recommended"));
             FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.PASVEX, "Passive - Ignore routing info"));
             FtpDataType.Items.Add(new ListItem((int)FtpDataConnectionType.AutoActive, "Active"));
 
