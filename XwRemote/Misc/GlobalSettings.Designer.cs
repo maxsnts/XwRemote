@@ -135,7 +135,7 @@
             this.tabInterface});
             this.faTabStrip1.Location = new System.Drawing.Point(0, 50);
             this.faTabStrip1.Name = "faTabStrip1";
-            this.faTabStrip1.SelectedItem = this.tabSSH;
+            this.faTabStrip1.SelectedItem = this.tabSecurity;
             this.faTabStrip1.Size = new System.Drawing.Size(424, 241);
             this.faTabStrip1.TabIndex = 15;
             this.faTabStrip1.Text = "faTabStrip1";
@@ -154,6 +154,7 @@
             this.tabSecurity.Controls.Add(this.label2);
             this.tabSecurity.IsDrawn = true;
             this.tabSecurity.Name = "tabSecurity";
+            this.tabSecurity.Selected = true;
             this.tabSecurity.Size = new System.Drawing.Size(422, 220);
             this.tabSecurity.TabIndex = 0;
             this.tabSecurity.Title = "Security";
@@ -345,7 +346,6 @@
             this.tabSSH.Controls.Add(this.label1);
             this.tabSSH.IsDrawn = true;
             this.tabSSH.Name = "tabSSH";
-            this.tabSSH.Selected = true;
             this.tabSSH.Size = new System.Drawing.Size(422, 220);
             this.tabSSH.TabIndex = 2;
             this.tabSSH.Title = "SSH";
