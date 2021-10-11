@@ -162,7 +162,8 @@ namespace XwRemote.Settings
             server.Password = PassBox.Text;
             server.IsFavorite = IsFavorite.Checked;
             server.Port = PortBox.Text.ToIntOrDefault(21);
-            server.FtpDataType = ((ListItem)FtpDataType.SelectedItem).ID;
+            if (server.Type == ServerType.FTP)
+                server.FtpDataType = ((ListItem)FtpDataType.SelectedItem).ID;
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
             server.Notes = NotesBox.Text;
             server.SshKey = SshKeyBox.Text;

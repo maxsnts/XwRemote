@@ -205,6 +205,7 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public void RealLoadList(string path, bool skipCheckLink)
         {
+            form.SetLocalStatusText("");
             BackColor = Color.FromArgb(240, 240, 240);
 
             BeginUpdate();
@@ -220,6 +221,8 @@ namespace XwRemote.Servers
                     ListViewItem i = Items.Add(n.Text, n.ImageIndex);
                     i.Tag = new DiskItem(true, false, n.Tag.ToString(), "");
                 }
+
+                form.SetLocalStatusText($"{Items.Count} Items");
             }
             else
             {
@@ -266,6 +269,8 @@ namespace XwRemote.Servers
                         {
                             MessageBox.Show("Unable to return sharenames . Please make share Servername is correct.");
                         }
+
+                        form.SetLocalStatusText($"{Items.Count} Items");
                     }
                     else
                     {
@@ -274,7 +279,7 @@ namespace XwRemote.Servers
                         ListViewItem.ListViewSubItem[] subItems;
                         ListViewItem item = null;
 
-                        DirectoryInfo[] dirs = nodeDirInfo.GetDirectories();
+                        
 
                         ListViewItem item1 = Items.Add(".", ShellImageList.GetFileImageIndex(".", FileAttributes.Directory));
                         item1.Tag = new DiskItem(true, false, ".", ".");
@@ -283,9 +288,10 @@ namespace XwRemote.Servers
                         item2.Tag = new DiskItem(true, false, "..", "..");
                         item2.BackColor = Color.FromArgb(230, 230, 230);
 
+                        int ndirs = 0;
+                        var dirs = nodeDirInfo.EnumerateDirectories();
                         foreach (DirectoryInfo dir in dirs)
                         {
-
                             if ((dir.Attributes & FileAttributes.Hidden) != 0)
                                 continue;
 
@@ -301,9 +307,12 @@ namespace XwRemote.Servers
                             item.Tag = new DiskItem(true, false, dir.FullName, dir.Name);
                             item.ImageIndex = ShellImageList.GetFileImageIndex(dir.FullName, dir.Attributes);
                             Items.Add(item);
+                            ndirs++;
                         }
 
-                        foreach (FileInfo file in nodeDirInfo.GetFiles())
+                        int nfiles = 0;
+                        var files = nodeDirInfo.EnumerateFiles();
+                        foreach (FileInfo file in files)
                         {
                             if ((file.Attributes & FileAttributes.Hidden) != 0)
                                 continue;
@@ -321,6 +330,7 @@ namespace XwRemote.Servers
                             //item.ImageIndex = ShellImageList.GetFileImageIndex(file.FullName, file.Attributes);
                             item.ImageIndex = ShellImageList.GetFileImageIndex(file.FullName, file.Attributes);
                             Items.Add(item);
+                            nfiles++;
                         }
 
                         if (!string.IsNullOrEmpty(path))
@@ -332,6 +342,8 @@ namespace XwRemote.Servers
                         {
                             fileSystemWatcher.EnableRaisingEvents = false;
                         }
+
+                        form.SetLocalStatusText($"{ndirs+nfiles} Items: {ndirs} Folders, {nfiles} Files");
                     }
                 }
                 catch (Exception ex)
@@ -340,7 +352,6 @@ namespace XwRemote.Servers
                 }
             }
             EndUpdate();
-            form.SetLocalStatusText($"{((Items.Count > 2) ? Items.Count - 2 : 0)} Items");
             
             CurrentDirectory = path;
             form.LocalPath.Text = path;

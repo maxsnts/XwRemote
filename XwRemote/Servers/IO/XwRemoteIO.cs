@@ -322,7 +322,7 @@ namespace XwRemote.Servers.IO
                                 i.Size = item.Size;
                                 i.Modified = item.Modified;
 
-                                //OH this is so bad...
+                                //OH this is so bad... (but why... i just can't remember)
                                 if (i.IsSymlink)
                                 {
                                     i.IsDirectory = ftp.DirectoryExists(item.FullName);

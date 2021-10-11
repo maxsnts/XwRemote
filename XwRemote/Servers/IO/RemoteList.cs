@@ -219,6 +219,7 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public async Task LoadList(string path)
         {
+            form.SetRemoteStatusText("");
             Cursor.Current = Cursors.WaitCursor;
             BackColor = Color.FromArgb(240, 240, 240);
 
@@ -250,6 +251,7 @@ namespace XwRemote.Servers
                     ListViewItem.ListViewSubItem[] subItems;
                     ListViewItem item = null;
 
+                    int ndirs = 0;
                     foreach (XwRemoteIOItem remoteItem in result.Items)
                     {
                         if (!remoteItem.IsDirectory)
@@ -272,8 +274,10 @@ namespace XwRemote.Servers
                             FileAttributes.Directory | ((remoteItem.IsSymlink) ? FileAttributes.Compressed : 0));
 
                         Items.Add(item);
+                        ndirs++;
                     }
 
+                    int nfiles = 0;
                     foreach (XwRemoteIOItem remoteItem in result.Items)
                     {
                         if (remoteItem.IsDirectory)
@@ -296,11 +300,11 @@ namespace XwRemote.Servers
                             FileAttributes.Normal | ((remoteItem.IsSymlink) ? FileAttributes.Compressed : 0));
 
                         Items.Add(item);
+                        nfiles++;
                     }
 
+                    form.SetRemoteStatusText($"{ndirs + nfiles} Items: {ndirs} Folders, {nfiles} Files");
                     EndUpdate();
-                        
-                    form.SetRemoteStatusText($"{((Items.Count > 2) ? Items.Count - 2 : 0)} Items");
 
                     CurrentDirectory = path;
                     form.RemotePath.Text = CurrentDirectory;
