@@ -8,7 +8,7 @@ namespace XwRemote.Servers
 {
     class PuttyAppPanel : System.Windows.Forms.Panel
     {
-        //*************************************************************************************************************
+        //****************************************************************************************************
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
@@ -31,7 +31,7 @@ namespace XwRemote.Servers
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
-        //*************************************************************************************************************
+        //****************************************************************************************************
         public delegate void PuttyAppStartedCallback();
         public delegate void PuttyAppClosedCallback(bool error);
         internal PuttyAppStartedCallback StartedCallback = null;
@@ -50,42 +50,35 @@ namespace XwRemote.Servers
         public string ApplicationParameters = "";
         private bool callCloseEvent = true;
 
-        //*************************************************************************************************************
+        //****************************************************************************************************
         public PuttyAppPanel(bool tryCorrectFocus)
         {
             TryCorrectFocus = tryCorrectFocus;
         }
 
-        //*************************************************************************************************************
+        //****************************************************************************************************
         public void Open()
         {
-            try
+            AppProcess = new Process();
+            AppProcess.EnableRaisingEvents = true;
+            AppProcess.StartInfo.FileName = ApplicationCommand;
+            AppProcess.StartInfo.Arguments = ApplicationParameters;
+            AppProcess.Exited += delegate (object sender, EventArgs ev)
             {
-                AppProcess = new Process();
-                AppProcess.EnableRaisingEvents = true;
-                AppProcess.StartInfo.FileName = ApplicationCommand;
-                AppProcess.StartInfo.Arguments = ApplicationParameters;
-                AppProcess.Exited += delegate (object sender, EventArgs ev)
-                {
-                    if (callCloseEvent)
-                        ClosedCallback?.Invoke(true);
-                };
-                AppProcess.Start();
-                AppProcess.WaitForInputIdle();
-                AppWindow = AppProcess.MainWindowHandle;
-                SetParent(AppWindow, Handle);
-                SetForegroundWindow(this.Handle);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+                if (callCloseEvent)
+                    ClosedCallback?.Invoke(true);
+            };
+            AppProcess.Start();
+            AppProcess.WaitForInputIdle();
+            AppWindow = AppProcess.MainWindowHandle;
+            SetParent(AppWindow, Handle);
+            //SetForegroundWindow(this.Handle);
 
             ShowWindow(AppWindow, 3); //SW_SHOWMAXIMIZED
             int lStyle = GetWindowLong(AppWindow, GWL_STYLE);
             lStyle &= ~(WS_BORDER | WS_THICKFRAME);
             SetWindowLong(AppWindow, GWL_STYLE, lStyle);
-
+            
             if (TryCorrectFocus)
             {
                 overlay = new TransparentPanel();
@@ -100,7 +93,7 @@ namespace XwRemote.Servers
             StartedCallback?.Invoke();
         }
 
-        //*************************************************************************************************************
+        //****************************************************************************************************
         public void Close()
         {
             callCloseEvent = false;
@@ -112,7 +105,7 @@ namespace XwRemote.Servers
             { }
         }
 
-        //*************************************************************************************************************
+        //****************************************************************************************************
         protected override void OnResize(EventArgs e)
         {
             if (AppWindow != IntPtr.Zero)
@@ -128,7 +121,7 @@ namespace XwRemote.Servers
             }
         }
 
-        //*************************************************************************************************************
+        //****************************************************************************************************
         protected override void OnHandleDestroyed(EventArgs e)
         {
             if (AppWindow != IntPtr.Zero)
@@ -138,17 +131,17 @@ namespace XwRemote.Servers
             base.OnHandleDestroyed(e);
         }
 
-        //*************************************************************************************************************
+        //****************************************************************************************************
         public new void Focus()
         {
             overlay?.Focus();
         }
 
-        //*************************************************************************************************************
-        //*************************************************************************************************************
-        //*************************************************************************************************************
-        //*************************************************************************************************************
-        //*************************************************************************************************************
+        //****************************************************************************************************
+        //****************************************************************************************************
+        //****************************************************************************************************
+        //****************************************************************************************************
+        //****************************************************************************************************
         public class TransparentPanel : Panel
         {
             public IntPtr AppWindow = IntPtr.Zero;

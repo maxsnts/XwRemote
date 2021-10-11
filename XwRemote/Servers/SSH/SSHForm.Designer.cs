@@ -47,6 +47,7 @@
             this.loadingCircle1.StylePreset = MRG.Controls.UI.LoadingCircle.StylePresets.MacOSX;
             this.loadingCircle1.TabIndex = 1;
             this.loadingCircle1.Text = "loadingCircle1";
+            this.loadingCircle1.Visible = false;
             // 
             // statusLabel
             // 
@@ -56,6 +57,7 @@
             this.statusLabel.Size = new System.Drawing.Size(70, 13);
             this.statusLabel.TabIndex = 2;
             this.statusLabel.Text = "Connecting...";
+            this.statusLabel.Visible = false;
             // 
             // SSHForm
             // 

@@ -88,8 +88,9 @@ namespace XwRemote.Servers
             {
                 BeginInvoke((MethodInvoker)delegate
                 {
-                    statusLabel.Visible = false;
                     loadingCircle1.Visible = false;
+                    loadingCircle1.Active = false;
+                    statusLabel.Visible = false;
                     puttyPanel.Visible = true;
                 });
             };
@@ -104,13 +105,15 @@ namespace XwRemote.Servers
                         DeletePuttySession();
                     });
                 }
-                catch { /* yeah yeah! it will have to do */ }
+                catch 
+                { 
+                    // yeah yeah! it will have to do
+                }
             };
 
             puttyPanel.StartedCallback = startedCallback;
             puttyPanel.ClosedCallback = closedCallback;
 
-            loadingCircle1.BringToFront();
             loadingCircle1.Active = true;
             loadingCircle1.InnerCircleRadius = 15;
             loadingCircle1.OuterCircleRadius = 30;
@@ -118,8 +121,9 @@ namespace XwRemote.Servers
             loadingCircle1.Top = (this.Height / 2) + 10;
             loadingCircle1.Left = (this.Width / 2) - 40;
             loadingCircle1.Visible = true;
+            loadingCircle1.BringToFront();
             SetStatusText("Connecting...");
-
+            
             if (File.Exists("putty\\putty.exe"))
             {
                 CreatePuttySession();
@@ -146,8 +150,13 @@ namespace XwRemote.Servers
             SSHForm form = (SSHForm)state;
             try
             {
-                Socket stk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-                stk.Connect(form.server.Host, form.server.Port);
+                // try with socket first, if connection cant be done, no point on trying with putty
+                using (Socket stk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP))
+                {
+                    stk.Connect(form.server.Host, form.server.Port);
+                    stk.Close();
+                }
+
                 form.BeginInvoke((MethodInvoker)delegate
                 {
                     form.puttyPanel.Open();
@@ -165,8 +174,10 @@ namespace XwRemote.Servers
                 }
                 catch
                 {
-                    //crap window gone
-                    MessageBox.Show(ex.Message);
+                    // Crap window gone?
+                    // ok... don't show the message 
+                    // there is no point since the user closed the tab already
+                    // MessageBox.Show(ex.Message);
                 }
             }
         }
