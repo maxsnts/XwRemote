@@ -45,17 +45,17 @@ namespace XwRemote.Servers
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.QueueList = new XwRemote.Servers.QueueList();
             this.StatusBox = new System.Windows.Forms.RichTextBox();
-            this.statusLocalCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusRemoteCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.loadingCircle1 = new MRG.Controls.UI.LoadingCircle();
             this.faTabStats = new FarsiLibrary.Win.FATabStripItem();
             this.statusMain = new System.Windows.Forms.StatusStrip();
-            this.currentItem = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusMainLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.TotalQueueText = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusTransferRate = new System.Windows.Forms.ToolStripStatusLabel();
             this.faTabStripItem4 = new FarsiLibrary.Win.FATabStripItem();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.statusLocalLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusRemoteLabel = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerStatus)).BeginInit();
             this.splitContainerStatus.Panel1.SuspendLayout();
             this.splitContainerStatus.Panel2.SuspendLayout();
@@ -68,6 +68,8 @@ namespace XwRemote.Servers
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.statusLocal.SuspendLayout();
+            this.statusRemote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -186,6 +188,8 @@ namespace XwRemote.Servers
             // 
             // statusLocal
             // 
+            this.statusLocal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLocalLabel});
             this.statusLocal.Location = new System.Drawing.Point(0, 484);
             this.statusLocal.Name = "statusLocal";
             this.statusLocal.Size = new System.Drawing.Size(318, 22);
@@ -223,6 +227,8 @@ namespace XwRemote.Servers
             // 
             // statusRemote
             // 
+            this.statusRemote.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusRemoteLabel});
             this.statusRemote.Location = new System.Drawing.Point(0, 505);
             this.statusRemote.Name = "statusRemote";
             this.statusRemote.Size = new System.Drawing.Size(330, 22);
@@ -318,18 +324,6 @@ namespace XwRemote.Servers
             this.StatusBox.TabIndex = 4;
             this.StatusBox.Text = "";
             // 
-            // statusLocalCount
-            // 
-            this.statusLocalCount.Name = "statusLocalCount";
-            this.statusLocalCount.Size = new System.Drawing.Size(22, 17);
-            this.statusLocalCount.Text = "---";
-            // 
-            // statusRemoteCount
-            // 
-            this.statusRemoteCount.Name = "statusRemoteCount";
-            this.statusRemoteCount.Size = new System.Drawing.Size(22, 17);
-            this.statusRemoteCount.Text = "---";
-            // 
             // loadingCircle1
             // 
             this.loadingCircle1.Active = false;
@@ -359,7 +353,7 @@ namespace XwRemote.Servers
             // statusMain
             // 
             this.statusMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.currentItem});
+            this.statusMainLabel});
             this.statusMain.Location = new System.Drawing.Point(0, 670);
             this.statusMain.Name = "statusMain";
             this.statusMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
@@ -367,11 +361,11 @@ namespace XwRemote.Servers
             this.statusMain.TabIndex = 1;
             this.statusMain.Text = "statusMain";
             // 
-            // currentItem
+            // statusMainLabel
             // 
-            this.currentItem.AutoSize = false;
-            this.currentItem.Name = "currentItem";
-            this.currentItem.Size = new System.Drawing.Size(600, 17);
+            this.statusMainLabel.Name = "statusMainLabel";
+            this.statusMainLabel.Size = new System.Drawing.Size(93, 17);
+            this.statusMainLabel.Text = "statusMainLabel";
             // 
             // TotalQueueText
             // 
@@ -412,6 +406,18 @@ namespace XwRemote.Servers
             this.statusLabel.TabIndex = 4;
             this.statusLabel.Text = "Connecting...";
             // 
+            // statusLocalLabel
+            // 
+            this.statusLocalLabel.Name = "statusLocalLabel";
+            this.statusLocalLabel.Size = new System.Drawing.Size(94, 17);
+            this.statusLocalLabel.Text = "statusLocalLabel";
+            // 
+            // statusRemoteLabel
+            // 
+            this.statusRemoteLabel.Name = "statusRemoteLabel";
+            this.statusRemoteLabel.Size = new System.Drawing.Size(107, 17);
+            this.statusRemoteLabel.Text = "statusRemoteLabel";
+            // 
             // IOForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -442,6 +448,10 @@ namespace XwRemote.Servers
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.statusLocal.ResumeLayout(false);
+            this.statusLocal.PerformLayout();
+            this.statusRemote.ResumeLayout(false);
+            this.statusRemote.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -471,8 +481,6 @@ namespace XwRemote.Servers
         public XwMaxLib.UI.Shell.XwShellTree LocalTree;
         private System.Windows.Forms.StatusStrip statusLocal;
         private System.Windows.Forms.StatusStrip statusRemote;
-        public System.Windows.Forms.ToolStripStatusLabel statusLocalCount;
-        public  System.Windows.Forms.ToolStripStatusLabel statusRemoteCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusTransferRate;
         public MRG.Controls.UI.LoadingCircle loadingCircle1;
@@ -481,6 +489,8 @@ namespace XwRemote.Servers
         public QueueList QueueList;
         private System.Windows.Forms.RichTextBox StatusBox;
         public System.Windows.Forms.StatusStrip statusMain;
-        public System.Windows.Forms.ToolStripStatusLabel currentItem;
+        public System.Windows.Forms.ToolStripStatusLabel statusMainLabel;
+        private System.Windows.Forms.ToolStripStatusLabel statusLocalLabel;
+        private System.Windows.Forms.ToolStripStatusLabel statusRemoteLabel;
     }
 }

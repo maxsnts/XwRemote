@@ -91,7 +91,7 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public void QueueUploadItem(bool IsDir, string source, string destination, string name, int ImageIndex, long size)
         {
-            form.currentItem.Text = $"Queueing {source}";
+            form.statusMainLabel.Text = $"Queueing {source}";
 
             QueueItem queue = new QueueItem();
             queue.Download = false;
@@ -131,7 +131,7 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public void QueueDownloadItem(bool IsDir, string source, string destination, string name, int ImageIndex, long size)
         {
-            form.currentItem.Text = $"Queueing {source}";
+            form.statusMainLabel.Text = $"Queueing {source}";
 
             Cursor.Current = Cursors.WaitCursor;
             QueueItem queue = new QueueItem();
@@ -189,7 +189,7 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public async void StartQueue(bool force = false)
         {
-            form.currentItem.Text = "";
+            form.statusMainLabel.Text = "";
 
             if (QueueRunning && !force)
                 return;

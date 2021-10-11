@@ -300,7 +300,7 @@ namespace XwRemote.Servers
 
                     EndUpdate();
                         
-                    form.statusRemoteCount.Text = string.Format("{0} Items", (Items.Count > 2) ? Items.Count - 2 : 0);
+                    form.SetRemoteStatusText($"{((Items.Count > 2) ? Items.Count - 2 : 0)} Items");
 
                     CurrentDirectory = path;
                     form.RemotePath.Text = CurrentDirectory;

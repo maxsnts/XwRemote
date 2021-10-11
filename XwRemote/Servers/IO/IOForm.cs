@@ -35,7 +35,10 @@ namespace XwRemote.Servers
         {
             ShellImageList.SetSmallImageList(LocalList);
             ShellImageList.SetSmallImageList(RemoteList);
-            
+            statusMain.Items["statusMainLabel"].Text = "";
+            statusLocal.Items["statusLocalLabel"].Text = "";
+            statusRemote.Items["statusRemoteLabel"].Text = "";
+
             LocalList.Init(this);
             RemoteList.Init(this, remoteIO);
             QueueList.Init(this, remoteIO);
@@ -103,6 +106,7 @@ namespace XwRemote.Servers
 
             if (result.Success)
             {
+                SetMainStatusText($"Connected to {server.Name} ({server.Host}) with user {server.Username}");
                 Log(result.Message);
                 await RemoteList.Load();
             }
@@ -134,6 +138,24 @@ namespace XwRemote.Servers
             statusLabel.AutoSize = true;
             statusLabel.Top = (this.Height / 2) - (statusLabel.Height / 2) - 10;
             statusLabel.Left = (this.Width / 2) - (statusLabel.Width / 2);
+        }
+
+        //*************************************************************************************************************
+        public void SetMainStatusText(string txt)
+        {
+            statusMain.Items["statusMainLabel"].Text = txt;
+        }
+
+        //*************************************************************************************************************
+        public void SetLocalStatusText(string txt)
+        {
+            statusLocal.Items["statusLocalLabel"].Text = txt;
+        }
+
+        //*************************************************************************************************************
+        public void SetRemoteStatusText(string txt)
+        {
+            statusRemote.Items["statusRemoteLabel"].Text = txt;
         }
 
         //*************************************************************************************************************

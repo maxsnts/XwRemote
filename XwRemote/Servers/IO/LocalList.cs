@@ -340,7 +340,7 @@ namespace XwRemote.Servers
                 }
             }
             EndUpdate();
-            form.statusLocalCount.Text = string.Format("{0} Items", (Items.Count>2)?Items.Count - 2:0);
+            form.SetLocalStatusText($"{((Items.Count > 2) ? Items.Count - 2 : 0)} Items");
             
             CurrentDirectory = path;
             form.LocalPath.Text = path;
