@@ -143,19 +143,22 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public void SetMainStatusText(string txt)
         {
-            statusMain.Items["statusMainLabel"].Text = txt;
+            if (statusMain.Items.ContainsKey("statusMainLabel"))
+                statusMain.Items["statusMainLabel"].Text = txt;
         }
 
         //*************************************************************************************************************
         public void SetLocalStatusText(string txt)
         {
-            statusLocal.Items["statusLocalLabel"].Text = txt;
+            if (statusLocal.Items.ContainsKey("statusLocalLabel"))
+                statusLocal.Items["statusLocalLabel"].Text = txt;
         }
 
         //*************************************************************************************************************
         public void SetRemoteStatusText(string txt)
         {
-            statusRemote.Items["statusRemoteLabel"].Text = txt;
+            if (statusRemote.Items.ContainsKey("statusRemoteLabel"))
+                statusRemote.Items["statusRemoteLabel"].Text = txt;
         }
 
         //*************************************************************************************************************
