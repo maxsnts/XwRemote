@@ -252,9 +252,9 @@
             this.Certificates.AutoSize = true;
             this.Certificates.Location = new System.Drawing.Point(70, 162);
             this.Certificates.Name = "Certificates";
-            this.Certificates.Size = new System.Drawing.Size(224, 17);
+            this.Certificates.Size = new System.Drawing.Size(287, 17);
             this.Certificates.TabIndex = 2;
-            this.Certificates.Text = "This Server requires Certificates (CredSsp)";
+            this.Certificates.Text = "This remote computer requires authentication (CredSsp)";
             this.Certificates.UseVisualStyleBackColor = true;
             // 
             // btnOK
