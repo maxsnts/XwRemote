@@ -27,6 +27,7 @@ namespace XwRemote
         private System.Windows.Forms.Timer timerCloseTab = new System.Windows.Forms.Timer();
         private bool retryClose = false;
         private TabPageEx tryCloseTab = null;
+        private bool resized = false;
 
         //*************************************************************************************************************
         public Main()
@@ -67,7 +68,7 @@ namespace XwRemote
             ServerTabs.ImageList = myImageList;
 
             Visible = false;
-            WindowState = (FormWindowState)FormWindowState.Parse(WindowState.GetType(), 
+            WindowState = (FormWindowState)FormWindowState.Parse(WindowState.GetType(),
                 config.GetValue("MainFormState", "Normal"));
             int X = config.GetValue("MainFormLocationX").ToIntOrDefault(50);
             int Y = config.GetValue("MainFormLocationY").ToIntOrDefault(50);
@@ -82,13 +83,14 @@ namespace XwRemote
                 Size = position.Size;
             }
             Visible = true;
-        
+
             timerClose.Interval = 100;
             timerClose.Tick += new System.EventHandler(this.timerClose_Tick);
             timerCloseTab.Interval = 100;
             timerCloseTab.Tick += new System.EventHandler(this.timerCloseTab_Tick);
 
             LoadFavorites();
+            resized = false;
         }
 
         //*************************************************************************************************************
@@ -114,7 +116,7 @@ namespace XwRemote
             {
                 if (ServerTabs.TabPages.Count > 0)
                 {
-                    if (MessageBox.Show("You have open connections. \r\nAre you sure you want to close application?", 
+                    if (MessageBox.Show("You have open connections. \r\nAre you sure you want to close application?",
                         "Close?",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.No)
                     {
@@ -130,7 +132,7 @@ namespace XwRemote
                 config.SetValue("MainFormLocationW", Size.Width.ToString());
                 config.SetValue("MainFormLocationH", Size.Height.ToString());
             }
-            
+
             foreach (TabPageEx page in ServerTabs.TabPages)
             {
                 Server server = (Server)page.SomeUserObject;
@@ -183,12 +185,12 @@ namespace XwRemote
         //*************************************************************************************************************
         public bool IsServerOpen(Server server)
         {
-            foreach(TabPageEx page in ServerTabs.TabPages)
+            foreach (TabPageEx page in ServerTabs.TabPages)
             {
                 if (((Server)page.Tag).ID == server.ID)
                     return true;
             }
-            
+
             return false;
         }
 
@@ -205,8 +207,8 @@ namespace XwRemote
 
             if (tryCloseTab == null) //first try to close?
             {
-                if (MessageBox.Show("You are about to close a server tab?", "Close?", 
-                    MessageBoxButtons.YesNo, 
+                if (MessageBox.Show("You are about to close a server tab?", "Close?",
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.No)
                 {
                     e.Cancel = true;
@@ -215,7 +217,7 @@ namespace XwRemote
             }
 
             server.OnTabClose();
-            
+
             Focus();
             FocusSelectedTab();
         }
@@ -301,7 +303,7 @@ namespace XwRemote
         {
             if (ServerTabs.TabPages.Count > 0)
             {
-                MessageBox.Show("You have open connections. \r\nClose server connections before update XwRemote", 
+                MessageBox.Show("You have open connections. \r\nClose server connections before update XwRemote",
                     "Connections...", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -320,7 +322,7 @@ namespace XwRemote
             {
                 if (!server.IsFavorite)
                     continue;
-                
+
                 ToolStripItem item = Toolbar_Favorites.DropDownItems.Add(
                     String.Format("{0} ({1})", server.Name, server.Host),
                     server.GetImage());
@@ -341,7 +343,7 @@ namespace XwRemote
         {
             if (e.ClickedItem.Tag == null)
                 return;
-            
+
             ConnectToServer((Server)e.ClickedItem.Tag);
         }
 
@@ -414,18 +416,18 @@ namespace XwRemote
             switch (m.Msg)
             {
                 case WM_SYSCOMMAND:
-                {
-                    if (config.GetValue("UI_MINIMIZE_TO_TRAY").ToBoolOrDefault(false))
                     {
-                        int command = m.WParam.ToInt32() & 0xfff0;
-                        if (command == SC_MINIMIZE)
+                        if (config.GetValue("UI_MINIMIZE_TO_TRAY").ToBoolOrDefault(false))
                         {
-                            Hide();
-                            return;
+                            int command = m.WParam.ToInt32() & 0xfff0;
+                            if (command == SC_MINIMIZE)
+                            {
+                                Hide();
+                                return;
+                            }
                         }
                     }
-                }
-                break;
+                    break;
             }
             base.WndProc(ref m);
         }
@@ -436,7 +438,7 @@ namespace XwRemote
             WindowState = (FormWindowState)FormWindowState.Parse(WindowState.GetType(),
                config.GetValue("MainFormState", "Normal"));
             Rectangle screen = SystemInformation.VirtualScreen;
-            screen.Inflate(-200,-100);
+            screen.Inflate(-200, -100);
             Location = screen.Location;
             Size = screen.Size;
             Show();
@@ -446,6 +448,38 @@ namespace XwRemote
         private void appTrayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Show();
+        }
+
+        //*************************************************************************************************************
+        private void Main_ResizeEnd(object sender, EventArgs e)
+        {
+            if (resized)
+            {
+                foreach (var tab in ServerTabs.TabPages)
+                {
+                    Server server = (Server)((TabPageEx)tab).SomeUserObject;
+                    server?.ResizeEnd();
+                }
+                resized = false;
+            }
+        }
+
+        //*************************************************************************************************************
+        private void Main_SizeChanged(object sender, EventArgs e)
+        {
+            resized = true;
+        }
+
+        //*************************************************************************************************************
+        FormWindowState LastWindowState = FormWindowState.Normal;
+        private void Main_Resize(object sender, EventArgs e)
+        {
+            // When window state changes
+            if (WindowState != LastWindowState)
+            {
+                LastWindowState = WindowState;
+                Main_ResizeEnd(sender, e);
+            }
         }
     }
 }

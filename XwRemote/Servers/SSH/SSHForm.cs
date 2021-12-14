@@ -206,6 +206,12 @@ namespace XwRemote.Servers
         }
 
         //*************************************************************************************************************
+        public void ResizeEnded()
+        {
+
+        }
+
+        //*************************************************************************************************************
         private void CreatePuttySession()
         {
             string subkey = string.Format("Software\\SimonTatham\\PuTTY\\Sessions\\XwRemote{0}", server.ID);

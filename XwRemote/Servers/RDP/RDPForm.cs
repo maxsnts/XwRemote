@@ -52,6 +52,13 @@ namespace XwRemote.Servers
         }
 
         //*************************************************************************************************************
+        public void ResizeEnded()
+        {
+            if (server.Width == -1)
+                rdpControl.Reconnect((uint)Width, (uint)Height);
+        }
+
+        //*************************************************************************************************************
         public void Connect()
         {
             buttonConnect.Visible = false;
@@ -117,8 +124,8 @@ namespace XwRemote.Servers
             rdpControl.AutoSize = true;
             rdpControl.SecuredSettings2.FullScreen = 0;
             rdpControl.AdvancedSettings7.SmartSizing = true;
-            rdpControl.DesktopWidth = (server.Width == 0) ? Width : server.Width;
-            rdpControl.DesktopHeight = (server.Height == 0) ? Height : server.Height;
+            rdpControl.DesktopWidth = (server.Width > 0) ? server.Width : Width;
+            rdpControl.DesktopHeight = (server.Height > 0) ? server.Height: Height;
 
             rdpControl.Connect();
         }
@@ -129,6 +136,7 @@ namespace XwRemote.Servers
             loadingCircle1.Active = false;
             loadingCircle1.Visible = false;
         }
+
 
         //*************************************************************************************************************
         private void rdpControl_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)

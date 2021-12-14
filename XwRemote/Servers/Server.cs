@@ -166,5 +166,8 @@ namespace XwRemote.Settings
         {
             return null;
         }
+        public virtual void ResizeEnd()
+        {
+        }
     }
 }

@@ -59,5 +59,11 @@ namespace XwRemote.Servers
         {
             return Resources.rdp;
         }
+
+        //*************************************************************************************************************
+        public override void ResizeEnd()
+        {
+            form?.ResizeEnded();
+        }
     }
 }

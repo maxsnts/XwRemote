@@ -113,14 +113,18 @@ namespace XwRemote.Servers
                     server.Height = 0;
                     break;
                 case 1:
+                    server.Width = -1;
+                    server.Height = -1;
+                    break;
+                case 2:
                     server.Width = 800;
                     server.Height = 600;
                     break;
-                case 2:
+                case 3:
                     server.Width = 1024;
                     server.Height = 768;
                     break;
-                case 3:
+                case 4:
                     server.Width = 1280;
                     server.Height = 1024;
                     break;
@@ -168,7 +172,8 @@ namespace XwRemote.Servers
         private void LoadSize(int X, int Y)
         {
             SizeCombo.Items.Clear();
-            SizeCombo.Items.Add(new ListItem(0, "Fit to window"));
+            SizeCombo.Items.Add(new ListItem(0, "Fit to window (Scale remote image)"));
+            SizeCombo.Items.Add(new ListItem(4, "Fit to window (Reconnect and resize)"));
             SizeCombo.Items.Add(new ListItem(1, "800x600"));
             SizeCombo.Items.Add(new ListItem(2, "1024x768"));
             SizeCombo.Items.Add(new ListItem(3, "1280x1024"));
@@ -178,14 +183,17 @@ namespace XwRemote.Servers
                 case 0:
                     SizeCombo.SelectedIndex = 0;
                     break;
-                case 800:
+                case -1:
                     SizeCombo.SelectedIndex = 1;
                     break;
-                case 1024:
+                case 800:
                     SizeCombo.SelectedIndex = 2;
                     break;
-                case 1280:
+                case 1024:
                     SizeCombo.SelectedIndex = 3;
+                    break;
+                case 1280:
+                    SizeCombo.SelectedIndex = 4;
                     break;
             }
         }

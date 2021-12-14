@@ -260,6 +260,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.Load += new System.EventHandler(this.OnLoad);
             this.Shown += new System.EventHandler(this.Main_Shown);
+            this.ResizeEnd += new System.EventHandler(this.Main_ResizeEnd);
+            this.SizeChanged += new System.EventHandler(this.Main_SizeChanged);
+            this.Resize += new System.EventHandler(this.Main_Resize);
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
