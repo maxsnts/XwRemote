@@ -105,11 +105,7 @@ namespace XwRemote.Misc
         {
             using (WebClient client = new WebClient())
             {
-#if DEBUG
-                string URL = $"https://github.com/maxsnts/{Main.UpdateRepo}/releases/tag/v3.0.1.0";
-#else
                 string URL = $"https://github.com/maxsnts/{Main.UpdateRepo}/releases/latest";
-#endif
 
                 try
                 {
@@ -125,8 +121,8 @@ namespace XwRemote.Misc
 
                         try
                         {
-                            m = Regex.Match(content, @"(?ixs)markdown-body"">(?<NOTES>.*?)</div>");
-                            //this must be a bad way to do it
+                            //this is a bad way to do it, very bridle
+                            m = Regex.Match(content, @"(?ixs)markdown-body.*?>(?<NOTES>.*?)</div>");
                             string notes = m.Result("${NOTES}").Trim();
                             notes = notes.Replace("<p>", "");
                             notes = notes.Replace("</p>", "\r\n");
