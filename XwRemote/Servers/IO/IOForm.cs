@@ -230,7 +230,7 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         private void LocalPath_DropDownClosed(object sender, EventArgs e)
         {
-            LocalList.CheckLick = true;
+            LocalList.CheckLink = true;
             string path = (LocalPath.SelectedItem == null) ? LocalPath.Text : LocalPath.SelectedItem.ToString();
             LocalList.LoadList(path);
         }

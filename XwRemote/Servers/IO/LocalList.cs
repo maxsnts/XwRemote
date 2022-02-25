@@ -21,8 +21,8 @@ namespace XwRemote.Servers
         public string CurrentDirectory = string.Empty;
         private ContextMenuStrip contextMenu = new ContextMenuStrip();
         FileListSorter sorter = null;
-        public bool CheckLick = false;
-
+        public bool CheckLink = false;
+        
         //*************************************************************************************************************
         public LocalList()
         {
@@ -38,6 +38,14 @@ namespace XwRemote.Servers
             KeyDown += new System.Windows.Forms.KeyEventHandler(this_KeyDown);
             MouseUp += new System.Windows.Forms.MouseEventHandler(this_MouseUp);
             AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this_AfterLabelEdit);
+
+            fileSystemWatcher.IncludeSubdirectories = false;
+            fileSystemWatcher.NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Size;
 
             fileSystemWatcher.SynchronizingObject = this;
             fileSystemWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Changed);
@@ -205,6 +213,8 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         public void RealLoadList(string path, bool skipCheckLink)
         {
+            fileSystemWatcher.EnableRaisingEvents = false;
+
             form.SetLocalStatusText("");
             BackColor = Color.FromArgb(240, 240, 240);
 
@@ -333,16 +343,6 @@ namespace XwRemote.Servers
                             nfiles++;
                         }
 
-                        if (!string.IsNullOrEmpty(path))
-                        {
-                            fileSystemWatcher.Path = path;
-                            fileSystemWatcher.EnableRaisingEvents = true;
-                        }
-                        else
-                        {
-                            fileSystemWatcher.EnableRaisingEvents = false;
-                        }
-
                         form.SetLocalStatusText($"{ndirs+nfiles} Items: {ndirs} Folders, {nfiles} Files");
                     }
                 }
@@ -351,36 +351,59 @@ namespace XwRemote.Servers
                     MessageBox.Show(ex.Message, "Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+
             EndUpdate();
             
             CurrentDirectory = path;
             form.LocalPath.Text = path;
 
             BackColor = SystemColors.Window;
+            
+            if (!string.IsNullOrEmpty(path))
+            {
+                fileSystemWatcher.Path = path;
+                fileSystemWatcher.EnableRaisingEvents = true;
+            }
+            else
+            {
+                fileSystemWatcher.EnableRaisingEvents = false;
+            }
         }
 
         //*************************************************************************************************************
         private void fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            if (form.QueueList.Items.Count == 0)
-            {
-                //Because sometimes a folder is Deleted just to be created again
-                //It prevent the list from going into the root
-                if (e.ChangeType == WatcherChangeTypes.Deleted)
-                    Thread.Sleep(250);
+            if (!fileSystemWatcher.EnableRaisingEvents)
+                return;
 
-                if (Directory.Exists(CurrentDirectory))
-                    RealLoadList(CurrentDirectory, true);
-            }
+            fileSystemWatcher.EnableRaisingEvents = false;
+            //Because sometimes a folder is Deleted just to be created again
+            //It prevent the list from going into the root
+            if (e.ChangeType == WatcherChangeTypes.Deleted)
+                Thread.Sleep(250);
+
+            ReloadListFromFileWatcher();
         }
 
         //*************************************************************************************************************
         private void fileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
         {
+            if (!fileSystemWatcher.EnableRaisingEvents)
+                return;
+
+            fileSystemWatcher.EnableRaisingEvents = false;
+            ReloadListFromFileWatcher();
+        }
+
+        //*************************************************************************************************************
+        private void ReloadListFromFileWatcher()
+        {
             if (form.QueueList.Items.Count == 0)
             {
                 if (Directory.Exists(CurrentDirectory))
+                {
                     RealLoadList(CurrentDirectory, true);
+                }
             }
         }
 
@@ -456,7 +479,7 @@ namespace XwRemote.Servers
                     form.LocalPin.Image = Resources.PinDown;
                     form.localPinTip.SetToolTip(form.LocalPin, "Unpin Folder");
 
-                    if (CheckLick)
+                    if (CheckLink)
                         await form.CheckLink(CurrentDirectory, true);
                 }
                 else
@@ -466,7 +489,7 @@ namespace XwRemote.Servers
                 }
             }
 
-            CheckLick = false;
+            CheckLink = false;
         }
 
         //*************************************************************************************************************
