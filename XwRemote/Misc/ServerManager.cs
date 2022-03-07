@@ -435,28 +435,35 @@ namespace XwRemote
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
+                treeServers.SelectedNode = null;
                 TreeViewHitTestInfo info = treeServers.HitTest(new Point(e.X, e.Y));
 
-                bool isServer = (info.Node?.Tag is Server);
-                bool isGroup = (info.Node?.Tag is Group);
-                
-                if (isServer)
+                if (info.Location == TreeViewHitTestLocations.Image ||
+                   info.Location == TreeViewHitTestLocations.Label)
                 {
-                    treeServers.ContextMenuStrip = contextServer;
-                }
+                    bool isServer = (info.Node?.Tag is Server);
+                    bool isGroup = (info.Node?.Tag is Group);
 
-                if (isGroup)
-                {
-                    treeServers.ContextMenuStrip = contextGroup;
-                    contextGroup.Items[1].Enabled = true; //rename
-                    contextGroup.Items[2].Enabled = true; //delete
-                }
+                    if (isServer)
+                    {
+                        treeServers.ContextMenuStrip = contextServer;
+                    }
 
-                if (!isServer && !isGroup && tabStrip1.SelectedTab == FilterGrouped)
+                    if (isGroup)
+                    {
+                        treeServers.ContextMenuStrip = contextGroup;
+                        contextGroup.Items[1].Enabled = true; //rename
+                        contextGroup.Items[2].Enabled = true; //delete
+                    }
+                }
+                else
                 {
-                    treeServers.ContextMenuStrip = contextGroup;
-                    contextGroup.Items[1].Enabled = false; //rename
-                    contextGroup.Items[2].Enabled = false; //delete
+                    if (tabStrip1.SelectedTab == FilterGrouped)
+                    {
+                        treeServers.ContextMenuStrip = contextGroup;
+                        contextGroup.Items[1].Enabled = false; //rename
+                        contextGroup.Items[2].Enabled = false; //delete
+                    }
                 }
             }
         }
@@ -467,13 +474,20 @@ namespace XwRemote
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 TreeViewHitTestInfo info = treeServers.HitTest(new Point(e.X, e.Y));
-                treeServers.SelectedNode = info.Node;
+                if (info.Location == TreeViewHitTestLocations.Image ||
+                    info.Location == TreeViewHitTestLocations.Label)
+                {
+                    treeServers.SelectedNode = info.Node;
+                }
             }
         }
 
         //*************************************************************************************************************
         private void treeServers_ItemDrag(object sender, ItemDragEventArgs e)
         {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+                return;
+
             tmpSelectedNode = null;
 
             if (tabStrip1.SelectedTab != FilterGrouped)

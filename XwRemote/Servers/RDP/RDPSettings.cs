@@ -75,6 +75,77 @@ namespace XwRemote.Servers
         }
 
         //*************************************************************************************************************
+        private void LoadColor(int bit)
+        {
+            ColorCombo.Items.Clear();
+            ColorCombo.Items.Add(new ListItem(8, "256 Colors (8 bit)"));
+            ColorCombo.Items.Add(new ListItem(15, "Medium Color (15 bit)"));
+            ColorCombo.Items.Add(new ListItem(16, "High Color (16 bit)"));
+            ColorCombo.Items.Add(new ListItem(24, "True Color (24 bit)"));
+            ColorCombo.Items.Add(new ListItem(32, "Highest Color (32 bit)"));
+
+            switch (bit)
+            {
+                case 8:
+                    ColorCombo.SelectedIndex = 0;
+                    break;
+                case 15:
+                    ColorCombo.SelectedIndex = 1;
+                    break;
+                case 16:
+                    ColorCombo.SelectedIndex = 2;
+                    break;
+                case 24:
+                    ColorCombo.SelectedIndex = 3;
+                    break;
+                case 32:
+                    ColorCombo.SelectedIndex = 4;
+                    break;
+                default:
+                    ColorCombo.SelectedIndex = 1;
+                    break;
+            }
+        }
+
+        //*************************************************************************************************************
+        private void LoadSize(int X, int Y)
+        {
+            SizeCombo.Items.Clear();
+            SizeCombo.Items.Add(new ListItem(0, "Fit to window (Scale remote image)"));
+            SizeCombo.Items.Add(new ListItem(4, "Fit to window (Reconnect and resize)"));
+            SizeCombo.Items.Add(new ListItem(6, "Full Screen (Reconnect and resize) Not recommended, but... "));
+            SizeCombo.Items.Add(new ListItem(1, "800x600"));
+            SizeCombo.Items.Add(new ListItem(2, "1024x768"));
+            SizeCombo.Items.Add(new ListItem(3, "1280x1024"));
+            SizeCombo.Items.Add(new ListItem(5, "1600x1200"));
+
+            switch (X)
+            {
+                case 0:
+                    SizeCombo.SelectedIndex = 0;
+                    break;
+                case -1:
+                    SizeCombo.SelectedIndex = 1;
+                    break;
+                case -2:
+                    SizeCombo.SelectedIndex = 2;
+                    break;
+                case 800:
+                    SizeCombo.SelectedIndex = 3;
+                    break;
+                case 1024:
+                    SizeCombo.SelectedIndex = 4;
+                    break;
+                case 1280:
+                    SizeCombo.SelectedIndex = 5;
+                    break;
+                case 1600:
+                    SizeCombo.SelectedIndex = 6;
+                    break;
+            }
+        }
+
+        //*************************************************************************************************************
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (NameBox.Text.Trim() == string.Empty)
@@ -117,85 +188,30 @@ namespace XwRemote.Servers
                     server.Height = -1;
                     break;
                 case 2:
+                    server.Width = -2;
+                    server.Height = -2;
+                    break;
+                case 3:
                     server.Width = 800;
                     server.Height = 600;
                     break;
-                case 3:
+                case 4:
                     server.Width = 1024;
                     server.Height = 768;
                     break;
-                case 4:
+                case 5:
                     server.Width = 1280;
                     server.Height = 1024;
+                    break;
+                case 6:
+                    server.Width = 1600;
+                    server.Height = 1200;
                     break;
             }
 
             server.Notes = NotesBox.Text;
             Main.config.SaveServer(server);
             Close();
-        }
-
-        //*************************************************************************************************************
-        private void LoadColor(int bit)
-        {
-            ColorCombo.Items.Clear();
-            ColorCombo.Items.Add(new ListItem(8, "256 Colors (8 bit)"));
-            ColorCombo.Items.Add(new ListItem(15, "Medium Color (15 bit)"));
-            ColorCombo.Items.Add(new ListItem(16, "High Color (16 bit)"));
-            ColorCombo.Items.Add(new ListItem(24, "True Color (24 bit)"));
-            ColorCombo.Items.Add(new ListItem(32, "Highest Color (32 bit)"));
-
-            switch (bit)
-            {
-                case 8:
-                    ColorCombo.SelectedIndex = 0;
-                    break;
-                case 15:
-                    ColorCombo.SelectedIndex = 1;
-                    break;
-                case 16:
-                    ColorCombo.SelectedIndex = 2;
-                    break;
-                case 24:
-                    ColorCombo.SelectedIndex = 3;
-                    break;
-                case 32:
-                    ColorCombo.SelectedIndex = 4;
-                    break;
-                default:
-                    ColorCombo.SelectedIndex = 1;
-                    break;
-            }
-        }
-
-        //*************************************************************************************************************
-        private void LoadSize(int X, int Y)
-        {
-            SizeCombo.Items.Clear();
-            SizeCombo.Items.Add(new ListItem(0, "Fit to window (Scale remote image)"));
-            SizeCombo.Items.Add(new ListItem(4, "Fit to window (Reconnect and resize)"));
-            SizeCombo.Items.Add(new ListItem(1, "800x600"));
-            SizeCombo.Items.Add(new ListItem(2, "1024x768"));
-            SizeCombo.Items.Add(new ListItem(3, "1280x1024"));
-            
-            switch (X)
-            {
-                case 0:
-                    SizeCombo.SelectedIndex = 0;
-                    break;
-                case -1:
-                    SizeCombo.SelectedIndex = 1;
-                    break;
-                case 800:
-                    SizeCombo.SelectedIndex = 2;
-                    break;
-                case 1024:
-                    SizeCombo.SelectedIndex = 3;
-                    break;
-                case 1280:
-                    SizeCombo.SelectedIndex = 4;
-                    break;
-            }
         }
 
         //*************************************************************************************************************

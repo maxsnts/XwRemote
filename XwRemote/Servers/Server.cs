@@ -157,6 +157,12 @@ namespace XwRemote.Settings
         {
             return true;
         }
+
+        public virtual void FullScreen()
+        {
+
+        }
+
         public virtual string GetIcon()
         {
             return "";   

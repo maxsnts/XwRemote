@@ -65,5 +65,11 @@ namespace XwRemote.Servers
         {
             form?.ResizeEnded();
         }
+
+        //*************************************************************************************************************
+        public override void FullScreen()
+        {
+            form?.FullScreen();
+        }
     }
 }

@@ -35,6 +35,7 @@ namespace XwRemote.Servers
             this.buttonConnect = new System.Windows.Forms.Button();
             this.axMsRdpClient10NotSafeForScripting1 = new AxMSTSCLib.AxMsRdpClient10NotSafeForScripting();
             this.rdpControl = new AxMSTSCLib.AxMsRdpClient9NotSafeForScripting();
+            this.labelMessage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.axMsRdpClient10NotSafeForScripting1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdpControl)).BeginInit();
             this.SuspendLayout();
@@ -58,7 +59,7 @@ namespace XwRemote.Servers
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(328, 315);
+            this.buttonConnect.Location = new System.Drawing.Point(315, 275);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(114, 35);
             this.buttonConnect.TabIndex = 2;
@@ -84,13 +85,21 @@ namespace XwRemote.Servers
             this.rdpControl.TabIndex = 3;
             this.rdpControl.OnConnected += new System.EventHandler(this.rdpControl_OnConnected);
             this.rdpControl.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(this.rdpControl_OnDisconnected);
-            this.rdpControl.OnEnterFullScreenMode += new System.EventHandler(this.rdpControl_OnEnterFullScreenMode);
-            this.rdpControl.OnLeaveFullScreenMode += new System.EventHandler(this.rdpControl_OnLeaveFullScreenMode);
-            this.rdpControl.OnRequestGoFullScreen += new System.EventHandler(this.rdpControl_OnRequestGoFullScreen);
-            this.rdpControl.OnRequestLeaveFullScreen += new System.EventHandler(this.rdpControl_OnRequestLeaveFullScreen);
             this.rdpControl.OnFatalError += new AxMSTSCLib.IMsTscAxEvents_OnFatalErrorEventHandler(this.rdpControl_OnFatalError);
             this.rdpControl.OnWarning += new AxMSTSCLib.IMsTscAxEvents_OnWarningEventHandler(this.rdpControl_OnWarning);
             this.rdpControl.Enter += new System.EventHandler(this.rdpControl_Enter);
+            // 
+            // labelMessage
+            // 
+            this.labelMessage.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelMessage.AutoSize = true;
+            this.labelMessage.BackColor = System.Drawing.SystemColors.Window;
+            this.labelMessage.Location = new System.Drawing.Point(329, 398);
+            this.labelMessage.Name = "labelMessage";
+            this.labelMessage.Size = new System.Drawing.Size(72, 13);
+            this.labelMessage.TabIndex = 4;
+            this.labelMessage.Text = "labelMessage";
+            this.labelMessage.Visible = false;
             // 
             // RDPForm
             // 
@@ -98,6 +107,7 @@ namespace XwRemote.Servers
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 579);
             this.ControlBox = false;
+            this.Controls.Add(this.labelMessage);
             this.Controls.Add(this.buttonConnect);
             this.Controls.Add(this.loadingCircle1);
             this.Controls.Add(this.rdpControl);
@@ -113,6 +123,7 @@ namespace XwRemote.Servers
             ((System.ComponentModel.ISupportInitialize)(this.axMsRdpClient10NotSafeForScripting1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdpControl)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -121,5 +132,6 @@ namespace XwRemote.Servers
         private System.Windows.Forms.Button buttonConnect;
         private AxMsRdpClient10NotSafeForScripting axMsRdpClient10NotSafeForScripting1;
         private AxMsRdpClient9NotSafeForScripting rdpControl;
+        private System.Windows.Forms.Label labelMessage;
     }
 }

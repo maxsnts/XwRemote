@@ -1,5 +1,6 @@
 ﻿using KRBTabControlNS.CustomTab;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using XwMaxLib.Extensions;
 using XwRemote.Settings;
@@ -122,12 +123,42 @@ namespace XwRemote.Servers
 
             //SIZE
             rdpControl.AutoSize = true;
-            rdpControl.SecuredSettings2.FullScreen = 0;
+            rdpControl.FullScreen = false;
             rdpControl.AdvancedSettings7.SmartSizing = true;
             rdpControl.DesktopWidth = (server.Width > 0) ? server.Width : Width;
             rdpControl.DesktopHeight = (server.Height > 0) ? server.Height: Height;
+            
+            rdpControl.OnEnterFullScreenMode += RdpControl_OnEnterFullScreenMode;
+            rdpControl.OnLeaveFullScreenMode += RdpControl_OnLeaveFullScreenMode;
+            rdpControl.FullScreenTitle = $"{server.Name} ({server.Host})";
+
+            if (server.Width == -2)
+            {
+                Rectangle screen = Screen.FromControl(this).Bounds;
+                rdpControl.DesktopWidth = screen.Width;
+                rdpControl.DesktopHeight = screen.Height;                
+                FullScreen();
+            }
 
             rdpControl.Connect();
+        }
+
+        //*************************************************************************************************************
+        private void RdpControl_OnEnterFullScreenMode(object sender, EventArgs e)
+        {
+            labelMessage.Visible = true;
+            Rectangle screen = Screen.FromControl(this).Bounds;
+            rdpControl.Reconnect((uint)screen.Width, (uint)screen.Height);
+        }
+
+        //*************************************************************************************************************
+        private void RdpControl_OnLeaveFullScreenMode(object sender, EventArgs e)
+        {
+            labelMessage.Visible = false;
+            rdpControl.FullScreen = false;
+            int X = (server.Width > 0) ? server.Width : Width;
+            int Y = (server.Height > 0) ? server.Height : Height;
+            rdpControl.Reconnect((uint)X, (uint)Y);
         }
 
         //*************************************************************************************************************
@@ -137,14 +168,13 @@ namespace XwRemote.Servers
             loadingCircle1.Visible = false;
         }
 
-
         //*************************************************************************************************************
         private void rdpControl_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             loadingCircle1.Active = false;
             loadingCircle1.Visible = false;
             buttonConnect.Visible = true;
-
+            
             switch (e.discReason)
             {
                 case 2308:
@@ -323,33 +353,9 @@ namespace XwRemote.Servers
         }
 
         //*************************************************************************************************************
-        private void rdpControl_OnLeaveFullScreenMode(object sender, EventArgs e)
-        {
-
-        }
-
-        //*************************************************************************************************************
-        private void rdpControl_OnRequestGoFullScreen(object sender, EventArgs e)
-        {
-
-        }
-
-        //*************************************************************************************************************
-        private void rdpControl_OnEnterFullScreenMode(object sender, EventArgs e)
-        {
-
-        }
-
-        //*************************************************************************************************************
         private void rdpControl_OnWarning(object sender, AxMSTSCLib.IMsTscAxEvents_OnWarningEvent e)
         {
             //MessageBox.Show(e.warningCode.ToString());
-        }
-
-        //*************************************************************************************************************
-        private void rdpControl_OnRequestLeaveFullScreen(object sender, EventArgs e)
-        {
-
         }
 
         //*************************************************************************************************************
@@ -380,6 +386,14 @@ namespace XwRemote.Servers
         private void rdpControl_Enter(object sender, EventArgs e)
         {
             rdpControl.Focus();
+        }
+
+        //*************************************************************************************************************
+        public void FullScreen()
+        {
+            rdpControl.FullScreen = true;
+            labelMessage.Text = "Is the RDP windows minimized?";
+            labelMessage.Visible = true;
         }
     }
 }

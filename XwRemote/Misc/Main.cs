@@ -216,10 +216,12 @@ namespace XwRemote
                 }
             }
 
+            toolFullScreen.Enabled = false;
             server.OnTabClose();
 
-            Focus();
-            FocusSelectedTab();
+            //I don't think is necessary... lets see
+            //Focus();
+            //FocusSelectedTab();
         }
 
         //*************************************************************************************************************
@@ -240,10 +242,20 @@ namespace XwRemote
             TabPage tab = ServerTabs.SelectedTab;
             if (tab == null)
                 return;
+
             Server server = (Server)((TabPageEx)tab).SomeUserObject;
             ServerTabs.TabGradient.GradientStyle = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
             ServerTabs.TabGradient.ColorEnd = Color.FromArgb(server.TabColor);
             server?.OnTabFocus();
+
+            if (server.Type == ServerType.RDP)
+            {
+                toolFullScreen.Enabled = true;
+            }
+            else
+            {
+                toolFullScreen.Enabled = false;
+            }
         }
 
         //*************************************************************************************************************
@@ -480,6 +492,20 @@ namespace XwRemote
                 LastWindowState = WindowState;
                 Main_ResizeEnd(sender, e);
             }
+        }
+
+        //*************************************************************************************************************
+        private void toolFullScreen_Click(object sender, EventArgs e)
+        {
+            TabPageEx tab = ((TabPageEx)ServerTabs.SelectedTab);
+            if (tab == null)
+                return;
+
+            Server server = (Server)((TabPageEx)tab).SomeUserObject;
+            if (server == null)
+                return;
+
+            server.FullScreen();
         }
     }
 }

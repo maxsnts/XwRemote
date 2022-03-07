@@ -40,8 +40,8 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.Toolbar_Favorites = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolSettings = new System.Windows.Forms.ToolStripButton();
+            this.toolScanner = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_CanYouHelp = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_Stuff = new System.Windows.Forms.ToolStripButton();
             this.appTrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -49,6 +49,7 @@
             this.resetPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolFullScreen = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.MainToolbar.SuspendLayout();
@@ -134,13 +135,14 @@
             this.toolStripSeparator4,
             this.Toolbar_Favorites,
             this.toolStripSeparator5,
-            this.toolStripButton1,
             this.toolSettings,
+            this.toolScanner,
             this.Toolbar_CanYouHelp,
             this.toolStripSeparator3,
             this.Toolbar_Stuff,
             this.toolStripSeparator2,
-            this.Toolbar_Updates});
+            this.Toolbar_Updates,
+            this.toolFullScreen});
             this.MainToolbar.Location = new System.Drawing.Point(0, 0);
             this.MainToolbar.Name = "MainToolbar";
             this.MainToolbar.Size = new System.Drawing.Size(869, 25);
@@ -167,24 +169,24 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = global::XwRemote.Properties.Resources.settings;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(69, 22);
-            this.toolStripButton1.Text = "Settings";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolSettings_Click);
-            // 
             // toolSettings
             // 
-            this.toolSettings.Image = global::XwRemote.Properties.Resources.magnifier;
+            this.toolSettings.Image = global::XwRemote.Properties.Resources.settings;
             this.toolSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolSettings.Name = "toolSettings";
             this.toolSettings.Size = new System.Drawing.Size(69, 22);
-            this.toolSettings.Text = "Scanner";
-            this.toolSettings.ToolTipText = "Network scanner";
-            this.toolSettings.Click += new System.EventHandler(this.toolScanner_Click);
+            this.toolSettings.Text = "Settings";
+            this.toolSettings.Click += new System.EventHandler(this.toolSettings_Click);
+            // 
+            // toolScanner
+            // 
+            this.toolScanner.Image = global::XwRemote.Properties.Resources.magnifier;
+            this.toolScanner.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolScanner.Name = "toolScanner";
+            this.toolScanner.Size = new System.Drawing.Size(69, 22);
+            this.toolScanner.Text = "Scanner";
+            this.toolScanner.ToolTipText = "Network scanner";
+            this.toolScanner.Click += new System.EventHandler(this.toolScanner_Click);
             // 
             // Toolbar_CanYouHelp
             // 
@@ -245,6 +247,16 @@
             this.appTrayIcon.DoubleClick += new System.EventHandler(this.appTrayIcon_DoubleClick);
             this.appTrayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.appTrayIcon_MouseDoubleClick);
             // 
+            // toolFullScreen
+            // 
+            this.toolFullScreen.Enabled = false;
+            this.toolFullScreen.Image = global::XwRemote.Properties.Resources.fullscreen;
+            this.toolFullScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolFullScreen.Name = "toolFullScreen";
+            this.toolFullScreen.Size = new System.Drawing.Size(84, 22);
+            this.toolFullScreen.Text = "Full Screen";
+            this.toolFullScreen.Click += new System.EventHandler(this.toolFullScreen_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -286,15 +298,16 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripDropDownButton Toolbar_Favorites;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton toolSettings;
+        private System.Windows.Forms.ToolStripButton toolScanner;
         private System.Windows.Forms.ToolStripButton Toolbar_CanYouHelp;
         private System.Windows.Forms.ToolStripButton Toolbar_Stuff;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolSettings;
         private System.Windows.Forms.ContextMenuStrip appTrayMenu;
         private System.Windows.Forms.ToolStripMenuItem showMainApplicationWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetPositionToolStripMenuItem;
         public System.Windows.Forms.NotifyIcon appTrayIcon;
+        private System.Windows.Forms.ToolStripButton toolFullScreen;
     }
 }
 
