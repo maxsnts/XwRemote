@@ -109,14 +109,14 @@
             this.UserBox.Location = new System.Drawing.Point(70, 110);
             this.UserBox.Name = "UserBox";
             this.UserBox.Size = new System.Drawing.Size(317, 20);
-            this.UserBox.TabIndex = 3;
+            this.UserBox.TabIndex = 2;
             // 
             // PassBox
             // 
             this.PassBox.Location = new System.Drawing.Point(70, 136);
             this.PassBox.Name = "PassBox";
             this.PassBox.Size = new System.Drawing.Size(294, 20);
-            this.PassBox.TabIndex = 4;
+            this.PassBox.TabIndex = 3;
             this.PassBox.UseSystemPasswordChar = true;
             this.PassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PassBox_KeyDown);
             // 
@@ -126,7 +126,7 @@
             this.SizeCombo.Location = new System.Drawing.Point(70, 208);
             this.SizeCombo.Name = "SizeCombo";
             this.SizeCombo.Size = new System.Drawing.Size(317, 21);
-            this.SizeCombo.TabIndex = 5;
+            this.SizeCombo.TabIndex = 6;
             // 
             // ColorCombo
             // 
@@ -135,7 +135,7 @@
             this.ColorCombo.Location = new System.Drawing.Point(70, 235);
             this.ColorCombo.Name = "ColorCombo";
             this.ColorCombo.Size = new System.Drawing.Size(317, 21);
-            this.ColorCombo.TabIndex = 6;
+            this.ColorCombo.TabIndex = 7;
             // 
             // label5
             // 
@@ -170,7 +170,7 @@
             this.PortBox.Location = new System.Drawing.Point(136, 262);
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(251, 20);
-            this.PortBox.TabIndex = 8;
+            this.PortBox.TabIndex = 9;
             // 
             // DefaultPort
             // 
@@ -180,7 +180,7 @@
             this.DefaultPort.Location = new System.Drawing.Point(70, 264);
             this.DefaultPort.Name = "DefaultPort";
             this.DefaultPort.Size = new System.Drawing.Size(60, 17);
-            this.DefaultPort.TabIndex = 7;
+            this.DefaultPort.TabIndex = 8;
             this.DefaultPort.Text = "Default";
             this.DefaultPort.UseVisualStyleBackColor = true;
             this.DefaultPort.CheckedChanged += new System.EventHandler(this.DefaultPort_CheckedChanged);
@@ -202,7 +202,7 @@
             this.SendKeys.Location = new System.Drawing.Point(70, 287);
             this.SendKeys.Name = "SendKeys";
             this.SendKeys.Size = new System.Drawing.Size(166, 17);
-            this.SendKeys.TabIndex = 9;
+            this.SendKeys.TabIndex = 10;
             this.SendKeys.Text = "Send Shortcut Keys to Server";
             this.SendKeys.UseVisualStyleBackColor = true;
             // 
@@ -212,7 +212,7 @@
             this.ConnectDrives.Location = new System.Drawing.Point(70, 310);
             this.ConnectDrives.Name = "ConnectDrives";
             this.ConnectDrives.Size = new System.Drawing.Size(128, 17);
-            this.ConnectDrives.TabIndex = 10;
+            this.ConnectDrives.TabIndex = 11;
             this.ConnectDrives.Text = "Connect Local Drives";
             this.ConnectDrives.UseVisualStyleBackColor = true;
             // 
@@ -222,7 +222,7 @@
             this.UseSound.Location = new System.Drawing.Point(70, 333);
             this.UseSound.Name = "UseSound";
             this.UseSound.Size = new System.Drawing.Size(79, 17);
-            this.UseSound.TabIndex = 11;
+            this.UseSound.TabIndex = 12;
             this.UseSound.Text = "Use Sound";
             this.UseSound.UseVisualStyleBackColor = true;
             // 
@@ -232,7 +232,7 @@
             this.checkConsole.Location = new System.Drawing.Point(70, 378);
             this.checkConsole.Name = "checkConsole";
             this.checkConsole.Size = new System.Drawing.Size(160, 17);
-            this.checkConsole.TabIndex = 13;
+            this.checkConsole.TabIndex = 14;
             this.checkConsole.Text = "Always connecto to Console";
             this.checkConsole.UseVisualStyleBackColor = true;
             this.checkConsole.Visible = false;
@@ -243,7 +243,7 @@
             this.checkThemes.Location = new System.Drawing.Point(70, 356);
             this.checkThemes.Name = "checkThemes";
             this.checkThemes.Size = new System.Drawing.Size(86, 17);
-            this.checkThemes.TabIndex = 12;
+            this.checkThemes.TabIndex = 13;
             this.checkThemes.Text = "Use Themes";
             this.checkThemes.UseVisualStyleBackColor = true;
             // 
@@ -253,7 +253,7 @@
             this.Certificates.Location = new System.Drawing.Point(70, 162);
             this.Certificates.Name = "Certificates";
             this.Certificates.Size = new System.Drawing.Size(287, 17);
-            this.Certificates.TabIndex = 2;
+            this.Certificates.TabIndex = 4;
             this.Certificates.Text = "This remote computer requires authentication (CredSsp)";
             this.Certificates.UseVisualStyleBackColor = true;
             // 
@@ -262,7 +262,7 @@
             this.btnOK.Location = new System.Drawing.Point(230, 10);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 1;
+            this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -273,7 +273,7 @@
             this.btnCancel.Location = new System.Drawing.Point(311, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
+            this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -312,7 +312,7 @@
             this.IsFavorite.Location = new System.Drawing.Point(15, 14);
             this.IsFavorite.Name = "IsFavorite";
             this.IsFavorite.Size = new System.Drawing.Size(143, 17);
-            this.IsFavorite.TabIndex = 0;
+            this.IsFavorite.TabIndex = 2;
             this.IsFavorite.Text = "Place on Favorites menu";
             this.IsFavorite.UseVisualStyleBackColor = true;
             // 
@@ -324,7 +324,7 @@
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
-            this.tabColorBox.TabIndex = 23;
+            this.tabColorBox.TabIndex = 16;
             // 
             // label1
             // 
@@ -351,7 +351,7 @@
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 77);
-            this.NotesBox.TabIndex = 24;
+            this.NotesBox.TabIndex = 15;
             // 
             // Encryption
             // 
@@ -359,7 +359,7 @@
             this.Encryption.Location = new System.Drawing.Point(70, 185);
             this.Encryption.Name = "Encryption";
             this.Encryption.Size = new System.Drawing.Size(112, 17);
-            this.Encryption.TabIndex = 26;
+            this.Encryption.TabIndex = 5;
             this.Encryption.Text = "Enable Encryption";
             this.Encryption.UseVisualStyleBackColor = true;
             // 

@@ -241,7 +241,10 @@ namespace XwRemote
         {
             TabPage tab = ServerTabs.SelectedTab;
             if (tab == null)
+            {
+                toolFullScreen.Enabled = false;
                 return;
+            }
 
             Server server = (Server)((TabPageEx)tab).SomeUserObject;
             ServerTabs.TabGradient.GradientStyle = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
