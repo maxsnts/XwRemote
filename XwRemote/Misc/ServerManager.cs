@@ -11,8 +11,10 @@ namespace XwRemote
     {
         private int SelectedTab = 1;
         public Server ConnectToThisServer = null;
-        private string tmpSelectedNode = null;
         private Main mainForm = null;
+        private string tmpSelectedNode = null;
+        private string tmpSelectedLabel;
+        private Point tmpScrollPost;
 
         //*************************************************************************************************************
         public ServerManager(Main main)
@@ -42,7 +44,9 @@ namespace XwRemote
         private void LoadList()
         {
             treeServers.BeginUpdate();
+            tmpScrollPost = treeServers.GetTreeViewScrollPos();
             tmpSelectedNode = treeServers.SelectedNode?.Name;
+            tmpSelectedLabel = treeServers.SelectedNode?.Text;
             treeServers.ContextMenuStrip = null;
             treeServers.Nodes.Clear();
             
@@ -170,7 +174,10 @@ namespace XwRemote
             {
                 treeServers.SelectedNode = found[0];
                 treeServers.SelectedNode.Parent?.Expand();
-                treeServers.SelectedNode?.EnsureVisible();
+                if (tmpSelectedLabel == treeServers.SelectedNode?.Text)
+                    treeServers.SetTreeViewScrollPos(tmpScrollPost);
+                else
+                    treeServers.SelectedNode?.EnsureVisible();
             }
         }
 
