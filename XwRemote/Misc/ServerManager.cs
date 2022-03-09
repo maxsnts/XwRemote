@@ -41,10 +41,11 @@ namespace XwRemote
         //*************************************************************************************************************
         private void LoadList()
         {
+            treeServers.BeginUpdate();
             tmpSelectedNode = treeServers.SelectedNode?.Name;
             treeServers.ContextMenuStrip = null;
             treeServers.Nodes.Clear();
-
+            
             switch (SelectedTab)
             {
                 case 1:
@@ -60,7 +61,9 @@ namespace XwRemote
                     LoadOrdered(true);
                     break;
             }
-
+                        
+            treeServers.EndUpdate();
+            
             if (!textSearch.Focused)
             {
                 SelectNode();

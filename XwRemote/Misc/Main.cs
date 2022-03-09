@@ -282,24 +282,6 @@ namespace XwRemote
                             param.Toolbar_Updates.Enabled = true;
                             param.Toolbar_Updates.Image = Resources.accept;
                         });
-
-                        try
-                        {
-                            while (true)
-                            {
-                                Thread.Sleep(1000);
-                                param.BeginInvoke((MethodInvoker)delegate
-                                {
-                                    param.Toolbar_Updates.Image = Resources.play;
-                                });
-                                Thread.Sleep(1000);
-                                param.BeginInvoke((MethodInvoker)delegate
-                                {
-                                    param.Toolbar_Updates.Image = Resources.accept;
-                                });
-                            }
-                        }
-                        catch { /* Not important */ }
                     }
                 }
             }
