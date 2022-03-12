@@ -36,7 +36,6 @@ namespace XwRemote.Misc
                 JsonSerializerSettings settings = new JsonSerializerSettings();
                 settings.NullValueHandling = NullValueHandling.Ignore;
                 JsonBox.Text = JsonConvert.SerializeObject(server, Formatting.Indented, settings);
-
             }
         }
 
@@ -49,18 +48,27 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            JObject parsed = JObject.Parse(JsonBox.Text);
-            if (parsed == null)
+            try
             {
-                MessageBox.Show("Unable to read server, some error in the json", "Error", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                JObject parsed = JObject.Parse(JsonBox.Text);
+                if (parsed == null)
+                {
+                    MessageBox.Show("Unable to read server, some error in the json", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                server = Server.GetServerInstance((ServerType)parsed["Type"].ToIntOrDefault(0));
+                JsonConvert.PopulateObject(JsonBox.Text, server);
+                server.ID = 0;
+                Main.config.SaveServer(server);
+            }
+            catch
+            {
+                MessageBox.Show("Unable to read server, some error in the json", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            server = Server.GetServerInstance((ServerType)parsed["Type"].ToIntOrDefault(0));
-            JsonConvert.PopulateObject(JsonBox.Text, server);
-            server.ID = 0;
-            Main.config.SaveServer(server);
             Close();
         }
     }
