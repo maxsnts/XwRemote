@@ -40,7 +40,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.PortBox = new System.Windows.Forms.TextBox();
             this.DefaultPort = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.SendKeys = new System.Windows.Forms.CheckBox();
@@ -60,7 +59,9 @@
             this.NotesBox = new System.Windows.Forms.TextBox();
             this.Encryption = new System.Windows.Forms.CheckBox();
             this.buttonShowPassword = new System.Windows.Forms.Button();
+            this.PortBox = new System.Windows.Forms.NumericUpDown();
             this.dividerPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -126,7 +127,7 @@
             this.SizeCombo.Location = new System.Drawing.Point(70, 208);
             this.SizeCombo.Name = "SizeCombo";
             this.SizeCombo.Size = new System.Drawing.Size(317, 21);
-            this.SizeCombo.TabIndex = 6;
+            this.SizeCombo.TabIndex = 7;
             // 
             // ColorCombo
             // 
@@ -135,7 +136,7 @@
             this.ColorCombo.Location = new System.Drawing.Point(70, 235);
             this.ColorCombo.Name = "ColorCombo";
             this.ColorCombo.Size = new System.Drawing.Size(317, 21);
-            this.ColorCombo.TabIndex = 7;
+            this.ColorCombo.TabIndex = 8;
             // 
             // label5
             // 
@@ -164,14 +165,6 @@
             this.label7.TabIndex = 20;
             this.label7.Text = "Color";
             // 
-            // PortBox
-            // 
-            this.PortBox.Enabled = false;
-            this.PortBox.Location = new System.Drawing.Point(136, 262);
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(251, 20);
-            this.PortBox.TabIndex = 9;
-            // 
             // DefaultPort
             // 
             this.DefaultPort.AutoSize = true;
@@ -180,7 +173,7 @@
             this.DefaultPort.Location = new System.Drawing.Point(70, 264);
             this.DefaultPort.Name = "DefaultPort";
             this.DefaultPort.Size = new System.Drawing.Size(60, 17);
-            this.DefaultPort.TabIndex = 8;
+            this.DefaultPort.TabIndex = 9;
             this.DefaultPort.Text = "Default";
             this.DefaultPort.UseVisualStyleBackColor = true;
             this.DefaultPort.CheckedChanged += new System.EventHandler(this.DefaultPort_CheckedChanged);
@@ -202,7 +195,7 @@
             this.SendKeys.Location = new System.Drawing.Point(70, 287);
             this.SendKeys.Name = "SendKeys";
             this.SendKeys.Size = new System.Drawing.Size(166, 17);
-            this.SendKeys.TabIndex = 10;
+            this.SendKeys.TabIndex = 11;
             this.SendKeys.Text = "Send Shortcut Keys to Server";
             this.SendKeys.UseVisualStyleBackColor = true;
             // 
@@ -212,7 +205,7 @@
             this.ConnectDrives.Location = new System.Drawing.Point(70, 310);
             this.ConnectDrives.Name = "ConnectDrives";
             this.ConnectDrives.Size = new System.Drawing.Size(128, 17);
-            this.ConnectDrives.TabIndex = 11;
+            this.ConnectDrives.TabIndex = 12;
             this.ConnectDrives.Text = "Connect Local Drives";
             this.ConnectDrives.UseVisualStyleBackColor = true;
             // 
@@ -222,7 +215,7 @@
             this.UseSound.Location = new System.Drawing.Point(70, 333);
             this.UseSound.Name = "UseSound";
             this.UseSound.Size = new System.Drawing.Size(79, 17);
-            this.UseSound.TabIndex = 12;
+            this.UseSound.TabIndex = 13;
             this.UseSound.Text = "Use Sound";
             this.UseSound.UseVisualStyleBackColor = true;
             // 
@@ -232,7 +225,7 @@
             this.checkConsole.Location = new System.Drawing.Point(70, 378);
             this.checkConsole.Name = "checkConsole";
             this.checkConsole.Size = new System.Drawing.Size(160, 17);
-            this.checkConsole.TabIndex = 14;
+            this.checkConsole.TabIndex = 15;
             this.checkConsole.Text = "Always connecto to Console";
             this.checkConsole.UseVisualStyleBackColor = true;
             this.checkConsole.Visible = false;
@@ -243,7 +236,7 @@
             this.checkThemes.Location = new System.Drawing.Point(70, 356);
             this.checkThemes.Name = "checkThemes";
             this.checkThemes.Size = new System.Drawing.Size(86, 17);
-            this.checkThemes.TabIndex = 13;
+            this.checkThemes.TabIndex = 14;
             this.checkThemes.Text = "Use Themes";
             this.checkThemes.UseVisualStyleBackColor = true;
             // 
@@ -253,7 +246,7 @@
             this.Certificates.Location = new System.Drawing.Point(70, 162);
             this.Certificates.Name = "Certificates";
             this.Certificates.Size = new System.Drawing.Size(287, 17);
-            this.Certificates.TabIndex = 4;
+            this.Certificates.TabIndex = 5;
             this.Certificates.Text = "This remote computer requires authentication (CredSsp)";
             this.Certificates.UseVisualStyleBackColor = true;
             // 
@@ -262,7 +255,7 @@
             this.btnOK.Location = new System.Drawing.Point(230, 10);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -273,7 +266,7 @@
             this.btnCancel.Location = new System.Drawing.Point(311, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -312,7 +305,7 @@
             this.IsFavorite.Location = new System.Drawing.Point(15, 14);
             this.IsFavorite.Name = "IsFavorite";
             this.IsFavorite.Size = new System.Drawing.Size(143, 17);
-            this.IsFavorite.TabIndex = 2;
+            this.IsFavorite.TabIndex = 0;
             this.IsFavorite.Text = "Place on Favorites menu";
             this.IsFavorite.UseVisualStyleBackColor = true;
             // 
@@ -324,7 +317,7 @@
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
-            this.tabColorBox.TabIndex = 16;
+            this.tabColorBox.TabIndex = 17;
             // 
             // label1
             // 
@@ -351,7 +344,7 @@
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 77);
-            this.NotesBox.TabIndex = 15;
+            this.NotesBox.TabIndex = 16;
             // 
             // Encryption
             // 
@@ -359,7 +352,7 @@
             this.Encryption.Location = new System.Drawing.Point(70, 185);
             this.Encryption.Name = "Encryption";
             this.Encryption.Size = new System.Drawing.Size(112, 17);
-            this.Encryption.TabIndex = 5;
+            this.Encryption.TabIndex = 6;
             this.Encryption.Text = "Enable Encryption";
             this.Encryption.UseVisualStyleBackColor = true;
             // 
@@ -369,9 +362,31 @@
             this.buttonShowPassword.Location = new System.Drawing.Point(365, 135);
             this.buttonShowPassword.Name = "buttonShowPassword";
             this.buttonShowPassword.Size = new System.Drawing.Size(23, 22);
-            this.buttonShowPassword.TabIndex = 39;
+            this.buttonShowPassword.TabIndex = 4;
             this.buttonShowPassword.UseVisualStyleBackColor = true;
             this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
+            // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(136, 262);
+            this.PortBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.PortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(252, 20);
+            this.PortBox.TabIndex = 10;
+            this.PortBox.Value = new decimal(new int[] {
+            3389,
+            0,
+            0,
+            0});
             // 
             // RDPSettings
             // 
@@ -380,6 +395,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(395, 558);
+            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.Encryption);
             this.Controls.Add(this.label9);
@@ -400,7 +416,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.PassBox);
             this.Controls.Add(this.UserBox);
             this.Controls.Add(this.HostBox);
@@ -420,6 +435,7 @@
             this.Load += new System.EventHandler(this.OnLoad);
             this.dividerPanel1.ResumeLayout(false);
             this.dividerPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -439,7 +455,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.CheckBox DefaultPort;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox SendKeys;
@@ -459,5 +474,6 @@
         private System.Windows.Forms.TextBox NotesBox;
         private System.Windows.Forms.CheckBox Encryption;
         private System.Windows.Forms.Button buttonShowPassword;
+        private System.Windows.Forms.NumericUpDown PortBox;
     }
 }

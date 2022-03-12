@@ -25,7 +25,7 @@ namespace XwRemote.Settings
         {
             NameBox.Text = server.Name;
             HostBox.Text = server.Host;
-            PortBox.Text = server.Port.ToString();
+            PortBox.Value = server.Port;
             UserBox.Text = server.Username;
             PassBox.Text = server.Password;
             IsFavorite.Checked = server.IsFavorite;
@@ -44,7 +44,7 @@ namespace XwRemote.Settings
                     {
                         DefaultPort.Checked = true;
                         PortBox.Enabled = false;
-                        PortBox.Text = "21";
+                        PortBox.Value = 21;
                     }
                     else
                     {
@@ -64,7 +64,7 @@ namespace XwRemote.Settings
                     {
                         DefaultPort.Checked = true;
                         PortBox.Enabled = false;
-                        PortBox.Text = "22";
+                        PortBox.Value = 22;
                     }
                     else
                     {
@@ -161,7 +161,7 @@ namespace XwRemote.Settings
             server.Username = UserBox.Text;
             server.Password = PassBox.Text;
             server.IsFavorite = IsFavorite.Checked;
-            server.Port = PortBox.Text.ToIntOrDefault(21);
+            server.Port = PortBox.Value.ToIntOrDefault(21);
             if (server.Type == ServerType.FTP)
                 server.FtpDataType = ((ListItem)FtpDataType.SelectedItem).ID;
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
@@ -184,7 +184,7 @@ namespace XwRemote.Settings
             if (DefaultPort.Checked)
             {
                 PortBox.Enabled = false;
-                PortBox.Text = "21";
+                PortBox.Value = 21;
             }
             else
             {

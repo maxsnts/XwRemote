@@ -36,7 +36,7 @@ namespace XwRemote
 
             if (!Main.config.ShowExperimentalFeatures())
             {
-                newSQL.Visible = false;
+                
             }
         }
 

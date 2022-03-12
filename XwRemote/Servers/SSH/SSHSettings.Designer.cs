@@ -43,7 +43,6 @@
             this.dividerPanel1 = new DividerPanel.DividerPanel();
             this.DefaultPort = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.PortBox = new System.Windows.Forms.TextBox();
             this.checkSSH1 = new System.Windows.Forms.CheckBox();
             this.tabColorBox = new ColorComboTestApp.ColorComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -53,7 +52,9 @@
             this.buttonOpenSshKey = new System.Windows.Forms.Button();
             this.SshKeyBox = new System.Windows.Forms.TextBox();
             this.buttonShowPassword = new System.Windows.Forms.Button();
+            this.PortBox = new System.Windows.Forms.NumericUpDown();
             this.dividerPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).BeginInit();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -203,21 +204,13 @@
             this.label8.TabIndex = 12;
             this.label8.Text = "Port";
             // 
-            // PortBox
-            // 
-            this.PortBox.Enabled = false;
-            this.PortBox.Location = new System.Drawing.Point(131, 161);
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(251, 20);
-            this.PortBox.TabIndex = 5;
-            // 
             // checkSSH1
             // 
             this.checkSSH1.AutoSize = true;
             this.checkSSH1.Location = new System.Drawing.Point(65, 187);
             this.checkSSH1.Name = "checkSSH1";
             this.checkSSH1.Size = new System.Drawing.Size(119, 17);
-            this.checkSSH1.TabIndex = 6;
+            this.checkSSH1.TabIndex = 5;
             this.checkSSH1.Text = "Connect with SSH1";
             this.checkSSH1.UseVisualStyleBackColor = true;
             // 
@@ -229,7 +222,7 @@
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
-            this.tabColorBox.TabIndex = 25;
+            this.tabColorBox.TabIndex = 8;
             // 
             // label1
             // 
@@ -258,7 +251,7 @@
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 62);
-            this.NotesBox.TabIndex = 26;
+            this.NotesBox.TabIndex = 7;
             // 
             // label7
             // 
@@ -288,7 +281,7 @@
             this.SshKeyBox.Name = "SshKeyBox";
             this.SshKeyBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.SshKeyBox.Size = new System.Drawing.Size(317, 90);
-            this.SshKeyBox.TabIndex = 36;
+            this.SshKeyBox.TabIndex = 6;
             this.SshKeyBox.WordWrap = false;
             // 
             // buttonShowPassword
@@ -301,6 +294,28 @@
             this.buttonShowPassword.UseVisualStyleBackColor = true;
             this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
             // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(131, 162);
+            this.PortBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.PortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(251, 20);
+            this.PortBox.TabIndex = 4;
+            this.PortBox.Value = new decimal(new int[] {
+            22,
+            0,
+            0,
+            0});
+            // 
             // SSHSettings
             // 
             this.AcceptButton = this.btnOK;
@@ -308,6 +323,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(391, 472);
+            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.SshKeyBox);
             this.Controls.Add(this.buttonOpenSshKey);
@@ -319,7 +335,6 @@
             this.Controls.Add(this.checkSSH1);
             this.Controls.Add(this.DefaultPort);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -341,6 +356,7 @@
             this.Load += new System.EventHandler(this.OnLoad);
             this.dividerPanel1.ResumeLayout(false);
             this.dividerPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,7 +379,6 @@
         private DividerPanel.DividerPanel dividerPanel1;
         private System.Windows.Forms.CheckBox DefaultPort;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.CheckBox checkSSH1;
         private ColorComboTestApp.ColorComboBox tabColorBox;
         private System.Windows.Forms.Label label1;
@@ -373,5 +388,6 @@
         private System.Windows.Forms.Button buttonOpenSshKey;
         private System.Windows.Forms.TextBox SshKeyBox;
         private System.Windows.Forms.Button buttonShowPassword;
+        private System.Windows.Forms.NumericUpDown PortBox;
     }
 }

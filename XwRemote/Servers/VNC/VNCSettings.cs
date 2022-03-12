@@ -25,7 +25,7 @@ namespace XwRemote.Settings
             HostBox.Text = server.Host;
             PassBox.Text = server.Password;
             IsFavorite.Checked = server.IsFavorite;
-            PortBox.Text = server.Port.ToString();
+            PortBox.Value = server.Port;
             checkAutoScale.Checked = server.AutoScale;
             tabColorBox.SelectedColor = Color.FromArgb(server.TabColor);
             NotesBox.Text = server.Notes;
@@ -34,7 +34,7 @@ namespace XwRemote.Settings
             {
                 DefaultPort.Checked = true;
                 PortBox.Enabled = false;
-                PortBox.Text = "5900";
+                PortBox.Value = 5900;
             }
             else
             {
@@ -63,7 +63,7 @@ namespace XwRemote.Settings
             server.Password = PassBox.Text;
             server.IsFavorite = IsFavorite.Checked;
             server.AutoScale = checkAutoScale.Checked;
-            server.Port = PortBox.Text.ToIntOrDefault(5900);
+            server.Port = PortBox.Value.ToIntOrDefault(5900);
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
             server.Notes = NotesBox.Text;
             Main.config.SaveServer(server);
@@ -82,7 +82,7 @@ namespace XwRemote.Settings
             if (DefaultPort.Checked)
             {
                 PortBox.Enabled = false;
-                PortBox.Text = "5900";
+                PortBox.Value = 5900;
             }
             else
             {

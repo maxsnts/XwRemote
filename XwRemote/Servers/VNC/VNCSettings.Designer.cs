@@ -41,14 +41,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.DefaultPort = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.PortBox = new System.Windows.Forms.TextBox();
             this.checkAutoScale = new System.Windows.Forms.CheckBox();
             this.tabColorBox = new ColorComboTestApp.ColorComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.NotesBox = new System.Windows.Forms.TextBox();
             this.buttonShowPassword = new System.Windows.Forms.Button();
+            this.PortBox = new System.Windows.Forms.NumericUpDown();
             this.dividerPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).BeginInit();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -182,14 +183,6 @@
             this.label8.TabIndex = 10;
             this.label8.Text = "Port";
             // 
-            // PortBox
-            // 
-            this.PortBox.Enabled = false;
-            this.PortBox.Location = new System.Drawing.Point(132, 135);
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(251, 20);
-            this.PortBox.TabIndex = 4;
-            // 
             // checkAutoScale
             // 
             this.checkAutoScale.AutoSize = true;
@@ -208,7 +201,7 @@
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
-            this.tabColorBox.TabIndex = 25;
+            this.tabColorBox.TabIndex = 7;
             // 
             // label1
             // 
@@ -235,7 +228,7 @@
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 77);
-            this.NotesBox.TabIndex = 26;
+            this.NotesBox.TabIndex = 6;
             // 
             // buttonShowPassword
             // 
@@ -247,6 +240,28 @@
             this.buttonShowPassword.UseVisualStyleBackColor = true;
             this.buttonShowPassword.Click += new System.EventHandler(this.buttonShowPassword_Click);
             // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(132, 136);
+            this.PortBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.PortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(251, 20);
+            this.PortBox.TabIndex = 4;
+            this.PortBox.Value = new decimal(new int[] {
+            5900,
+            0,
+            0,
+            0});
+            // 
             // VNCSettings
             // 
             this.AcceptButton = this.butOK;
@@ -254,6 +269,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
             this.ClientSize = new System.Drawing.Size(392, 339);
+            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.buttonShowPassword);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.NotesBox);
@@ -262,7 +278,6 @@
             this.Controls.Add(this.checkAutoScale);
             this.Controls.Add(this.DefaultPort);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.PassBox);
@@ -282,6 +297,7 @@
             this.Load += new System.EventHandler(this.OnLoad);
             this.dividerPanel1.ResumeLayout(false);
             this.dividerPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,12 +318,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox DefaultPort;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.CheckBox checkAutoScale;
         private ColorComboTestApp.ColorComboBox tabColorBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox NotesBox;
         private System.Windows.Forms.Button buttonShowPassword;
+        private System.Windows.Forms.NumericUpDown PortBox;
     }
 }

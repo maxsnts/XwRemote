@@ -106,8 +106,6 @@ namespace XwRemote.Settings
                     return new IEServer();
                 case ServerType.RDP:
                     return new RDPServer();
-                case ServerType.MYSQL:
-                    return new SQLServer(type);
                 case ServerType.SSH:
                     return new SSHServer();
                 case ServerType.VNC:

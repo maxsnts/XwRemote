@@ -28,7 +28,7 @@ namespace XwRemote.Servers
             server.Type = ServerType.RDP;
             NameBox.Text = server.Name;
             HostBox.Text = server.Host;
-            PortBox.Text = server.Port.ToString();
+            PortBox.Value = server.Port;
             UserBox.Text = server.Username;
             PassBox.Text = server.Password;
             UseSound.Checked = server.UseSound;
@@ -45,7 +45,7 @@ namespace XwRemote.Servers
             {
                 DefaultPort.Checked = true;
                 PortBox.Enabled = false;
-                PortBox.Text = "3389";
+                PortBox.Value = 3389;
             }
             else
             {
@@ -66,7 +66,7 @@ namespace XwRemote.Servers
             if (DefaultPort.Checked)
             {
                 PortBox.Enabled = false;
-                PortBox.Text = "3389";
+                PortBox.Value = 3389;
             }
             else
             {
@@ -171,7 +171,7 @@ namespace XwRemote.Servers
             server.UseSound = UseSound.Checked;
             server.ConnectDrives = ConnectDrives.Checked;
             server.SendKeys = SendKeys.Checked;
-            server.Port = PortBox.Text.ToIntOrDefault(3389);
+            server.Port = (int)PortBox.Value;
             server.Themes = checkThemes.Checked;
             server.Certificates = Certificates.Checked;
             server.TabColor = tabColorBox.SelectedColor.ToArgb();

@@ -64,7 +64,6 @@
             this.ExportServer = new System.Windows.Forms.ToolStripMenuItem();
             this.newIE = new System.Windows.Forms.Button();
             this.dialogHeader1 = new XwMaxLib.UI.DialogHeader();
-            this.newSQL = new System.Windows.Forms.Button();
             this.NewSFTP = new System.Windows.Forms.Button();
             this.NewS3 = new System.Windows.Forms.Button();
             this.NewAzureFile = new System.Windows.Forms.Button();
@@ -492,20 +491,6 @@
             this.dialogHeader1.Size = new System.Drawing.Size(572, 50);
             this.dialogHeader1.TabIndex = 8;
             // 
-            // newSQL
-            // 
-            this.newSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.newSQL.Image = global::XwRemote.Properties.Resources.database;
-            this.newSQL.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.newSQL.Location = new System.Drawing.Point(422, 313);
-            this.newSQL.Name = "newSQL";
-            this.newSQL.Size = new System.Drawing.Size(141, 23);
-            this.newSQL.TabIndex = 9;
-            this.newSQL.Text = "New SQL";
-            this.newSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.newSQL.UseVisualStyleBackColor = true;
-            this.newSQL.Click += new System.EventHandler(this.newSQL_Click);
-            // 
             // NewSFTP
             // 
             this.NewSFTP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -579,7 +564,6 @@
             this.Controls.Add(this.NewAzureFile);
             this.Controls.Add(this.NewS3);
             this.Controls.Add(this.NewSFTP);
-            this.Controls.Add(this.newSQL);
             this.Controls.Add(this.dialogHeader1);
             this.Controls.Add(this.NewRDP);
             this.Controls.Add(this.newSSH);
@@ -647,7 +631,6 @@
         private System.Windows.Forms.ToolStripMenuItem copyAsVNC;
         private System.Windows.Forms.ToolStripMenuItem copyAsSSH;
         private System.Windows.Forms.ToolStripMenuItem copyAsIE;
-        private System.Windows.Forms.Button newSQL;
         private System.Windows.Forms.Button NewSFTP;
         private System.Windows.Forms.Button NewS3;
         private System.Windows.Forms.Button NewAzureFile;

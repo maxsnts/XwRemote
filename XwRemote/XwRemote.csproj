@@ -152,13 +152,6 @@
     <Compile Include="Servers\IE\IEServer.cs" />
     <Compile Include="Servers\IO\XwRemoteIO.cs" />
     <Compile Include="Servers\RDP\RDPServer.cs" />
-    <Compile Include="Servers\SQL\SQLForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Servers\SQL\SQLForm.Designer.cs">
-      <DependentUpon>SQLForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Servers\SQL\SQLServer.cs" />
     <Compile Include="Servers\IO\Exists.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,12 +197,6 @@
     </Compile>
     <Compile Include="Servers\IE\IESettings.Designer.cs">
       <DependentUpon>IESettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Servers\SQL\SQLSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Servers\SQL\SQLSettings.Designer.cs">
-      <DependentUpon>SQLSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -285,9 +272,6 @@
     <EmbeddedResource Include="Misc\Stuff.resx">
       <DependentUpon>Stuff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Servers\SQL\SQLForm.resx">
-      <DependentUpon>SQLForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Servers\IO\Exists.resx">
       <DependentUpon>Exists.cs</DependentUpon>
     </EmbeddedResource>
@@ -303,9 +287,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Servers\IE\IESettings.resx">
       <DependentUpon>IESettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Servers\SQL\SQLSettings.resx">
-      <DependentUpon>SQLSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

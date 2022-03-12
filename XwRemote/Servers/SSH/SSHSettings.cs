@@ -27,7 +27,7 @@ namespace XwRemote.Settings
             UserBox.Text = server.Username;
             PassBox.Text = server.Password;
             IsFavorite.Checked = server.IsFavorite;
-            PortBox.Text = server.Port.ToString();
+            PortBox.Value = server.Port;
             checkSSH1.Checked = server.SSH1;
             tabColorBox.SelectedColor = Color.FromArgb(server.TabColor);
             NotesBox.Text = server.Notes;
@@ -37,7 +37,7 @@ namespace XwRemote.Settings
             {
                 DefaultPort.Checked = true;
                 PortBox.Enabled = false;
-                PortBox.Text = "22";
+                PortBox.Value = 22;
             }
             else
             {
@@ -67,7 +67,7 @@ namespace XwRemote.Settings
             server.Password = PassBox.Text;
             server.IsFavorite = IsFavorite.Checked;
             server.SSH1 = checkSSH1.Checked;
-            server.Port = PortBox.Text.ToIntOrDefault(22);
+            server.Port = PortBox.Value.ToIntOrDefault(22);
             server.TabColor = tabColorBox.SelectedColor.ToArgb();
             server.Notes = NotesBox.Text;
             server.SshKey = SshKeyBox.Text;
@@ -89,7 +89,7 @@ namespace XwRemote.Settings
             if (DefaultPort.Checked)
             {
                 PortBox.Enabled = false;
-                PortBox.Text = "22";
+                PortBox.Value = 22;
             }
             else
             {

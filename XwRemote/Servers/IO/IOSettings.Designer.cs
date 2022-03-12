@@ -42,7 +42,6 @@
             this.NameBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.PortLabel = new System.Windows.Forms.Label();
-            this.PortBox = new System.Windows.Forms.TextBox();
             this.DefaultPort = new System.Windows.Forms.CheckBox();
             this.tabColorBox = new ColorComboTestApp.ColorComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,7 +55,9 @@
             this.FtpDataTypeLabel = new System.Windows.Forms.Label();
             this.UseTLS = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.PortBox = new System.Windows.Forms.NumericUpDown();
             this.dividerPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).BeginInit();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -194,14 +195,6 @@
             this.PortLabel.TabIndex = 12;
             this.PortLabel.Text = "Port";
             // 
-            // PortBox
-            // 
-            this.PortBox.Location = new System.Drawing.Point(132, 162);
-            this.PortBox.MaxLength = 5;
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(250, 20);
-            this.PortBox.TabIndex = 5;
-            // 
             // DefaultPort
             // 
             this.DefaultPort.AutoSize = true;
@@ -223,7 +216,7 @@
             this.tabColorBox.Name = "tabColorBox";
             this.tabColorBox.SelectedColor = System.Drawing.Color.LightSkyBlue;
             this.tabColorBox.Size = new System.Drawing.Size(70, 23);
-            this.tabColorBox.TabIndex = 25;
+            this.tabColorBox.TabIndex = 10;
             // 
             // label1
             // 
@@ -250,7 +243,7 @@
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.Size = new System.Drawing.Size(317, 59);
-            this.NotesBox.TabIndex = 26;
+            this.NotesBox.TabIndex = 9;
             // 
             // buttonOpenSshKey
             // 
@@ -282,7 +275,7 @@
             this.SshKeyBox.Name = "SshKeyBox";
             this.SshKeyBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.SshKeyBox.Size = new System.Drawing.Size(317, 90);
-            this.SshKeyBox.TabIndex = 35;
+            this.SshKeyBox.TabIndex = 8;
             this.SshKeyBox.Visible = false;
             this.SshKeyBox.WordWrap = false;
             // 
@@ -303,7 +296,7 @@
             this.FtpDataType.Location = new System.Drawing.Point(132, 188);
             this.FtpDataType.Name = "FtpDataType";
             this.FtpDataType.Size = new System.Drawing.Size(250, 21);
-            this.FtpDataType.TabIndex = 39;
+            this.FtpDataType.TabIndex = 6;
             // 
             // FtpDataTypeLabel
             // 
@@ -322,7 +315,7 @@
             this.UseTLS.Location = new System.Drawing.Point(64, 219);
             this.UseTLS.Name = "UseTLS";
             this.UseTLS.Size = new System.Drawing.Size(164, 17);
-            this.UseTLS.TabIndex = 41;
+            this.UseTLS.TabIndex = 7;
             this.UseTLS.Text = "Use TLS to connect to FTPS";
             this.UseTLS.UseVisualStyleBackColor = true;
             // 
@@ -335,6 +328,28 @@
             this.label3.TabIndex = 42;
             this.label3.Text = "TLS";
             // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(132, 161);
+            this.PortBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.PortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(251, 20);
+            this.PortBox.TabIndex = 5;
+            this.PortBox.Value = new decimal(new int[] {
+            21,
+            0,
+            0,
+            0});
+            // 
             // IOSettings
             // 
             this.AcceptButton = this.butOK;
@@ -342,6 +357,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.butCancel;
             this.ClientSize = new System.Drawing.Size(395, 506);
+            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.UseTLS);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.FtpDataTypeLabel);
@@ -356,7 +372,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DefaultPort);
             this.Controls.Add(this.PortLabel);
-            this.Controls.Add(this.PortBox);
             this.Controls.Add(this.PasswordLabel);
             this.Controls.Add(this.UsernameLabel);
             this.Controls.Add(this.HostLabel);
@@ -378,6 +393,7 @@
             this.Load += new System.EventHandler(this.OnLoad);
             this.dividerPanel1.ResumeLayout(false);
             this.dividerPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PortBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -399,7 +415,6 @@
         private System.Windows.Forms.TextBox NameBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label PortLabel;
-        private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.CheckBox DefaultPort;
         private ColorComboTestApp.ColorComboBox tabColorBox;
         private System.Windows.Forms.Label label1;
@@ -413,5 +428,6 @@
         private System.Windows.Forms.Label FtpDataTypeLabel;
         private System.Windows.Forms.CheckBox UseTLS;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown PortBox;
     }
 }
