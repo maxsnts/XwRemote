@@ -407,6 +407,7 @@
             // 
             // tabInterface
             // 
+            this.tabInterface.CanClose = false;
             this.tabInterface.Controls.Add(this.checkCloseToTray);
             this.tabInterface.Controls.Add(this.checkMinimizeToTray);
             this.tabInterface.IsDrawn = true;
