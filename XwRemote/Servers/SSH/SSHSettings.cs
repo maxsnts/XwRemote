@@ -27,7 +27,6 @@ namespace XwRemote.Settings
             UserBox.Text = server.Username;
             PassBox.Text = server.Password;
             IsFavorite.Checked = server.IsFavorite;
-            PortBox.Value = server.Port;
             checkSSH1.Checked = server.SSH1;
             tabColorBox.SelectedColor = Color.FromArgb(server.TabColor);
             NotesBox.Text = server.Notes;
@@ -42,6 +41,7 @@ namespace XwRemote.Settings
             else
             {
                 DefaultPort.Checked = false;
+                PortBox.Value = server.Port;
                 PortBox.Enabled = true;
             }
         }

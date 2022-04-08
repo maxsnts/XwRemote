@@ -28,7 +28,6 @@ namespace XwRemote.Servers
             server.Type = ServerType.RDP;
             NameBox.Text = server.Name;
             HostBox.Text = server.Host;
-            PortBox.Value = server.Port;
             UserBox.Text = server.Username;
             PassBox.Text = server.Password;
             UseSound.Checked = server.UseSound;
@@ -51,6 +50,7 @@ namespace XwRemote.Servers
             {
                 DefaultPort.Checked = false;
                 PortBox.Enabled = true;
+                PortBox.Value = server.Port;
             }
         }
 

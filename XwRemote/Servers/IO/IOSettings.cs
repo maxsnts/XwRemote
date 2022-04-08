@@ -25,7 +25,6 @@ namespace XwRemote.Settings
         {
             NameBox.Text = server.Name;
             HostBox.Text = server.Host;
-            PortBox.Value = server.Port;
             UserBox.Text = server.Username;
             PassBox.Text = server.Password;
             IsFavorite.Checked = server.IsFavorite;
@@ -50,6 +49,7 @@ namespace XwRemote.Settings
                     {
                         DefaultPort.Checked = false;
                         PortBox.Enabled = true;
+                        PortBox.Value = server.Port;
                     }
                     LoadFtpDataType(server.FtpDataType);
                 }
@@ -70,6 +70,7 @@ namespace XwRemote.Settings
                     {
                         DefaultPort.Checked = false;
                         PortBox.Enabled = true;
+                        PortBox.Value = server.Port;
                     }
                     SshKeyBox.Visible = true;
                     SshKeyLabel.Visible = true;
