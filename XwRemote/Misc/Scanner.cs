@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XwMaxLib.Extensions;
@@ -57,8 +58,8 @@ namespace XwRemote.Misc
             textTcpPorts.Text = Main.config.GetValue("LASTSCANPORTS", "");
             if (textTcpPorts.Text == "")
                 textTcpPorts.Text = "80,443,21,22,3389,5900";
-            numericMaxThreads.Value = Main.config.GetValue("LASTSCANMAXTRH", "10").ToIntOrDefault(10);
-            numericTestTimeout.Value = Main.config.GetValue("LASTSCANCONNTIMEOUT", "100").ToIntOrDefault(100);
+            numericMaxThreads.Value = Main.config.GetValue("LASTSCANMAXTRH", "20").ToIntOrDefault(20);
+            numericTestTimeout.Value = Main.config.GetValue("LASTSCANCONNTIMEOUT", "4000").ToIntOrDefault(4000);
 
             progressBar.Step = 1;
             progressBar.Minimum = 0;
@@ -99,11 +100,14 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void Pump_Tick(object sender, EventArgs e)
         {
+            if (state == State.Stopped && closing)
+            {
+                Close();
+            }
+
             if (state == State.Canceling && curRunningTasks == 0)
             {
                 state = State.Stopped;
-                if (closing)
-                    Close();
             }
 
             if (state == State.Running)
@@ -122,8 +126,8 @@ namespace XwRemote.Misc
             buttonStartNoARP.Enabled = (state == State.Running || state == State.Stopped);
 
 #if DEBUG
-            buttonStartARP.Text = $"{state.ToString()} ({curRunningTasks})";
-            buttonStartNoARP.Text = $"{state.ToString()} ({curRunningTasks})";
+            buttonStartARP.Text = $"LAN -> {state.ToString()} ({curRunningTasks})";
+            buttonStartNoARP.Text = $"WAN -> {state.ToString()} ({curRunningTasks})";
 #else
             buttonStartARP.Text = (state == State.Stopped) ? "Start for LAN (use ARP, faster)" : $"Cancel ({curRunningTasks})";
             buttonStartNoARP.Text = (state == State.Stopped) ? "Start for WAN (no ARP, slower)" : $"Cancel ({curRunningTasks})";
@@ -153,6 +157,7 @@ namespace XwRemote.Misc
             if (state == State.Running)
             {
                 state = State.Canceling;
+                progressBar.Value = 0;
                 return;
             }
 
@@ -266,9 +271,14 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void Scan()
         {
+            ThreadPool.SetMinThreads(maxRunningTasks, maxRunningTasks);
+            
             bool alldone = true;
             foreach (ListViewItem item in listViewHosts.Items)
             {
+                if (state == State.Canceling)
+                    return;
+
                 if (curRunningTasks >= maxRunningTasks)
                     return;
 
@@ -318,6 +328,8 @@ namespace XwRemote.Misc
                     return;
                 }
 
+                if (state == State.Canceling)
+                    return;
 
                 string foundports = " ";
                 string mac = "";
@@ -333,10 +345,19 @@ namespace XwRemote.Misc
                     TestTcpPort(ip, 1);
                 }
 
+                if (state == State.Canceling)
+                    return;
+
                 mac = GetMacAddress(ip);
                 if (mac != "" || !useARP)
                 {
+                    if (state == State.Canceling)
+                        return;
+
                     ping = PingHost(ip);
+
+                    if (state == State.Canceling)
+                        return;
 
                     if (checkTcpPorts.Checked)
                     {
@@ -351,18 +372,32 @@ namespace XwRemote.Misc
                         });
                     }
 
+                    if (state == State.Canceling)
+                        return;
+
                     if (checkDNS.Checked)
-                        dns = GetReverseDNS(ip);
+                        dns = GetReverseDNS(ip, maxConnTimetout);
+
+                    if (state == State.Canceling)
+                        return;
 
                     if (checkNetBios.Checked)
-                        netbios = GetNetbiosName(ip);
+                        netbios = GetNetbiosName(ip, maxConnTimetout);
+
+                    if (state == State.Canceling)
+                        return;
 
                     vendor = GetMACVendor(mac);
                 }
 
+                if (state == State.Canceling)
+                    return;
 
-                bool dead = ping == false && foundports.Trim() == "" && mac == "" && dns == "" && netbios == "";
+                bool dead = ping == false && foundports.Trim() == "" && mac == "" && (netbios == "" || netbios == "- - -");
                 int image = GetIcon(foundports);
+
+                if (state == State.Canceling)
+                    return;
 
                 Invoke((Action)(() =>
                 {
@@ -428,9 +463,9 @@ namespace XwRemote.Misc
         {
             //Jeeasssusss... 
             //https://stackoverflow.com/questions/17756824/blue-screen-when-using-ping
-#if DEBUG
-            return false;
-#endif
+//#if DEBUG
+//            return false;
+//#endif
             try
             {
                 using (Ping pinger = new Ping())
@@ -447,6 +482,8 @@ namespace XwRemote.Misc
         {
             using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.NoDelay, 1);
+
                 try
                 {
                     IAsyncResult result = socket.BeginConnect(host, port, null, null);
@@ -501,6 +538,9 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void Scanner_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (closing)
+                return;
+            
             if (state == State.Running)
             {
                 state = State.Canceling;
@@ -544,11 +584,13 @@ namespace XwRemote.Misc
             0x41, 0x41, 0x41, 0x41, 0x41, 0x00, 0x00, 0x21,
             0x00, 0x01 };
 
-        public string GetNetbiosName(string ipAddress)
+        public string GetNetbiosName(string ipAddress, int timeout = 100)
         {
             byte[] receiveBuffer = new byte[1024];
             Socket requestSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            requestSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
+            requestSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, timeout);
+            requestSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, timeout);
+            requestSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.NoDelay, 1);
             IPAddress[] addressList = Dns.GetHostAddresses(ipAddress);
             if (addressList.Length == 0)
             {
@@ -561,7 +603,6 @@ namespace XwRemote.Misc
             requestSocket.SendTo(NameRequest, remoteEndpoint);
             try
             {
-
                 int receivedByteCount = requestSocket.ReceiveFrom(receiveBuffer, ref remoteEndpoint);
                 if (receivedByteCount >= 90)
                 {
@@ -571,11 +612,10 @@ namespace XwRemote.Misc
                     return $"{deviceName}";
                 }
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
-                return "";
+                return "- - -";
             }
-
             return "";
         }
 
