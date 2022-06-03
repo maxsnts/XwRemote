@@ -24,7 +24,6 @@ namespace XwRemote.Misc
 
         private ImageList imageList = new ImageList();
         State state = State.Stopped;
-        bool closing = false;
         int maxRunningTasks = 10;
         int maxConnTimetout = 100;
         int curRunningTasks = 0;
@@ -100,11 +99,6 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void Pump_Tick(object sender, EventArgs e)
         {
-            if (state == State.Stopped && closing)
-            {
-                Close();
-            }
-
             if (state == State.Canceling && curRunningTasks == 0)
             {
                 state = State.Stopped;
@@ -421,7 +415,13 @@ namespace XwRemote.Misc
                         Update();
                     }
                     progressBar.Increment(1);
-                }));
+                    }));
+            }
+            catch (Exception ex)
+            {
+                //Windows was closed with running scan.
+                if (ex.Message.Contains("BeginInvoke"))
+                    return;
             }
             finally
             {
@@ -538,14 +538,9 @@ namespace XwRemote.Misc
         //*************************************************************************************************************
         private void Scanner_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (closing)
-                return;
-            
             if (state == State.Running)
             {
                 state = State.Canceling;
-                closing = true;
-                e.Cancel = true;
             }
         }
 
