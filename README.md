@@ -1,4 +1,5 @@
-# XwRemote  <div style="text-align: right"> [![PayPal donate button](https://www.paypalobjects.com/webstatic/en_US/btn/btn_donate_pp_142x27.png)](https://www.paypal.me/maxsnts) </div>
+# XwRemote 
+[![PayPal donate button](https://www.paypalobjects.com/webstatic/en_US/btn/btn_donate_pp_142x27.png)](https://www.paypal.me/maxsnts)
 
 How do i eliminate the need for many applications and the consequent open and close merry-go-round?
 
@@ -40,4 +41,4 @@ Anyway, if there is anything that this could do better, let me know!
 ##### Remote SSH session
 ![Connection Manager](Images/SSH.png)
 
-## In case you are feeling generous  
+
