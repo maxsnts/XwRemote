@@ -66,7 +66,7 @@ namespace XwRemote.Servers
             AppProcess.Exited += delegate (object sender, EventArgs ev)
             {
                 if (callCloseEvent)
-                    ClosedCallback?.Invoke(true);
+                    ClosedCallback?.Invoke(((Process)sender).ExitCode == 0 ? false : true );
             };
             AppProcess.Start();
             AppProcess.WaitForInputIdle();

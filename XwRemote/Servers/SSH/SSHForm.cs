@@ -34,7 +34,9 @@ namespace XwRemote.Servers
                 server.Port = 22;
 
             SuspendLayout();
-           
+
+            buttonConnect.Visible = false;
+
             puttyPanel = new PuttyAppPanel(Main.config.GetValue("SSH_CORRECT_FOCUS").ToBoolOrDefault(true));
             puttyPanel.Parent = this;
             puttyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -95,14 +97,22 @@ namespace XwRemote.Servers
                 });
             };
 
-            PuttyAppPanel.PuttyAppClosedCallback closedCallback = delegate (bool closed)
+            PuttyAppPanel.PuttyAppClosedCallback closedCallback = delegate (bool error)
             {
                 try
                 {
                     BeginInvoke((MethodInvoker)delegate
                     {
-                        ((KRBTabControl)(Parent.Parent)).TabPages.Remove((TabPageEx)Parent);
-                        DeletePuttySession();
+                        if (error)
+                        {
+                            SetStatusText("Connection closed");
+                            buttonConnect.Visible = true;
+                        }
+                        else
+                        {
+                            ((KRBTabControl)(Parent.Parent)).TabPages.Remove((TabPageEx)Parent);
+                            DeletePuttySession();
+                        }
                     });
                 }
                 catch 
@@ -123,7 +133,8 @@ namespace XwRemote.Servers
             loadingCircle1.Visible = true;
             loadingCircle1.BringToFront();
             SetStatusText("Connecting...");
-            
+            buttonConnect.Visible = false;
+
             if (File.Exists("putty\\putty.exe"))
             {
                 CreatePuttySession();
@@ -170,6 +181,7 @@ namespace XwRemote.Servers
                     {
                         form.SetStatusText(ex.Message);
                         form.loadingCircle1.Visible = false;
+                        form.buttonConnect.Visible = true;
                     });
                 }
                 catch
@@ -311,7 +323,7 @@ namespace XwRemote.Servers
                 key.SetValue("SSHLogOmitPasswords", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("SSHLogOmitData", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("PortNumber", 0x00000016, RegistryValueKind.DWord);
-                key.SetValue("CloseOnExit", 0x00000001, RegistryValueKind.DWord);
+                key.SetValue("CloseOnExit", 0x00000002, RegistryValueKind.DWord);
                 key.SetValue("WarnOnClose", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("PingInterval", 0x00000000, RegistryValueKind.DWord);
                 key.SetValue("PingIntervalSecs", 0x0000003c, RegistryValueKind.DWord);
@@ -467,6 +479,12 @@ namespace XwRemote.Servers
                     }
                     break;
             }
+        }
+
+        //*************************************************************************************************************
+        private void buttonConnect_Click(object sender, EventArgs e)
+        {
+            Connect();
         }
     }
 }

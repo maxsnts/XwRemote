@@ -46,7 +46,7 @@ namespace XwRemote.Servers
             this.loadingCircle1.BackColor = System.Drawing.SystemColors.Window;
             this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
             this.loadingCircle1.InnerCircleRadius = 5;
-            this.loadingCircle1.Location = new System.Drawing.Point(343, 26);
+            this.loadingCircle1.Location = new System.Drawing.Point(331, 188);
             this.loadingCircle1.Name = "loadingCircle1";
             this.loadingCircle1.NumberSpoke = 12;
             this.loadingCircle1.OuterCircleRadius = 11;
@@ -59,7 +59,7 @@ namespace XwRemote.Servers
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(315, 275);
+            this.buttonConnect.Location = new System.Drawing.Point(311, 322);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(114, 35);
             this.buttonConnect.TabIndex = 2;
@@ -72,6 +72,7 @@ namespace XwRemote.Servers
             this.axMsRdpClient10NotSafeForScripting1.Enabled = true;
             this.axMsRdpClient10NotSafeForScripting1.Location = new System.Drawing.Point(0, 0);
             this.axMsRdpClient10NotSafeForScripting1.Name = "axMsRdpClient10NotSafeForScripting1";
+            this.axMsRdpClient10NotSafeForScripting1.Size = new System.Drawing.Size(75, 23);
             this.axMsRdpClient10NotSafeForScripting1.TabIndex = 0;
             // 
             // rdpControl
@@ -94,7 +95,7 @@ namespace XwRemote.Servers
             this.labelMessage.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelMessage.AutoSize = true;
             this.labelMessage.BackColor = System.Drawing.SystemColors.Window;
-            this.labelMessage.Location = new System.Drawing.Point(329, 398);
+            this.labelMessage.Location = new System.Drawing.Point(329, 261);
             this.labelMessage.Name = "labelMessage";
             this.labelMessage.Size = new System.Drawing.Size(72, 13);
             this.labelMessage.TabIndex = 4;
