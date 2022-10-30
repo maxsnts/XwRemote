@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -41,6 +42,12 @@ namespace XwRemote
             // Add the event handler for handling non-UI thread exceptions to the event. 
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             //#endif
+
+            //Reset working folder to the exe folder
+            var process = Process.GetCurrentProcess();
+            string fullPath = process.MainModule.FileName;
+            Directory.SetCurrentDirectory(Directory.GetParent(fullPath).FullName);
+
 
             if (File.Exists("XwUpdater.exe"))
             {
