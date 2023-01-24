@@ -36,9 +36,11 @@ namespace XwRemote.Servers
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.LocalTree = new XwMaxLib.UI.Shell.XwShellTree();
             this.statusLocal = new System.Windows.Forms.StatusStrip();
+            this.statusLocalLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.LocalList = new XwRemote.Servers.LocalList();
             this.LocalPath = new System.Windows.Forms.ComboBox();
             this.statusRemote = new System.Windows.Forms.StatusStrip();
+            this.statusRemoteLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.RemotePin = new System.Windows.Forms.Button();
             this.RemoteList = new XwRemote.Servers.RemoteList();
             this.RemotePath = new System.Windows.Forms.ComboBox();
@@ -54,8 +56,6 @@ namespace XwRemote.Servers
             this.toolStripStatusTransferRate = new System.Windows.Forms.ToolStripStatusLabel();
             this.faTabStripItem4 = new FarsiLibrary.Win.FATabStripItem();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.statusLocalLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusRemoteLabel = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerStatus)).BeginInit();
             this.splitContainerStatus.Panel1.SuspendLayout();
             this.splitContainerStatus.Panel2.SuspendLayout();
@@ -196,6 +196,12 @@ namespace XwRemote.Servers
             this.statusLocal.TabIndex = 1;
             this.statusLocal.Text = "statusLocal";
             // 
+            // statusLocalLabel
+            // 
+            this.statusLocalLabel.Name = "statusLocalLabel";
+            this.statusLocalLabel.Size = new System.Drawing.Size(94, 17);
+            this.statusLocalLabel.Text = "statusLocalLabel";
+            // 
             // LocalList
             // 
             this.LocalList.AllowDrop = true;
@@ -222,6 +228,7 @@ namespace XwRemote.Servers
             this.LocalPath.Name = "LocalPath";
             this.LocalPath.Size = new System.Drawing.Size(504, 21);
             this.LocalPath.TabIndex = 1;
+            this.LocalPath.SelectedIndexChanged += new System.EventHandler(this.LocalPath_SelectedIndexChanged);
             this.LocalPath.DropDownClosed += new System.EventHandler(this.LocalPath_DropDownClosed);
             this.LocalPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LocalPath_KeyDown);
             // 
@@ -234,6 +241,12 @@ namespace XwRemote.Servers
             this.statusRemote.Size = new System.Drawing.Size(330, 22);
             this.statusRemote.TabIndex = 5;
             this.statusRemote.Text = "statusRemote";
+            // 
+            // statusRemoteLabel
+            // 
+            this.statusRemoteLabel.Name = "statusRemoteLabel";
+            this.statusRemoteLabel.Size = new System.Drawing.Size(107, 17);
+            this.statusRemoteLabel.Text = "statusRemoteLabel";
             // 
             // RemotePin
             // 
@@ -405,18 +418,6 @@ namespace XwRemote.Servers
             this.statusLabel.Size = new System.Drawing.Size(70, 13);
             this.statusLabel.TabIndex = 4;
             this.statusLabel.Text = "Connecting...";
-            // 
-            // statusLocalLabel
-            // 
-            this.statusLocalLabel.Name = "statusLocalLabel";
-            this.statusLocalLabel.Size = new System.Drawing.Size(94, 17);
-            this.statusLocalLabel.Text = "statusLocalLabel";
-            // 
-            // statusRemoteLabel
-            // 
-            this.statusRemoteLabel.Name = "statusRemoteLabel";
-            this.statusRemoteLabel.Size = new System.Drawing.Size(107, 17);
-            this.statusRemoteLabel.Text = "statusRemoteLabel";
             // 
             // IOForm
             // 

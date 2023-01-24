@@ -1,6 +1,7 @@
 ﻿using ShellDll;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XwMaxLib.Data;
@@ -204,9 +205,10 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         private void LocalTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            LocalList.RealLoadList(e.Node.Tag.ToString(), false);
+            string path = e.Node.Tag.ToString();
+            LocalList.RealLoadList(path, false);
             if (Main.config.GetValue("DEFAULT_FTP_LOCAL_FOLDER") == "#LASTUSED#")
-                Main.config.SetValue("FTP_LAST_USED_FOLDER", e.Node.Tag.ToString());
+                Main.config.SetValue("FTP_LAST_USED_FOLDER", path);
         }
 
         //*************************************************************************************************************
@@ -230,8 +232,19 @@ namespace XwRemote.Servers
         //*************************************************************************************************************
         private void LocalPath_DropDownClosed(object sender, EventArgs e)
         {
-            LocalList.CheckLink = true;
+            
+        }
+
+        //*************************************************************************************************************
+        private void LocalPath_SelectedIndexChanged(object sender, EventArgs e)
+        {
             string path = (LocalPath.SelectedItem == null) ? LocalPath.Text : LocalPath.SelectedItem.ToString();
+            if (!Directory.Exists(path))
+            {
+                MessageBox.Show($"Path not found: {path}", "Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            LocalList.CheckLink = true;
             LocalList.LoadList(path);
         }
 
@@ -342,5 +355,7 @@ namespace XwRemote.Servers
         {
             
         }
+
+      
     }
 }

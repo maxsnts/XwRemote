@@ -1,4 +1,5 @@
-﻿using ShellDll;
+﻿using FluentFTP.Helpers;
+using ShellDll;
 using System;
 using System.Drawing;
 using System.IO;
@@ -200,12 +201,14 @@ namespace XwRemote.Servers
         {
             if (path == CurrentDirectory)
                 return;
-           
+
             if (path.StartsWith("\\\\"))
                 RealLoadList(path, false);
             else
-                if (form.LocalTree.SelectPath(path))
-                    RealLoadList(path, false);
+                form.LocalTree.SelectPath(path);
+
+            //if (form.LocalTree.SelectPath(path))
+            //RealLoadList(path, false);
 
             CheckPin();
         }
@@ -284,12 +287,9 @@ namespace XwRemote.Servers
                     }
                     else
                     {
-
                         DirectoryInfo nodeDirInfo = new DirectoryInfo(path);
                         ListViewItem.ListViewSubItem[] subItems;
                         ListViewItem item = null;
-
-                        
 
                         ListViewItem item1 = Items.Add(".", ShellImageList.GetFileImageIndex(".", FileAttributes.Directory));
                         item1.Tag = new DiskItem(true, false, ".", ".");
@@ -337,37 +337,29 @@ namespace XwRemote.Servers
 
                             item.SubItems.AddRange(subItems);
                             item.Tag = new DiskItem(false, false, file.FullName, file.Name, file.Length);
-                            //item.ImageIndex = ShellImageList.GetFileImageIndex(file.FullName, file.Attributes);
                             item.ImageIndex = ShellImageList.GetFileImageIndex(file.FullName, file.Attributes);
                             Items.Add(item);
                             nfiles++;
                         }
 
                         form.SetLocalStatusText($"{ndirs+nfiles} Items: {ndirs} Folders, {nfiles} Files");
+
+                        fileSystemWatcher.Path = path;
+                        fileSystemWatcher.EnableRaisingEvents = true;
+
+                        CurrentDirectory = path;
+                        form.LocalPath.Text = CurrentDirectory;
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    RealLoadList(CurrentDirectory, false);
                 }
             }
 
             EndUpdate();
-            
-            CurrentDirectory = path;
-            form.LocalPath.Text = path;
-
             BackColor = SystemColors.Window;
-            
-            if (!string.IsNullOrEmpty(path))
-            {
-                fileSystemWatcher.Path = path;
-                fileSystemWatcher.EnableRaisingEvents = true;
-            }
-            else
-            {
-                fileSystemWatcher.EnableRaisingEvents = false;
-            }
         }
 
         //*************************************************************************************************************

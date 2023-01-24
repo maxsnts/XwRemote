@@ -111,9 +111,9 @@ namespace XwRemote.Servers
         private void LoadSize(int X, int Y)
         {
             SizeCombo.Items.Clear();
-            SizeCombo.Items.Add(new ListItem(0, "Fit to window (Scale remote image)"));
-            SizeCombo.Items.Add(new ListItem(4, "Fit to window (Reconnect and resize)"));
-            SizeCombo.Items.Add(new ListItem(6, "Full Screen (Reconnect and resize) Not recommended, but... "));
+            SizeCombo.Items.Add(new ListItem(0, "Fit to window (On resize: Scale remote image)"));
+            SizeCombo.Items.Add(new ListItem(4, "Fit to window (On resize: Reconnect with new resolution)"));
+            SizeCombo.Items.Add(new ListItem(6, "Full Screen ((On resize: Reconnect) Not recommended, but... "));
             SizeCombo.Items.Add(new ListItem(1, "800x600"));
             SizeCombo.Items.Add(new ListItem(2, "1024x768"));
             SizeCombo.Items.Add(new ListItem(3, "1280x1024"));
