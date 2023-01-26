@@ -53,6 +53,7 @@
             this.radioDesktop = new System.Windows.Forms.RadioButton();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabSSH = new FarsiLibrary.Win.FATabStripItem();
+            this.checkBoxBoldFont = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.checkBoxAutoAcceptKeys = new System.Windows.Forms.CheckBox();
             this.checkBoxCorrectFocus = new System.Windows.Forms.CheckBox();
@@ -339,6 +340,7 @@
             // tabSSH
             // 
             this.tabSSH.CanClose = false;
+            this.tabSSH.Controls.Add(this.checkBoxBoldFont);
             this.tabSSH.Controls.Add(this.label7);
             this.tabSSH.Controls.Add(this.checkBoxAutoAcceptKeys);
             this.tabSSH.Controls.Add(this.checkBoxCorrectFocus);
@@ -349,6 +351,17 @@
             this.tabSSH.Size = new System.Drawing.Size(422, 220);
             this.tabSSH.TabIndex = 2;
             this.tabSSH.Title = "SSH";
+            // 
+            // checkBoxBoldFont
+            // 
+            this.checkBoxBoldFont.Checked = true;
+            this.checkBoxBoldFont.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxBoldFont.Location = new System.Drawing.Point(59, 38);
+            this.checkBoxBoldFont.Name = "checkBoxBoldFont";
+            this.checkBoxBoldFont.Size = new System.Drawing.Size(272, 34);
+            this.checkBoxBoldFont.TabIndex = 5;
+            this.checkBoxBoldFont.Text = "Use bold font";
+            this.checkBoxBoldFont.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -363,7 +376,7 @@
             // 
             this.checkBoxAutoAcceptKeys.Checked = true;
             this.checkBoxAutoAcceptKeys.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAutoAcceptKeys.Location = new System.Drawing.Point(59, 52);
+            this.checkBoxAutoAcceptKeys.Location = new System.Drawing.Point(59, 74);
             this.checkBoxAutoAcceptKeys.Name = "checkBoxAutoAcceptKeys";
             this.checkBoxAutoAcceptKeys.Size = new System.Drawing.Size(272, 34);
             this.checkBoxAutoAcceptKeys.TabIndex = 3;
@@ -374,7 +387,7 @@
             // 
             this.checkBoxCorrectFocus.Checked = true;
             this.checkBoxCorrectFocus.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCorrectFocus.Location = new System.Drawing.Point(59, 92);
+            this.checkBoxCorrectFocus.Location = new System.Drawing.Point(59, 114);
             this.checkBoxCorrectFocus.Name = "checkBoxCorrectFocus";
             this.checkBoxCorrectFocus.Size = new System.Drawing.Size(272, 34);
             this.checkBoxCorrectFocus.TabIndex = 2;
@@ -512,5 +525,6 @@
         private System.Windows.Forms.CheckBox checkMinimizeToTray;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBoxAutoAcceptKeys;
+        private System.Windows.Forms.CheckBox checkBoxBoldFont;
     }
 }

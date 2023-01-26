@@ -399,7 +399,13 @@ namespace XwRemote.Servers
                 key.SetValue("WinNameAlways", 0x00000001, RegistryValueKind.DWord);
                 key.SetValue("TermWidth", 0x00000050, RegistryValueKind.DWord);
                 key.SetValue("TermHeight", 0x00000018, RegistryValueKind.DWord);
-                key.SetValue("FontIsBold", 0x00000000, RegistryValueKind.DWord);
+
+                
+                if (Main.config.GetValue("SSH_BOLD_FONT").ToBoolOrDefault(false))
+                    key.SetValue("FontIsBold", 0x00000001, RegistryValueKind.DWord);
+                else
+                    key.SetValue("FontIsBold", 0x00000000, RegistryValueKind.DWord);
+
                 key.SetValue("FontCharSet", 0x00000000, RegistryValueKind.DWord);
 
                 key.SetValue("FontQuality", 0x00000000, RegistryValueKind.DWord);
