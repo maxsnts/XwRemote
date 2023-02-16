@@ -81,6 +81,7 @@ namespace XwRemote.Servers
             
             if (TryCorrectFocus)
             {
+                if (overlay == null)
                 overlay = new TransparentPanel();
                 overlay.BackColor = Color.Transparent;
                 overlay.Dock = System.Windows.Forms.DockStyle.Fill;
