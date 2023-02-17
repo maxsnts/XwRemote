@@ -44,7 +44,7 @@
             this.NewFTP = new System.Windows.Forms.Button();
             this.NewRDP = new System.Windows.Forms.Button();
             this.NewVNC = new System.Windows.Forms.Button();
-            this.newSSH = new System.Windows.Forms.Button();
+            this.NewSSH = new System.Windows.Forms.Button();
             this.EditServer = new System.Windows.Forms.Button();
             this.DeleteServer = new System.Windows.Forms.Button();
             this.contextServer = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -62,7 +62,7 @@
             this.copyAsVNC = new System.Windows.Forms.ToolStripMenuItem();
             this.copyAsIE = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportServer = new System.Windows.Forms.ToolStripMenuItem();
-            this.newIE = new System.Windows.Forms.Button();
+            this.NewIE = new System.Windows.Forms.Button();
             this.dialogHeader1 = new XwMaxLib.UI.DialogHeader();
             this.NewSFTP = new System.Windows.Forms.Button();
             this.NewS3 = new System.Windows.Forms.Button();
@@ -242,7 +242,8 @@
             this.ConnectBtn.Location = new System.Drawing.Point(422, 569);
             this.ConnectBtn.Name = "ConnectBtn";
             this.ConnectBtn.Size = new System.Drawing.Size(141, 57);
-            this.ConnectBtn.TabIndex = 0;
+            this.ConnectBtn.TabIndex = 12;
+            this.ConnectBtn.TabStop = false;
             this.ConnectBtn.Text = "Connect";
             this.ConnectBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.ConnectBtn.UseVisualStyleBackColor = true;
@@ -256,7 +257,8 @@
             this.NewFTP.Location = new System.Drawing.Point(422, 139);
             this.NewFTP.Name = "NewFTP";
             this.NewFTP.Size = new System.Drawing.Size(141, 23);
-            this.NewFTP.TabIndex = 1;
+            this.NewFTP.TabIndex = 4;
+            this.NewFTP.TabStop = false;
             this.NewFTP.Text = "New FTP";
             this.NewFTP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewFTP.UseVisualStyleBackColor = true;
@@ -270,7 +272,8 @@
             this.NewRDP.Location = new System.Drawing.Point(422, 81);
             this.NewRDP.Name = "NewRDP";
             this.NewRDP.Size = new System.Drawing.Size(141, 23);
-            this.NewRDP.TabIndex = 3;
+            this.NewRDP.TabIndex = 2;
+            this.NewRDP.TabStop = false;
             this.NewRDP.Text = "New RDP";
             this.NewRDP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewRDP.UseVisualStyleBackColor = true;
@@ -284,25 +287,27 @@
             this.NewVNC.Location = new System.Drawing.Point(422, 255);
             this.NewVNC.Name = "NewVNC";
             this.NewVNC.Size = new System.Drawing.Size(141, 23);
-            this.NewVNC.TabIndex = 4;
+            this.NewVNC.TabIndex = 8;
+            this.NewVNC.TabStop = false;
             this.NewVNC.Text = "New VNC";
             this.NewVNC.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewVNC.UseVisualStyleBackColor = true;
             this.NewVNC.Click += new System.EventHandler(this.NewVNC_Click);
             // 
-            // newSSH
+            // NewSSH
             // 
-            this.newSSH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.newSSH.Image = global::XwRemote.Properties.Resources.ssh;
-            this.newSSH.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.newSSH.Location = new System.Drawing.Point(422, 110);
-            this.newSSH.Name = "newSSH";
-            this.newSSH.Size = new System.Drawing.Size(141, 23);
-            this.newSSH.TabIndex = 5;
-            this.newSSH.Text = "New SSH";
-            this.newSSH.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.newSSH.UseVisualStyleBackColor = true;
-            this.newSSH.Click += new System.EventHandler(this.newSSH_Click);
+            this.NewSSH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.NewSSH.Image = global::XwRemote.Properties.Resources.ssh;
+            this.NewSSH.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.NewSSH.Location = new System.Drawing.Point(422, 110);
+            this.NewSSH.Name = "NewSSH";
+            this.NewSSH.Size = new System.Drawing.Size(141, 23);
+            this.NewSSH.TabIndex = 3;
+            this.NewSSH.TabStop = false;
+            this.NewSSH.Text = "New SSH";
+            this.NewSSH.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.NewSSH.UseVisualStyleBackColor = true;
+            this.NewSSH.Click += new System.EventHandler(this.newSSH_Click);
             // 
             // EditServer
             // 
@@ -312,7 +317,8 @@
             this.EditServer.Location = new System.Drawing.Point(422, 540);
             this.EditServer.Name = "EditServer";
             this.EditServer.Size = new System.Drawing.Size(141, 23);
-            this.EditServer.TabIndex = 6;
+            this.EditServer.TabIndex = 11;
+            this.EditServer.TabStop = false;
             this.EditServer.Text = "Edit Server";
             this.EditServer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.EditServer.UseVisualStyleBackColor = true;
@@ -326,7 +332,8 @@
             this.DeleteServer.Location = new System.Drawing.Point(422, 511);
             this.DeleteServer.Name = "DeleteServer";
             this.DeleteServer.Size = new System.Drawing.Size(141, 23);
-            this.DeleteServer.TabIndex = 7;
+            this.DeleteServer.TabIndex = 10;
+            this.DeleteServer.TabStop = false;
             this.DeleteServer.Text = "Delete Server";
             this.DeleteServer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.DeleteServer.UseVisualStyleBackColor = true;
@@ -462,19 +469,20 @@
             this.ExportServer.Text = "Export Server";
             this.ExportServer.Click += new System.EventHandler(this.ExportServer_Click);
             // 
-            // newIE
+            // NewIE
             // 
-            this.newIE.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.newIE.Image = global::XwRemote.Properties.Resources.IE;
-            this.newIE.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.newIE.Location = new System.Drawing.Point(422, 284);
-            this.newIE.Name = "newIE";
-            this.newIE.Size = new System.Drawing.Size(141, 23);
-            this.newIE.TabIndex = 5;
-            this.newIE.Text = "New IE";
-            this.newIE.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.newIE.UseVisualStyleBackColor = true;
-            this.newIE.Click += new System.EventHandler(this.newIE_Click);
+            this.NewIE.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.NewIE.Image = global::XwRemote.Properties.Resources.IE;
+            this.NewIE.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.NewIE.Location = new System.Drawing.Point(422, 284);
+            this.NewIE.Name = "NewIE";
+            this.NewIE.Size = new System.Drawing.Size(141, 23);
+            this.NewIE.TabIndex = 9;
+            this.NewIE.TabStop = false;
+            this.NewIE.Text = "New IE";
+            this.NewIE.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.NewIE.UseVisualStyleBackColor = true;
+            this.NewIE.Click += new System.EventHandler(this.newIE_Click);
             // 
             // dialogHeader1
             // 
@@ -490,6 +498,7 @@
             this.dialogHeader1.Name = "dialogHeader1";
             this.dialogHeader1.Size = new System.Drawing.Size(572, 50);
             this.dialogHeader1.TabIndex = 8;
+            this.dialogHeader1.TabStop = false;
             // 
             // NewSFTP
             // 
@@ -499,7 +508,8 @@
             this.NewSFTP.Location = new System.Drawing.Point(422, 168);
             this.NewSFTP.Name = "NewSFTP";
             this.NewSFTP.Size = new System.Drawing.Size(141, 23);
-            this.NewSFTP.TabIndex = 10;
+            this.NewSFTP.TabIndex = 5;
+            this.NewSFTP.TabStop = false;
             this.NewSFTP.Text = "New SFTP";
             this.NewSFTP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewSFTP.UseVisualStyleBackColor = true;
@@ -513,7 +523,8 @@
             this.NewS3.Location = new System.Drawing.Point(422, 197);
             this.NewS3.Name = "NewS3";
             this.NewS3.Size = new System.Drawing.Size(141, 23);
-            this.NewS3.TabIndex = 11;
+            this.NewS3.TabIndex = 6;
+            this.NewS3.TabStop = false;
             this.NewS3.Text = "New AWS S3";
             this.NewS3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewS3.UseVisualStyleBackColor = true;
@@ -527,7 +538,8 @@
             this.NewAzureFile.Location = new System.Drawing.Point(422, 226);
             this.NewAzureFile.Name = "NewAzureFile";
             this.NewAzureFile.Size = new System.Drawing.Size(141, 23);
-            this.NewAzureFile.TabIndex = 12;
+            this.NewAzureFile.TabIndex = 7;
+            this.NewAzureFile.TabStop = false;
             this.NewAzureFile.Text = "New Azure File";
             this.NewAzureFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.NewAzureFile.UseVisualStyleBackColor = true;
@@ -540,7 +552,7 @@
             this.textSearch.Location = new System.Drawing.Point(32, 604);
             this.textSearch.Name = "textSearch";
             this.textSearch.Size = new System.Drawing.Size(366, 20);
-            this.textSearch.TabIndex = 13;
+            this.textSearch.TabIndex = 1;
             this.textSearch.TextChanged += new System.EventHandler(this.textSearch_TextChanged);
             // 
             // pictureBox1
@@ -566,10 +578,10 @@
             this.Controls.Add(this.NewSFTP);
             this.Controls.Add(this.dialogHeader1);
             this.Controls.Add(this.NewRDP);
-            this.Controls.Add(this.newSSH);
+            this.Controls.Add(this.NewSSH);
             this.Controls.Add(this.NewVNC);
             this.Controls.Add(this.NewFTP);
-            this.Controls.Add(this.newIE);
+            this.Controls.Add(this.NewIE);
             this.Controls.Add(this.DeleteServer);
             this.Controls.Add(this.EditServer);
             this.Controls.Add(this.ConnectBtn);
@@ -606,7 +618,7 @@
         private System.Windows.Forms.Button NewFTP;
         private System.Windows.Forms.Button NewRDP;
         private System.Windows.Forms.Button NewVNC;
-        private System.Windows.Forms.Button newSSH;
+        private System.Windows.Forms.Button NewSSH;
         private System.Windows.Forms.Button EditServer;
         private System.Windows.Forms.Button DeleteServer;
         private Messir.Windows.Forms.TabStrip tabStrip1;
@@ -625,7 +637,7 @@
         private System.Windows.Forms.ToolStripMenuItem addToFavoritesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem makeCopyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.Button newIE;
+        private System.Windows.Forms.Button NewIE;
         private System.Windows.Forms.ToolStripMenuItem copyAsFTP;
         private System.Windows.Forms.ToolStripMenuItem copyAsRDP;
         private System.Windows.Forms.ToolStripMenuItem copyAsVNC;

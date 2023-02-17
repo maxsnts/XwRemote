@@ -60,8 +60,11 @@
             this.sshFontSize = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.tabInterface = new FarsiLibrary.Win.FATabStripItem();
-            this.checkCloseToTray = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkSaveSearch = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.checkMinimizeToTray = new System.Windows.Forms.CheckBox();
+            this.checkCloseToTray = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.dividerPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.faTabStrip1)).BeginInit();
@@ -72,6 +75,8 @@
             this.tabSSH.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sshFontSize)).BeginInit();
             this.tabInterface.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dialogHeader1
@@ -155,7 +160,6 @@
             this.tabSecurity.Controls.Add(this.label2);
             this.tabSecurity.IsDrawn = true;
             this.tabSecurity.Name = "tabSecurity";
-            this.tabSecurity.Selected = true;
             this.tabSecurity.Size = new System.Drawing.Size(422, 220);
             this.tabSecurity.TabIndex = 0;
             this.tabSecurity.Title = "Security";
@@ -421,37 +425,69 @@
             // tabInterface
             // 
             this.tabInterface.CanClose = false;
-            this.tabInterface.Controls.Add(this.checkCloseToTray);
-            this.tabInterface.Controls.Add(this.checkMinimizeToTray);
+            this.tabInterface.Controls.Add(this.groupBox3);
+            this.tabInterface.Controls.Add(this.groupBox2);
             this.tabInterface.IsDrawn = true;
             this.tabInterface.Name = "tabInterface";
+            this.tabInterface.Selected = true;
             this.tabInterface.Size = new System.Drawing.Size(422, 220);
             this.tabInterface.TabIndex = 3;
             this.tabInterface.Title = "Interface";
             // 
-            // checkCloseToTray
+            // groupBox3
             // 
-            this.checkCloseToTray.AutoSize = true;
-            this.checkCloseToTray.Checked = true;
-            this.checkCloseToTray.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkCloseToTray.Location = new System.Drawing.Point(206, 15);
-            this.checkCloseToTray.Name = "checkCloseToTray";
-            this.checkCloseToTray.Size = new System.Drawing.Size(125, 17);
-            this.checkCloseToTray.TabIndex = 4;
-            this.checkCloseToTray.Text = "Close to system tray";
-            this.checkCloseToTray.UseVisualStyleBackColor = true;
+            this.groupBox3.Controls.Add(this.checkSaveSearch);
+            this.groupBox3.Location = new System.Drawing.Point(11, 60);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(400, 50);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Server Manager Search";
+            // 
+            // checkSaveSearch
+            // 
+            this.checkSaveSearch.AutoSize = true;
+            this.checkSaveSearch.Location = new System.Drawing.Point(17, 20);
+            this.checkSaveSearch.Name = "checkSaveSearch";
+            this.checkSaveSearch.Size = new System.Drawing.Size(312, 17);
+            this.checkSaveSearch.TabIndex = 3;
+            this.checkSaveSearch.Text = "Save search to use the next time you open server manager";
+            this.checkSaveSearch.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.checkMinimizeToTray);
+            this.groupBox2.Controls.Add(this.checkCloseToTray);
+            this.groupBox2.Location = new System.Drawing.Point(11, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(400, 51);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Tray";
             // 
             // checkMinimizeToTray
             // 
             this.checkMinimizeToTray.AutoSize = true;
             this.checkMinimizeToTray.Checked = true;
             this.checkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkMinimizeToTray.Location = new System.Drawing.Point(23, 15);
+            this.checkMinimizeToTray.Location = new System.Drawing.Point(17, 20);
             this.checkMinimizeToTray.Name = "checkMinimizeToTray";
             this.checkMinimizeToTray.Size = new System.Drawing.Size(138, 17);
             this.checkMinimizeToTray.TabIndex = 3;
             this.checkMinimizeToTray.Text = "Minimize to system tray";
             this.checkMinimizeToTray.UseVisualStyleBackColor = true;
+            // 
+            // checkCloseToTray
+            // 
+            this.checkCloseToTray.AutoSize = true;
+            this.checkCloseToTray.Checked = true;
+            this.checkCloseToTray.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkCloseToTray.Location = new System.Drawing.Point(205, 20);
+            this.checkCloseToTray.Name = "checkCloseToTray";
+            this.checkCloseToTray.Size = new System.Drawing.Size(125, 17);
+            this.checkCloseToTray.TabIndex = 4;
+            this.checkCloseToTray.Text = "Close to system tray";
+            this.checkCloseToTray.UseVisualStyleBackColor = true;
             // 
             // GlobalSettings
             // 
@@ -484,7 +520,10 @@
             this.tabSSH.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sshFontSize)).EndInit();
             this.tabInterface.ResumeLayout(false);
-            this.tabInterface.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -526,5 +565,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBoxAutoAcceptKeys;
         private System.Windows.Forms.CheckBox checkBoxBoldFont;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkSaveSearch;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

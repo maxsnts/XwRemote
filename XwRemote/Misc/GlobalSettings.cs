@@ -35,6 +35,8 @@ namespace XwRemote.Settings
             checkMinimizeToTray.Checked = Main.config.GetValue("UI_MINIMIZE_TO_TRAY").ToBoolOrDefault(false);
             checkCloseToTray.Checked = Main.config.GetValue("UI_CLOSE_TO_TRAY").ToBoolOrDefault(false);
 
+            checkSaveSearch.Checked = Main.config.GetValue("UI_SEARCH_SAVE").ToBoolOrDefault(false);
+            
             radioFixed_CheckedChanged(null, null);
         }
 
@@ -89,6 +91,8 @@ namespace XwRemote.Settings
 
             Main.config.SetValue("UI_MINIMIZE_TO_TRAY", checkMinimizeToTray.Checked.ToString());
             Main.config.SetValue("UI_CLOSE_TO_TRAY", checkCloseToTray.Checked.ToString());
+
+            Main.config.SetValue("UI_SEARCH_SAVE", checkSaveSearch.Checked.ToString());
 
             Close();
         }
